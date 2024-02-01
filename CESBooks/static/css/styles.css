@@ -1,0 +1,57 @@
+nav .navbar-brand
+{
+    /* size for brand */
+    font-size: xx-large;
+}
+
+/* colors for brand */
+nav .navbar-brand .yellow
+{
+    color: #f5b82e;
+}
+
+main .form-control
+{
+    display: inline-block;
+    width: auto;
+}
+
+main
+{
+    /* scroll horizontally as needed */
+    overflow-x: auto;
+    text-align: center;
+}
+
+main img
+{
+    /* constrain images on small screens */
+    max-width: 100%;
+}
+
+.table .table-borderless thead tr th, .table tbody tr td {
+    border: none; !important;
+}
+
+table {
+    table-layout: fixed;
+    text-align: left;
+}
+
+td {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.narrow-width {
+    width: 100px;
+}
+
+.normal-width {
+    width: 200px;
+}
+
+.wide-width {
+    width: 500px;
+}

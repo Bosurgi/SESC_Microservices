@@ -1,0 +1,38 @@
+version: '2'
+
+networks:
+  default:
+
+services:
+
+  financedb:
+    image: mariadb
+    restart: always
+    volumes:
+      - ./migrations/mysql-migrations.sql:/docker-entrypoint-initdb.d/mysql-mysql-migrations.sql
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    networks:
+      - default
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=$$MYSQL_ROOT_PASSWORD --execute \"SHOW DATABASES;\""
+      timeout: 2s
+      retries: 10
+
+  financeapp:
+    image: tvergilio/finance:1.3
+    environment:
+      spring.datasource.url: jdbc:mariadb://financedb:3306/${DB_NAME}
+      spring.datasource.username: ${DB_APPLICATION_USER}
+      spring.datasource.password: ${DB_APPLICATION_PASSWORD}
+    ports:
+      - "8081:8081"
+    expose:
+      - "8081"
+    depends_on:
+        financedb:
+          condition: service_healthy
+    networks:
+      - default

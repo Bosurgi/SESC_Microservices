@@ -1,0 +1,29 @@
+{% extends "user/layout.html" %}
+
+{% block title %}
+    {{ title}}
+{% endblock %}
+
+{% block main %}
+    {{ title}}
+    <table class="table" data-toggle="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Book</th>
+                <th data-sortable="true" scope="col">Date Borrowed</th>
+                <th data-sortable="true" scope="col">Date Returned</th>
+                <th data-sortable="true" scope="col">Overdue</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in transactions %}
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                    <td>{{ row[3] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

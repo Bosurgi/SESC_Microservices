@@ -1,0 +1,21 @@
+{% extends "user/layout.html" %}
+
+{% block title %}
+    Update PIN
+{% endblock %}
+
+{% block main %}
+    <p>Please enter a new PIN</p><br>
+    <form action="/firstlogin" method="post">
+        <div class="form-group">
+            <input id='pass' class="form-control" name="student_id" value={{ student_id }} type="text" readonly>
+        </div>
+        <div class="form-group">
+            <input id='pass' class="form-control" name="pin" placeholder="New PIN" type="password">
+        </div>
+        <div class="form-group">
+            <input id='confirm-pass' class="form-control" name="confirm-pin" placeholder="Confirm PIN" type="password">
+        </div>
+        <button id='submit' class="btn btn-primary" type="submit">Register</button>
+    </form>
+{% endblock %}

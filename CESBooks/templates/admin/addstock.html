@@ -1,0 +1,40 @@
+{% extends "admin/admin_layout.html" %}
+
+{% block title %}
+    Add New Title
+{% endblock %}
+
+{% block main %}
+    <form action="/admin/addstock" method="post">
+        <p>
+            <div class="form-group">
+                <img src="{{ cover }}" width="100" height="120" alt="book cover">
+            </div>
+        <p>
+            <div class="form-group">
+                <label for="isbn">ISBN</label>
+                <input autocomplete="on" autofocus class="form-control" id ="isbn" name="isbn" value="{{ isbn }}" type="text" >
+            </div>
+        <p>
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input autocomplete="off" autofocus class="form-control" id="title" name="title" value="{{ title }}" type="text">
+            </div>
+        <p>
+        <div class="form-group">
+                <label for="author">Author</label>
+                <input autocomplete="off" autofocus class="form-control" id="author" name="author" value="{{ author }}" type="text">
+            </div>
+        <p>
+            <div class="form-group">
+                <label for="year">Year</label>
+                <input autocomplete="off" autofocus class="form-control" id="year" name="year" value="{{ year }}" type="number">
+            </div>
+        <p>
+            <div class="form-group">
+                <label for="copies">Copies</label>
+                <input autocomplete="off" autofocus class="form-control" id="copies" name="copies" value="{{  copies  }}" type="text">
+            </div>
+        <button class="btn btn-primary" type="submit">Add Book</button>
+    </form>
+{% endblock %}

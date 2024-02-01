@@ -1,0 +1,14 @@
+{% extends "admin/admin_layout.html" %}
+
+{% block title %}
+    Add New Title
+{% endblock %}
+
+{% block main %}
+    <form action="/admin/add" method="post">
+        <div class="form-group">
+            <label for="isbn"></label><input autocomplete="on" autofocus class="form-control" id="isbn" name="isbn" placeholder="isbn">
+        </div>
+        <button class="btn btn-primary" id="submit" type="submit">Add Book</button>
+    </form>
+{% endblock %}

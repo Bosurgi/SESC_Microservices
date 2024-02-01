@@ -1,0 +1,31 @@
+{% extends "user/layout.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block main %}
+    {{ title }}
+    <table class="table" data-toggle="table">
+        <thead class="thead-light">
+            <tr>
+                <th class=normal-width scope="col">ISBN</th>
+                <th class=wide-width data-sortable="true" scope="col">Title </th>
+                <th class=normal-width data-sortable="true" scope="col">Author</th>
+                <th class=narrow-width data-sortable="true" scope="col">Year</th>
+                <th class=narrow-width scope="col">Copies</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+                <tr>
+                    <td>{{ book[0] }}</td>
+                    <td>{{ book[1] }}</td>
+                    <td>{{ book[2] }}</td>
+                    <td>{{ book[3] }}</td>
+                    <td>{{ book[4] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

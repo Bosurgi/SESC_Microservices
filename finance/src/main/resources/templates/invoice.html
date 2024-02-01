@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <title>Invoice Payment Portal</title>
+    <meta th:replace="fragments/header"/>
+</head>
+<body>
+<div th:replace="fragments/nav"></div>
+<div class="container-fluid">
+    <h3>Invoice</h3>
+    <dl class="row col-md-3">
+        <dt class="col-sm-9">Reference:</dt>
+        <dd class="col-sm-3" th:text="${invoice.reference}"></dd>
+        <dt class="col-sm-9">Student ID:</dt>
+        <dd class="col-sm-3" th:text="${invoice.account.studentId}"></dd>
+        <dt class="col-sm-9">Amount:</dt>
+        <dd class="col-sm-3" th:text="${#numbers.formatCurrency(invoice.amount)}"></dd>
+        <dt class="col-sm-9">Due Date:</dt>
+        <dd class="col-sm-3" th:text="${#temporals.format(invoice.dueDate, 'dd-MMM-yyyy')}"></dd>
+        <dt class="col-sm-9">Type:</dt>
+        <dd class="col-sm-3" th:text="${invoice.type}"></dd>
+        <dt class="col-sm-9">Status:</dt>
+        <dd class="col-sm-3" th:text="${invoice.status}"></dd>
+    </dl>
+    <div class="row">
+        <div class="btn-group">
+            <div class="col-xs-6">
+                <a class="btn btn-secondary btn-block" href="/portal" role="button">Find
+                    Another Invoice</a>
+            </div>
+            <div class="col-xs-6">
+                <div th:if="${#strings.equals(invoice.status,'OUTSTANDING')}">
+                    <form action="#" th:action="@{/portal/pay}" th:object="${invoice}" method="post">
+                        <input type="hidden" id="reference" th:field="*{reference}"/>
+                        <button class="btn btn-primary btn-block" type="submit" name="pay" value="submit">Pay Invoice
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div th:if="${message}" th:text="${message}" th:class="${'alert alert-success w-25'}"></div>
+</div>
+</body>
+</html>

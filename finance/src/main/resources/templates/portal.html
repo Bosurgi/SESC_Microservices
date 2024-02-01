@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <title>Invoice Payment Portal</title>
+    <meta th:replace="fragments/header"/>
+</head>
+<body>
+<div th:replace="fragments/nav"></div>
+<div class="container-fluid">
+    <form action="#" th:action="@{/portal/invoice}" th:object="${invoice}" method="post">
+        <div class="mb-3">
+            <label for="reference" class="form-label">Invoice Reference:</label>
+            <input type="text" class="form-control w-25" id="reference" aria-describedby="referenceHelp"
+                   th:field="*{reference}" onkeyup="this.value = this.value.toUpperCase();"
+                   onkeydown="hideAlert()">
+            <div id="referenceHelp" class="form-text">Enter your unique invoice reference number.</div>
+            <div id="alert" class="alert alert-warning w-25" role="alert"
+                 th:if="${#fields.hasErrors('reference')}"
+                 th:errors="*{reference}">reference error
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Find Invoice</button>
+    </form>
+</div>
+</body>
+</html>

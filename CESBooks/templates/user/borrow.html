@@ -1,0 +1,16 @@
+{% extends "user/layout.html" %}
+
+{% block title %}
+    Borrow Books
+{% endblock %}
+
+{% block main %}
+        <form action="/borrow" method="post">
+        <div class="form-group">
+            <label>
+                <input autocomplete="off" autofocus class="form-control" name="isbn" placeholder="ISBN" type="text" onkeyup="EnableDisable(isbn)">
+            </label>
+        </div>
+        <button class="btn btn-primary" name="submit" type="submit" value="borrow">Borrow</button>
+    </form>
+{% endblock %}

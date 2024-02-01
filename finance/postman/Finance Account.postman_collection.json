@@ -1,0 +1,109 @@
+{
+	"info": {
+		"_postman_id": "30324dbf-1263-4ed3-b00a-8967cc42c037",
+		"name": "Finance Account",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all finance accounts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/accounts",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create new finance account",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"studentId\": \"c3429928\"\r\n}"
+				},
+				"url": {
+					"raw": "localhost:8081/accounts/",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"accounts",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get account by student ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8081/accounts/student/c7465688",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"accounts",
+						"student",
+						"c7465688"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get finance account",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/accounts/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"accounts",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

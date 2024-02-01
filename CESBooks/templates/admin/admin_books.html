@@ -1,0 +1,29 @@
+{% extends "admin/admin_layout.html" %}
+
+{% block title %}
+    {{  title }}
+{% endblock %}
+
+{% block main %}
+    {{ title }}
+    <table class="table" data-toggle="table">
+        <thead class="thead-light">
+            <tr>
+                {% for col in cols %}
+                    <th class={{ col [1] }} data-sortable="true" scope="col">{{ col[0] }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in books %}
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                    <td>{{ row[3] }}</td>
+                    <td>{{ row[4] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
