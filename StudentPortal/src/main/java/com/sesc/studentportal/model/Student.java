@@ -33,7 +33,8 @@ public class Student extends User {
 
     private Boolean isEnrolled;
 
-    private List<Module> enrolmentList = new ArrayList<>();
+    @OneToMany
+    private List<Module> modules = new ArrayList<>();
 
 
     /***
