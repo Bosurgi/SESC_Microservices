@@ -25,6 +25,9 @@ public class Student extends User {
     private Long id;
 
     @NotBlank
+    @Column(unique = true)
+    @Getter
+    @Setter
     private String studentId;
 
     private String surname;

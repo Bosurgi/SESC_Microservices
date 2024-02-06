@@ -1,8 +1,10 @@
 package com.sesc.studentportal.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +21,8 @@ public class Module {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
+    @NotBlank
     private String title;
     private String description;
     private Double fee;
@@ -42,3 +46,4 @@ public class Module {
         this.fee = fee;
     }
 }
+
