@@ -1,14 +1,22 @@
 package com.sesc.studentportal.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.RandomStringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
+/***
+ * Entity for a student which extends the User class
+ */
 @Entity
 @Data
-public class Student {
+@Table(name="students")
+public class Student extends User {
     @Getter
     @Setter
     @Id
@@ -16,11 +24,16 @@ public class Student {
     @Column(name="id")
     private Long id;
 
+    @NotBlank
     private String studentId;
 
     private String surname;
 
     private String firstName;
+
+    private Boolean isEnrolled;
+
+    private List<Module> enrolmentList = new ArrayList<>();
 
 
     /***
@@ -39,6 +52,7 @@ public class Student {
      * Default constructor
      */
     public Student() {
+        // Empty constructor
     }
 
     /***
