@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -14,6 +15,9 @@ import java.util.List;
  * Entity for a student which extends the User class
  */
 @Entity
+@NoArgsConstructor
+@Getter
+@Setter
 @Data
 @Table(name="students")
 public class Student extends User {
@@ -26,8 +30,6 @@ public class Student extends User {
 
     @NotBlank
     @Column(unique = true)
-    @Getter
-    @Setter
     private String studentId;
 
     private String surname;
@@ -52,12 +54,6 @@ public class Student extends User {
 
     // CONSTRUCTORS //
 
-    /***
-     * Default constructor
-     */
-    public Student() {
-        // Empty constructor
-    }
 
     /***
      * Constructor with surname and first name and generates a student ID

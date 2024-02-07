@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /***
@@ -16,6 +17,7 @@ import lombok.Setter;
 @Data
 @Getter
 @Setter
+@NoArgsConstructor
 public class Module {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
@@ -26,13 +28,6 @@ public class Module {
     private String title;
     private String description;
     private Double fee;
-
-    /***
-     * Default constructor for a module
-     */
-    public Module() {
-        // Empty Constructor
-    }
 
     /***
      * Constructor for a module with title, description and fee
