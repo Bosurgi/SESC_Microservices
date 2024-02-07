@@ -2,10 +2,7 @@ package com.sesc.studentportal.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.ArrayList;
@@ -15,6 +12,7 @@ import java.util.List;
  * Entity for a student which extends the User class
  */
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Getter
 @Setter
@@ -38,8 +36,8 @@ public class Student extends User {
 
     private Boolean isEnrolled;
 
-    @OneToMany
-    private List<Module> modules = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
+    private List<Enrolments> enrolments = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

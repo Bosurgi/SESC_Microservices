@@ -1,14 +1,14 @@
 package com.sesc.studentportal.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 /***
  * Entity for a module which is a course unit.
@@ -20,7 +20,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Module {
     @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long moduleId;
 
     @Column(unique = true)
@@ -28,6 +28,11 @@ public class Module {
     private String title;
     private String description;
     private Double fee;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "module")
+    @JoinColumn(name = "enrolment_id")
+    @JsonIgnore // It ignores the enrolments field when serializing to JSON
+    private List<Enrolments> enrolments;
 
     /***
      * Constructor for a module with title, description and fee
