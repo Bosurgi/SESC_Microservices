@@ -21,7 +21,7 @@ import lombok.Setter;
 public class Module {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
-    private Long id;
+    private Long moduleId;
 
     @Column(unique = true)
     @NotBlank

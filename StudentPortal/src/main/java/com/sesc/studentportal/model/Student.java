@@ -25,12 +25,12 @@ public class Student extends User {
     @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-    private Long id;
+    @Column(name="student_Id")
+    private Long studentId;
 
     @NotBlank
     @Column(unique = true)
-    private String studentId;
+    private String studentNumber;
 
     private String surname;
 
@@ -41,13 +41,17 @@ public class Student extends User {
     @OneToMany
     private List<Module> modules = new ArrayList<>();
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
     /***
      * Generate a student id if it is not already set
      */
     private void generateId() {
-        if ( this.studentId == null ) {
-            this.studentId = "c" + RandomStringUtils.random(1, '7', '3') +
+        if ( this.studentNumber == null ) {
+            this.studentNumber = "c" + RandomStringUtils.random(1, '7', '3') +
                     RandomStringUtils.randomNumeric(6);
         }
     } // End of Method
