@@ -29,8 +29,8 @@ public class Module {
     private String description;
     private Double fee;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "module")
-    @JoinColumn(name = "enrolment_id")
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "enrolmentId")
     @JsonIgnore // It ignores the enrolments field when serializing to JSON
     private List<Enrolments> enrolments;
 

@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name="enrolments")
+@Table(name = "enrolments")
 public class Enrolments {
     // Primary Key
     @Id
@@ -22,11 +22,11 @@ public class Enrolments {
     private Long enrolmentId;
     // Foreign Key to Student
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id")
+    @JoinColumn(name = "studentId")
     private Student student;
     // Foreign Key to Module
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "module_id")
+    @JoinColumn(name = "moduleId")
     private Module module;
 
     // CONSTRUCTORS //

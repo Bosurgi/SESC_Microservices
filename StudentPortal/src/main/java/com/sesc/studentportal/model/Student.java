@@ -2,7 +2,10 @@ package com.sesc.studentportal.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.ArrayList;
@@ -12,18 +15,19 @@ import java.util.List;
  * Entity for a student which extends the User class
  */
 @Entity
-@EqualsAndHashCode(callSuper = true)
+//@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Getter
 @Setter
 @Data
-@Table(name="students")
-public class Student extends User {
+@Table(name = "students")
+public class Student {
+    //        extends User {
     @Getter
     @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="student_Id")
+    @Column(name = "studentId")
     private Long studentId;
 
     @NotBlank
@@ -36,11 +40,11 @@ public class Student extends User {
 
     private Boolean isEnrolled;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Enrolments> enrolments = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private User user;
 
 
@@ -48,7 +52,7 @@ public class Student extends User {
      * Generate a student id if it is not already set
      */
     private void generateId() {
-        if ( this.studentNumber == null ) {
+        if (this.studentNumber == null) {
             this.studentNumber = "c" + RandomStringUtils.random(1, '7', '3') +
                     RandomStringUtils.randomNumeric(6);
         }

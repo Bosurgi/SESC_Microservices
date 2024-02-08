@@ -1,5 +1,6 @@
 package com.sesc.studentportal.services;
 
+import com.sesc.studentportal.model.Module;
 import com.sesc.studentportal.repository.ModuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

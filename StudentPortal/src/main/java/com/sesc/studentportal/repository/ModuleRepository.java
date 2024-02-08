@@ -1,5 +1,6 @@
 package com.sesc.studentportal.repository;
 
+import com.sesc.studentportal.model.Module;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -23,7 +24,7 @@ public interface ModuleRepository extends JpaRepository<Module, Long> {
      * @param moduleName the module name
      * @return the Module
      */
-    Module findModuleByModuleName(String moduleName);
+    Module findModuleByTitle(String moduleName);
 
     /***
      * Find a module by its module Title by querying the database

@@ -12,11 +12,11 @@ import lombok.Setter;
 @Entity
 @NoArgsConstructor
 @Data
-@Table(name="users")
-@Inheritance(strategy = InheritanceType.JOINED)
-public abstract class User {
+@Table(name = "users")
+//@Inheritance(strategy = InheritanceType.JOINED)
+public class User {
 
-    @Column(name="user_id")
+    @Column(name = "userId")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;

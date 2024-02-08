@@ -1,5 +1,6 @@
 package com.sesc.studentportal.controller;
 
+import com.sesc.studentportal.model.Module;
 import com.sesc.studentportal.services.ModuleService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

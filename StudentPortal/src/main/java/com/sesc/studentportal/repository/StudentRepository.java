@@ -16,14 +16,14 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
      * @param id the student ID
      * @return the Student
      */
-    Student findStudentById(Long id);
+    Student findStudentByStudentId(Long id);
 
     /***
      * Find a student by its name
      * @param name the student name
      * @return the Student
      */
-    Student findStudentByName(String name);
+    Student findStudentByFirstName(String name);
 
     /***
      * Find a student by its surname
@@ -44,6 +44,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
      * @param keyword the keyword to search for
      * @return the Student corresponding to the search
      */
-    @Query("SELECT s FROM Student s WHERE CONCAT(s.firstName, s.surname, s.studentId) LIKE %?3%")
+    @Query("SELECT s FROM Student s WHERE CONCAT(s.firstName, s.surname, s.studentId) LIKE %?1%")
     public Student search(String keyword);
 }
