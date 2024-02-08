@@ -2,12 +2,14 @@ package com.sesc.studentportal.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /***
  * ModuleRepository which allows CRUD operations on the Module entity in the database.
  */
+@Repository
 public interface ModuleRepository extends JpaRepository<Module, Long> {
     /***
      * Find a module by its id

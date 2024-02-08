@@ -3,10 +3,12 @@ package com.sesc.studentportal.repository;
 import com.sesc.studentportal.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 /***
  * ModuleRepository which allows CRUD operations on the Student entity in the database.
  */
+@Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
     /***

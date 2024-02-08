@@ -4,12 +4,14 @@ import com.sesc.studentportal.model.Enrolments;
 import com.sesc.studentportal.model.Module;
 import com.sesc.studentportal.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /***
  * Enrolment Repository which allows CRUD operations on the Enrolment entity in the database.
  */
+@Repository
 public interface EnrolmentRepository extends JpaRepository<Enrolments, Long> {
 
     /***
