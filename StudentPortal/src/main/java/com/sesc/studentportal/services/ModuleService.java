@@ -2,7 +2,6 @@ package com.sesc.studentportal.services;
 
 import com.sesc.studentportal.model.Module;
 import com.sesc.studentportal.repository.ModuleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,13 +29,15 @@ public class ModuleService {
         return moduleRepository.search(keyword);
     }
 
+    // CONSTRUCTOR //
+
     /***
      * Constructor for the ModuleService.
      * Using AutoWired annotation to inject the ModuleRepository into the ModuleService.
      * @param moduleRepository the Repository for the Module
      */
-    @Autowired
     public ModuleService(ModuleRepository moduleRepository) {
         this.moduleRepository = moduleRepository;
     }
+
 }

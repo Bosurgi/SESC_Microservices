@@ -34,4 +34,15 @@ public class ModuleController {
     public List<Module> getModule(@RequestParam String keyword) {
         return moduleService.searchModules(keyword);
     }
+
+
+    // CONSTRUCTOR //
+
+    /***
+     * Constructor for the ModuleController.
+     * @param moduleService The Service for the Module
+     */
+    public ModuleController(ModuleService moduleService) {
+        this.moduleService = moduleService;
+    }
 }
