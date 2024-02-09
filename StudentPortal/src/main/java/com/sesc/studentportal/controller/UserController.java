@@ -18,9 +18,18 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    /***
+     * Deletes a user by their id.
+     * @param id The id of the user to delete.
+     */
     @DeleteMapping("/{id}")
-    public void deleteUserById(@PathVariable Long id) {
-        userService.deleteUser(id);
+    public String deleteUserById(@PathVariable Long id) {
+        try {
+            userService.deleteUser(id);
+        } catch (Exception e) {
+            return "User not found";
+        }
+        return "User deleted";
     }
 
     @PostMapping("/{id}")
