@@ -26,10 +26,14 @@ public class UserService {
     }
 
     public User createUser(@NotNull User user) {
-        userRepository.save(user);
-        return user;
+        if (userRepository.findUserByUserName(user.getUserName()) == null) {
+            userRepository.save(user);
+            return user;
+        } else {
+            // TODO: Throw Exception
+            return null;
+        }
     }
-
 
     // CONSTRUCTOR //
 

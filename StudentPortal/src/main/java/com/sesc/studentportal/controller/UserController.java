@@ -17,7 +17,6 @@ public class UserController {
         return userService.createUser(user);
     }
 
-
     public UserController(UserService userService) {
         this.userService = userService;
     }
