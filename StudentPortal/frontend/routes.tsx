@@ -10,7 +10,7 @@ export const routes = [
         element: <MainLayout/>,
         handle: {title: 'Main'},
         children: [
-            {path: '', element: <HomeView/>, handle: {title: 'Hello World'}},
+            {path: '/', element: <HomeView/>, handle: {title: 'Hello World'}},
             {path: '/about', element: <AboutView/>, handle: {title: 'About'}},
         ],
     },
