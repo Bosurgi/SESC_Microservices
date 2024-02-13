@@ -4,6 +4,7 @@ import com.sesc.studentportal.model.Student;
 import com.sesc.studentportal.model.User;
 import com.sesc.studentportal.repository.StudentRepository;
 import com.sesc.studentportal.repository.UserRepository;
+import dev.hilla.BrowserCallable;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.List;
 /***
  * Service for the User entity where the business logic for the User entity is defined.
  */
+@BrowserCallable
 @Service
 public class UserService {
 
