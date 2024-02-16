@@ -5,13 +5,13 @@ plugins {
     id("dev.hilla") version "2.5.5"
     id("org.asciidoctor.jvm.convert") version "3.3.2"
 //    id("com.vaadin") version "24.3.3"
+    kotlin("jvm")
 }
 
 group = "com.sesc"
 version = "0.0.1-SNAPSHOT"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
 }
 
 configurations {
@@ -43,6 +43,7 @@ dependencies {
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation(kotlin("stdlib-jdk8"))
 }
 
 dependencyManagement {
@@ -63,4 +64,7 @@ tasks.test {
 tasks.asciidoctor {
     project.property("snippetsDir")!!.let { inputs.dir(it) }
     dependsOn(tasks.test)
+}
+kotlin {
+    jvmToolchain(21)
 }
