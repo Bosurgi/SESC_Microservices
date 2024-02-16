@@ -6,6 +6,8 @@ import {PasswordField} from "@hilla/react-components/PasswordField";
 import User from "Frontend/generated/com/sesc/studentportal/model/User";
 import {ErrorDialog} from "Frontend/components/ErrorDialog";
 import Role from "Frontend/generated/com/sesc/studentportal/model/Role";
+import {EmailField} from "@hilla/react-components/EmailField";
+import {UserEndpoint} from "Frontend/generated/endpoints";
 
 export default function Register() {
 
@@ -28,27 +30,43 @@ export default function Register() {
             <div className="grid grid-cols-1 gap-8 place-content-center place-items-center">
                 <FormLayout>
                     <TextField
+                        required
+                        errorMessage="First Name Required"
+                        autoCapitalize={"words"}
                         label="First Name"
                         onChange={(e) => setUser({...user, firstName: e.target.value})}
                         // style={{maxWidth}}
                     />
                     <TextField
+                        required
+                        errorMessage="Last Name Required"
+                        autoCapitalize={"words"}
+                        autocorrect={"on"}
                         label="Last Name"
                         onChange={(e) => setUser({...user, lastName: e.target.value})}
                     />
-                    <TextField
-                        label="Email"
+                    <EmailField
+                        required
+                        label="Email address"
+                        errorMessage="Enter a valid email address"
+                        helperText="Only email addresses allowed"
                         onChange={(e) => setUser({...user, email: e.target.value})}
                     />
                     <TextField
+                        required
+                        errorMessage="User Name Required"
                         label="Username"
                         onChange={(e) => setUser({...user, userName: e.target.value})}
                     />
                     <PasswordField
+                        errorMessage="Password Required"
+                        required
                         label="Password"
                         onChange={(e) => setUser({...user, password: e.target.value})}
                     />
                     <PasswordField
+                        errorMessage="Password Confirmation"
+                        required
                         label="Confirm Password"
                         onChange={(e) => setPasswordConfirmation(e.target.value)}
                     />
@@ -96,7 +114,7 @@ export default function Register() {
         console.log('Registering');
         // Use either the Controller or the Endpoint for the registration
         // let userToSend = await UserController.registerUser(user);
-        // let userToSend = await UserEndpoint.registerUser(user);
+        let userToSend = await UserEndpoint.registerUser(user);
 
     }
 
