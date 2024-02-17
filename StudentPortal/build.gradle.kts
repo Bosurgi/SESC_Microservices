@@ -6,6 +6,7 @@ plugins {
     id("org.asciidoctor.jvm.convert") version "3.3.2"
 //    id("com.vaadin") version "24.3.3"
     kotlin("jvm")
+//    id("war")
 }
 
 group = "com.sesc"
@@ -53,6 +54,12 @@ dependencyManagement {
     }
 }
 
+hilla {
+    productionMode = true
+}
+
+
+
 tasks.withType<Test> {
     useJUnitPlatform()
 }
@@ -65,6 +72,7 @@ tasks.asciidoctor {
     project.property("snippetsDir")!!.let { inputs.dir(it) }
     dependsOn(tasks.test)
 }
+
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(17)
 }
