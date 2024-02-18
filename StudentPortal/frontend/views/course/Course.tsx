@@ -7,6 +7,8 @@ import Module from "Frontend/generated/com/sesc/studentportal/model/Module";
 import {useEffect, useState} from "react";
 import {getModules} from "Frontend/generated/ModuleEndpoint";
 import Details from "Frontend/components/Details";
+import {GridColumn} from "@hilla/react-components/GridColumn";
+import {Button} from "@hilla/react-components/Button";
 
 
 export default function Course() {
@@ -64,12 +66,9 @@ export default function Course() {
                           <VerticalLayout>
                               <Details details={module.description}/>
                           </VerticalLayout>
-
                       )}
                 >
                     <GridSortColumn path="title" header="Title" autoWidth resizable/>
-
-                    {/* TODO: On click display the module details */}
 
                     {/*<GridSortColumn path="description" header="Description" autoWidth resizable/>*/}
 
@@ -77,6 +76,17 @@ export default function Course() {
                         {/* If the fee is not set, display "Free" else add £ symbol*/}
                         {({item}) => (item.fee ? `£${item.fee}` : 'Free')}
                     </GridSortColumn>
+
+                    <GridColumn>
+                        {({item}) => (
+                            <Button className="primary" onClick={() => {
+                                // Enrol the user to the module here
+                                // TODO: Implement the enrolment logic for the backend
+                                console.log(`Enrolling to ${item.title}`);
+                            }}>
+                                Enroll
+                            </Button>)}
+                    </GridColumn>
                 </Grid>
             </VerticalLayout>
         </>
