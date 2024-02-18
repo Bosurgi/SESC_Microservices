@@ -6,6 +6,7 @@ import {Grid} from "@hilla/react-components/Grid";
 import Module from "Frontend/generated/com/sesc/studentportal/model/Module";
 import {useEffect, useState} from "react";
 import {getModules} from "Frontend/generated/ModuleEndpoint";
+import Details from "Frontend/components/Details";
 
 
 export default function Course() {
@@ -14,6 +15,9 @@ export default function Course() {
     const [moduleList, setModuleList] = useState<Module[]>([])
     // The new list of modules after filtering
     const [filteredModules, setFilteredModules] = useState<Module[]>([])
+
+    // Details State for managing the module details
+    const [details, setDetails] = useState<Module[]>([]);
 
     // Fetch the modules from the backend and filter them
     useEffect(() => {
@@ -50,12 +54,24 @@ export default function Course() {
                     <Icon slot="prefix" icon="vaadin:search"/>
                 </TextField>
 
-                <Grid items={filteredModules}>
+                <Grid items={filteredModules}
+                      theme="row-stripes"
+                      detailsOpenedItems={details}
+                      onActiveItemChanged={(e) => {
+                          setDetails(e.detail.value ? [e.detail.value] : []);
+                      }}
+                      rowDetailsRenderer={({item: module}) => (
+                          <VerticalLayout>
+                              <Details details={module.description}/>
+                          </VerticalLayout>
+
+                      )}
+                >
                     <GridSortColumn path="title" header="Title" autoWidth resizable/>
 
                     {/* TODO: On click display the module details */}
 
-                    <GridSortColumn path="description" header="Description" autoWidth resizable/>
+                    {/*<GridSortColumn path="description" header="Description" autoWidth resizable/>*/}
 
                     <GridSortColumn path="fee" header="Fee" autoWidth>
                         {/* If the fee is not set, display "Free" else add £ symbol*/}
