@@ -3,6 +3,7 @@ import Home from "Frontend/views/home/Home";
 import Login from "Frontend/views/login/Login";
 import Main from "Frontend/views/Main";
 import Register from "Frontend/views/registration/Register";
+import Course from "Frontend/views/course/Course";
 
 export const routes = [
     {
@@ -13,6 +14,7 @@ export const routes = [
             {path: '/', element: <Home/>, handle: {title: 'Home'}},
             {path: '/login', element: <Login/>, handle: {title: 'Login'}},
             {path: '/register', element: <Register/>, handle: {title: 'Register'}},
+            {path: '/courses', element: <Course/>, handle: {title: 'Course'}},
         ],
     },
 ] as RouteObject[];

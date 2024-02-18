@@ -9,6 +9,7 @@ import Role from "Frontend/generated/com/sesc/studentportal/model/Role";
 import {EmailField} from "@hilla/react-components/EmailField";
 import {UserEndpoint} from "Frontend/generated/endpoints";
 
+// TODO: Switch to AUTO FORMS by Hilla later - Allows to update backend automatically
 export default function Register() {
 
     const [user, setUser] = useState<User>(
