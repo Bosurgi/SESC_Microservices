@@ -25,7 +25,7 @@ public class User {
     private String lastName;
     private String email;
     private Role role;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "studentId")
     private Student student;
 }
