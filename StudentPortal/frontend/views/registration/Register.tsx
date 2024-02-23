@@ -8,6 +8,8 @@ import {ErrorDialog} from "Frontend/components/ErrorDialog";
 // import Role from "Frontend/generated/com/sesc/studentportal/model/Role";
 import {UserEndpoint} from "Frontend/generated/endpoints";
 import {EmailField} from "@hilla/react-components/EmailField";
+import {useNavigate} from "react-router-dom";
+import {toast, ToastContainer} from "react-toastify";
 
 // TODO: Switch to AUTO FORMS by Hilla later - Allows to update backend automatically
 export default function Register() {
@@ -18,6 +20,16 @@ export default function Register() {
     const [passwordConfirmation, setPasswordConfirmation] = useState<string>('');
 
     const [dialogOpened, setDialogOpened] = useState(false);
+
+    const [showToast, setShowToast] = useState(false);
+
+    const navigate = useNavigate();
+
+    const showToastMessage = () => {
+        toast("Successfully registered. You will be redirected shortly.", {
+            autoClose: 3000,
+        });
+    };
 
     const responsiveSteps = [
         {minWidth: '0', columns: 1},
@@ -75,10 +87,17 @@ export default function Register() {
                 </FormLayout>
             </div>
 
+            <ToastContainer/>
+
+
             <Button theme="primary"
                     onClick={async () => {
                         if (isPasswordSame(user.password, passwordConfirmation)) {
                             await handleRegistration();
+                            showToastMessage();
+                            setTimeout(() => {
+                                navigate('/login');
+                            }, 3000)
                         } else {
                             setDialogOpened(true);
                         }
@@ -107,6 +126,7 @@ export default function Register() {
         </div>
     );
 
+
     /**
      * Function to handle the registration of a user to the endpoint in the backend
      */
@@ -115,10 +135,14 @@ export default function Register() {
         console.log('Registering');
         // Use either the Controller or the Endpoint for the registration
         // let userToSend = await UserController.registerUser(user);
-        let userToSend = await UserEndpoint.registerUser(user);
-        console.log('User sent', userToSend);
-
+        try {
+            await UserEndpoint.registerUser(user);
+            setShowToast(true);
+        } catch (e) {
+            console.error('Error registering user', e);
+        }
     }
+
 
     /**
      * Function to check if the password and the password confirmation match

@@ -13,11 +13,14 @@ export const routes = protectRoutes([
         children: [
             // PATHS
             {path: '/', element: <Home/>, handle: {title: 'Home'}},
-
-            {path: '/register', element: <Register/>, handle: {title: 'Register'}},
-            {path: '/courses', element: <Course/>, handle: {title: 'Course', requiresLogin: true}},
+            {
+                path: '/courses',
+                element: <Course/>,
+                handle: {title: 'Course', requiresLogin: true}
+            },
         ],
     },
+    {path: '/register', element: <Register/>, handle: {title: 'Register'}},
     {path: '/login', element: <Login/>, handle: {title: 'Login'}},
 ]);
 

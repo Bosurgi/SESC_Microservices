@@ -4,6 +4,8 @@ export default function Home() {
     // const [name, setName] = useState('');
     const {state, login} = useAuth();
 
+    console.log(state.user?.authorities)
+
     return (
         <>
             <div className="flex flex-col min-h-screen">
