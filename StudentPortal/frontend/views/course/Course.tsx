@@ -3,20 +3,20 @@ import {TextField} from "@hilla/react-components/TextField";
 import {Icon} from "@hilla/react-components/Icon";
 import {GridSortColumn} from "@hilla/react-components/GridSortColumn";
 import {Grid} from "@hilla/react-components/Grid";
-import Module from "Frontend/generated/com/sesc/studentportal/model/Module";
 import {useEffect, useState} from "react";
 import {getModules} from "Frontend/generated/ModuleEndpoint";
 import Details from "Frontend/components/Details";
 import {GridColumn} from "@hilla/react-components/GridColumn";
 import {Button} from "@hilla/react-components/Button";
+import Module from "Frontend/generated/com/sesc/studentportal/model/Module";
 
 
 export default function Course() {
 
     // The module List to be displayed
-    const [moduleList, setModuleList] = useState<Module[]>([])
+    const [moduleList, setModuleList] = useState<Module[] | undefined>([])
     // The new list of modules after filtering
-    const [filteredModules, setFilteredModules] = useState<Module[]>([])
+    const [filteredModules, setFilteredModules] = useState<Module[] | undefined>([])
 
     // Details State for managing the module details
     const [details, setDetails] = useState<Module[]>([]);
@@ -24,11 +24,11 @@ export default function Course() {
     // Fetch the modules from the backend and filter them
     useEffect(() => {
         getModules().then((modules) => {
-            const newModules = modules.map((module) => ({
+            const newModules = modules?.map((module) => ({
                 ...module,
-                title: module.title,
-                description: module.description,
-                fee: module.fee,
+                title: module?.title,
+                description: module?.description,
+                fee: module?.fee,
             }));
             setModuleList(newModules);
             setFilteredModules(newModules);
@@ -46,7 +46,7 @@ export default function Course() {
                         const searchTerm = (e.detail.value.trim() || '').trim().toLowerCase();
                         setFilteredModules(
                             // Using only the title to filter the modules
-                            moduleList.filter(
+                            moduleList?.filter(
                                 ({title}) =>
                                     !searchTerm ||
                                     title?.toLowerCase().includes(searchTerm)

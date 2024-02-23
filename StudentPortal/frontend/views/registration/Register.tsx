@@ -6,7 +6,6 @@ import {PasswordField} from "@hilla/react-components/PasswordField";
 import User from "Frontend/generated/com/sesc/studentportal/model/User";
 import {ErrorDialog} from "Frontend/components/ErrorDialog";
 // import Role from "Frontend/generated/com/sesc/studentportal/model/Role";
-import {EmailField} from "@hilla/react-components/EmailField";
 import {UserEndpoint} from "Frontend/generated/endpoints";
 
 // TODO: Switch to AUTO FORMS by Hilla later - Allows to update backend automatically
@@ -30,29 +29,29 @@ export default function Register() {
         <div className="flex flex-col items-center justify-center p-4">
             <div className="grid grid-cols-1 gap-8 place-content-center place-items-center">
                 <FormLayout>
-                    <TextField
-                        required
-                        errorMessage="First Name Required"
-                        autoCapitalize={"words"}
-                        label="First Name"
-                        // onChange={(e) => setUser({...user, firstName: e.target.value})}
-                        // style={{maxWidth}}
-                    />
-                    <TextField
-                        required
-                        errorMessage="Last Name Required"
-                        autoCapitalize={"words"}
-                        autocorrect={"on"}
-                        label="Last Name"
-                        // onChange={(e) => setUser({...user, lastName: e.target.value})}
-                    />
-                    <EmailField
-                        required
-                        label="Email address"
-                        errorMessage="Enter a valid email address"
-                        helperText="Only email addresses allowed"
-                        // onChange={(e) => setUser({...user, email: e.target.value})}
-                    />
+                    {/*<TextField*/}
+                    {/*    required*/}
+                    {/*    errorMessage="First Name Required"*/}
+                    {/*    autoCapitalize={"words"}*/}
+                    {/*    label="First Name"*/}
+                    {/*    // onChange={(e) => setUser({...user, firstName: e.target.value})}*/}
+                    {/*    // style={{maxWidth}}*/}
+                    {/*/>*/}
+                    {/*<TextField*/}
+                    {/*    required*/}
+                    {/*    errorMessage="Last Name Required"*/}
+                    {/*    autoCapitalize={"words"}*/}
+                    {/*    autocorrect={"on"}*/}
+                    {/*    label="Last Name"*/}
+                    {/*    // onChange={(e) => setUser({...user, lastName: e.target.value})}*/}
+                    {/*/>*/}
+                    {/*<EmailField*/}
+                    {/*    required*/}
+                    {/*    label="Email address"*/}
+                    {/*    errorMessage="Enter a valid email address"*/}
+                    {/*    helperText="Only email addresses allowed"*/}
+                    {/*    // onChange={(e) => setUser({...user, email: e.target.value})}*/}
+                    {/*/>*/}
                     <TextField
                         required
                         errorMessage="User Name Required"
@@ -76,9 +75,9 @@ export default function Register() {
             </div>
 
             <Button theme="primary"
-                    onClick={() => {
+                    onClick={async () => {
                         if (isPasswordSame(user.password, passwordConfirmation)) {
-                            handleRegistration();
+                            await handleRegistration();
                         } else {
                             setDialogOpened(true);
                         }
@@ -116,6 +115,7 @@ export default function Register() {
         // Use either the Controller or the Endpoint for the registration
         // let userToSend = await UserController.registerUser(user);
         let userToSend = await UserEndpoint.registerUser(user);
+        console.log('User sent', userToSend);
 
     }
 

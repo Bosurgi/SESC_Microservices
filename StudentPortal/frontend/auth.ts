@@ -1,7 +1,7 @@
 import {configureAuth} from "@hilla/react-auth";
-import {UserInfoService} from "Frontend/generated/endpoints";
+import {JpaUserDetailService} from "Frontend/generated/endpoints";
 
-const auth = configureAuth(UserInfoService.getUserInfo);
+const auth = configureAuth(JpaUserDetailService.getUserInfo);
 
 export const useAuth = auth.useAuth;
 export const AuthProvider = auth.AuthProvider;

@@ -79,9 +79,13 @@ public class SecurityConfig extends VaadinWebSecurity {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        super.configure(http);
-        http.userDetailsService(jpaUserDetailService);
+        http
+                .userDetailsService(jpaUserDetailService)
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers(new AntPathRequestMatcher("/register")).permitAll();
+                });
         setLoginView(http, "/login");
+        super.configure(http);
     }
 
 

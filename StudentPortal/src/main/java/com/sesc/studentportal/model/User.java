@@ -23,7 +23,7 @@ public class User {
     private String username;
     private String password;
     private String roles;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "studentId")
     private Student student;
 

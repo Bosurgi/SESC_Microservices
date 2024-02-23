@@ -26,7 +26,6 @@ export default function Login() {
                     } else {
                         setUrl(redirectUrl ?? defaultUrl ?? '/courses');
                     }
-                    console.log(state.user)
                 }}
             />
 

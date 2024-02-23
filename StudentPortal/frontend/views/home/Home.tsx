@@ -1,5 +1,8 @@
+import {useAuth} from "Frontend/auth";
+
 export default function Home() {
     // const [name, setName] = useState('');
+    const {state, login} = useAuth();
 
     return (
         <>
@@ -10,7 +13,7 @@ export default function Home() {
 
                 <section
                     className="w-full flex-1 flex gap-8 flex-col items-center justify-center md:grid md:grid-cols-2 lg:grid-cols-3">
-                    
+
                 </section>
 
                 <section className="w-full flex justify-center py-4">

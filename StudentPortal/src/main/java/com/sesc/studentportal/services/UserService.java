@@ -4,6 +4,7 @@ import com.sesc.studentportal.model.Student;
 import com.sesc.studentportal.model.User;
 import com.sesc.studentportal.repository.StudentRepository;
 import com.sesc.studentportal.repository.UserRepository;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 import dev.hilla.BrowserCallable;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.Optional;
  * Service for the User entity where the business logic for the User entity is defined.
  */
 @BrowserCallable
+@AnonymousAllowed
 @Service
 public class UserService {
 
@@ -90,13 +92,13 @@ public class UserService {
      * @return the User object.
      */
     public User createUser(@NotNull User user) {
-        if (userRepository.findUserByUsername(user.getUsername()) == null) {
-            userRepository.save(user);
-            return user;
-        } else {
-            // TODO: Throw Exception
-            return null;
-        }
+//        if (userRepository.findUserByUsername(user.getUsername()) == null) {
+//            userRepository.save(user);
+        return userRepository.save(user);
+//        } else {
+//            // TODO: Throw Exception
+//            return null;
+//        }
     }
 
     // CONSTRUCTOR //
