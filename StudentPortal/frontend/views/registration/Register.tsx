@@ -7,12 +7,13 @@ import User from "Frontend/generated/com/sesc/studentportal/model/User";
 import {ErrorDialog} from "Frontend/components/ErrorDialog";
 // import Role from "Frontend/generated/com/sesc/studentportal/model/Role";
 import {UserEndpoint} from "Frontend/generated/endpoints";
+import {EmailField} from "@hilla/react-components/EmailField";
 
 // TODO: Switch to AUTO FORMS by Hilla later - Allows to update backend automatically
 export default function Register() {
 
     const [user, setUser] = useState<User>(
-        {username: '', password: '', roles: 'USER'}
+        {username: '', password: '', roles: 'USER', firstname: '', surname: '', email: ''}
     );
     const [passwordConfirmation, setPasswordConfirmation] = useState<string>('');
 
@@ -29,29 +30,29 @@ export default function Register() {
         <div className="flex flex-col items-center justify-center p-4">
             <div className="grid grid-cols-1 gap-8 place-content-center place-items-center">
                 <FormLayout>
-                    {/*<TextField*/}
-                    {/*    required*/}
-                    {/*    errorMessage="First Name Required"*/}
-                    {/*    autoCapitalize={"words"}*/}
-                    {/*    label="First Name"*/}
-                    {/*    // onChange={(e) => setUser({...user, firstName: e.target.value})}*/}
-                    {/*    // style={{maxWidth}}*/}
-                    {/*/>*/}
-                    {/*<TextField*/}
-                    {/*    required*/}
-                    {/*    errorMessage="Last Name Required"*/}
-                    {/*    autoCapitalize={"words"}*/}
-                    {/*    autocorrect={"on"}*/}
-                    {/*    label="Last Name"*/}
-                    {/*    // onChange={(e) => setUser({...user, lastName: e.target.value})}*/}
-                    {/*/>*/}
-                    {/*<EmailField*/}
-                    {/*    required*/}
-                    {/*    label="Email address"*/}
-                    {/*    errorMessage="Enter a valid email address"*/}
-                    {/*    helperText="Only email addresses allowed"*/}
-                    {/*    // onChange={(e) => setUser({...user, email: e.target.value})}*/}
-                    {/*/>*/}
+                    <TextField
+                        required
+                        errorMessage="First Name Required"
+                        autoCapitalize={"words"}
+                        label="First Name"
+                        onChange={(e) => setUser({...user, firstname: e.target.value})}
+                        // style={{maxWidth}}
+                    />
+                    <TextField
+                        required
+                        errorMessage="Last Name Required"
+                        autoCapitalize={"words"}
+                        autocorrect={"on"}
+                        label="Last Name"
+                        onChange={(e) => setUser({...user, surname: e.target.value})}
+                    />
+                    <EmailField
+                        required
+                        label="Email address"
+                        errorMessage="Enter a valid email address"
+                        helperText="Only email addresses allowed"
+                        onChange={(e) => setUser({...user, email: e.target.value})}
+                    />
                     <TextField
                         required
                         errorMessage="User Name Required"

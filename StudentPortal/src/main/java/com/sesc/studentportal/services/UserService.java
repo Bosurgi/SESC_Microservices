@@ -70,7 +70,7 @@ public class UserService {
             userToUpdate.setUsername(user.getUsername());
             userToUpdate.setPassword(user.getPassword());
             userToUpdate.setRoles(user.getRoles());
-//            userToUpdate.setEmail(user.getEmail());
+            userToUpdate.setEmail(user.getEmail());
 //            userToUpdate.setRole(user.getRole());
             userRepository.save(userToUpdate);
         }
