@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /***
  * Service for the User entity where the business logic for the User entity is defined.
@@ -43,8 +44,8 @@ public class UserService {
      * @param username the username of the user to get.
      * @return the User object.
      */
-    public User getUserByUsername(String username) {
-        return userRepository.findUserByUserName(username);
+    public Optional<User> getUserByUsername(String username) {
+        return userRepository.findUserByUsername(username);
     }
 
     /***
@@ -64,10 +65,11 @@ public class UserService {
     public User updateUser(Long id, User user) {
         User userToUpdate = userRepository.findById(id).orElse(null);
         if (userToUpdate != null) {
-            userToUpdate.setUserName(user.getUserName());
+            userToUpdate.setUsername(user.getUsername());
             userToUpdate.setPassword(user.getPassword());
-            userToUpdate.setEmail(user.getEmail());
-            userToUpdate.setRole(user.getRole());
+            userToUpdate.setRoles(user.getRoles());
+//            userToUpdate.setEmail(user.getEmail());
+//            userToUpdate.setRole(user.getRole());
             userRepository.save(userToUpdate);
         }
         return userToUpdate;
@@ -88,7 +90,7 @@ public class UserService {
      * @return the User object.
      */
     public User createUser(@NotNull User user) {
-        if (userRepository.findUserByUserName(user.getUserName()) == null) {
+        if (userRepository.findUserByUsername(user.getUsername()) == null) {
             userRepository.save(user);
             return user;
         } else {

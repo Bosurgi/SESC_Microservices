@@ -5,7 +5,7 @@ import {Button} from "@hilla/react-components/Button.js";
 import {PasswordField} from "@hilla/react-components/PasswordField";
 import User from "Frontend/generated/com/sesc/studentportal/model/User";
 import {ErrorDialog} from "Frontend/components/ErrorDialog";
-import Role from "Frontend/generated/com/sesc/studentportal/model/Role";
+// import Role from "Frontend/generated/com/sesc/studentportal/model/Role";
 import {EmailField} from "@hilla/react-components/EmailField";
 import {UserEndpoint} from "Frontend/generated/endpoints";
 
@@ -13,7 +13,7 @@ import {UserEndpoint} from "Frontend/generated/endpoints";
 export default function Register() {
 
     const [user, setUser] = useState<User>(
-        {userName: '', email: '', password: '', firstName: '', lastName: '', role: Role.GUEST}
+        {username: '', password: '', roles: 'USER'}
     );
     const [passwordConfirmation, setPasswordConfirmation] = useState<string>('');
 
@@ -35,7 +35,7 @@ export default function Register() {
                         errorMessage="First Name Required"
                         autoCapitalize={"words"}
                         label="First Name"
-                        onChange={(e) => setUser({...user, firstName: e.target.value})}
+                        // onChange={(e) => setUser({...user, firstName: e.target.value})}
                         // style={{maxWidth}}
                     />
                     <TextField
@@ -44,20 +44,20 @@ export default function Register() {
                         autoCapitalize={"words"}
                         autocorrect={"on"}
                         label="Last Name"
-                        onChange={(e) => setUser({...user, lastName: e.target.value})}
+                        // onChange={(e) => setUser({...user, lastName: e.target.value})}
                     />
                     <EmailField
                         required
                         label="Email address"
                         errorMessage="Enter a valid email address"
                         helperText="Only email addresses allowed"
-                        onChange={(e) => setUser({...user, email: e.target.value})}
+                        // onChange={(e) => setUser({...user, email: e.target.value})}
                     />
                     <TextField
                         required
                         errorMessage="User Name Required"
                         label="Username"
-                        onChange={(e) => setUser({...user, userName: e.target.value})}
+                        onChange={(e) => setUser({...user, username: e.target.value})}
                     />
                     <PasswordField
                         errorMessage="Password Required"

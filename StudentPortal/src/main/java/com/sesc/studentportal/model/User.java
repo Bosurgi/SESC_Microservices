@@ -19,13 +19,18 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-    private String userName;
+    @Column(name = "username")
+    private String username;
     private String password;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private Role role;
+    private String roles;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "studentId")
     private Student student;
+
+    public User(String userName, String password, String roles) {
+        this.username = userName;
+        this.password = password;
+        this.roles = roles;
+    }
+
 }
