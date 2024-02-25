@@ -9,6 +9,9 @@ import Details from "Frontend/components/Details";
 import {GridColumn} from "@hilla/react-components/GridColumn";
 import {Button} from "@hilla/react-components/Button";
 import Module from "Frontend/generated/com/sesc/studentportal/model/Module";
+import {useAuth} from "Frontend/auth";
+import {getUserByUsername} from "Frontend/generated/UserService";
+import {registerStudent} from "Frontend/generated/StudentEndpoint";
 
 
 export default function Course() {
@@ -20,6 +23,8 @@ export default function Course() {
 
     // Details State for managing the module details
     const [details, setDetails] = useState<Module[]>([]);
+
+    const {state} = useAuth();
 
     // Fetch the modules from the backend and filter them
     useEffect(() => {
@@ -79,10 +84,16 @@ export default function Course() {
 
                     <GridColumn>
                         {({item}) => (
-                            <Button className="primary" onClick={() => {
+                            <Button className="primary" onClick={async () => {
                                 // Enrol the user to the module here
                                 // TODO: Implement the enrolment logic for the backend
-                                console.log(`Enrolling to ${item.title}`);
+                                const user = await getUserByUsername(state.user?.name);
+                                if (!user?.student) {
+                                    console.log("User is not a student");
+                                    const student = await registerStudent(state.user?.name);
+                                    console.log("Student Registered: ", student);
+                                    console.log(`Enrolling ${state.user?.name} to ${item.title}`);
+                                }
                             }}>
                                 Enroll
                             </Button>)}

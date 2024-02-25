@@ -7,7 +7,7 @@ export default function NavBar() {
 
     const navigate = useNavigate();
 
-    const {state, login, logout} = useAuth();
+    const {state, logout} = useAuth();
 
     const handleSignIn = () => {
         navigate('/login');

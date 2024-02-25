@@ -5,6 +5,8 @@ import com.sesc.studentportal.services.UserService;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import dev.hilla.Endpoint;
 
+import java.util.Optional;
+
 /**
  * Endpoint for the User entity where the Endpoints to access the User entity are defined.
  * The Endpoints can be used internally on the Student Portal by Hilla.
@@ -22,5 +24,9 @@ public class UserEndpoint {
 
     public User registerUser(User user) {
         return userService.createUser(user);
+    }
+
+    public Optional<User> getUserByUsername(String username) {
+        return userService.getUserByUsername(username);
     }
 }

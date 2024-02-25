@@ -92,6 +92,7 @@ public class UserService {
      * @return the User object.
      */
     public User createUser(@NotNull User user) {
+        // TODO: Check if the user is already registered
 //        if (userRepository.findUserByUsername(user.getUsername()) == null) {
 //            userRepository.save(user);
         return userRepository.save(user);
