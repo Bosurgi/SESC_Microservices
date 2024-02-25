@@ -25,6 +25,7 @@ export default function Register() {
 
     const navigate = useNavigate();
 
+    // Toast Message to show the user that the registration was successful
     const showToastMessage = () => {
         toast("Successfully registered. You will be redirected shortly.", {
             autoClose: 3000,
@@ -94,6 +95,7 @@ export default function Register() {
                     onClick={async () => {
                         if (isPasswordSame(user.password, passwordConfirmation)) {
                             await handleRegistration();
+                            // Showing the toast message and redirecting the user to the login page
                             showToastMessage();
                             setTimeout(() => {
                                 navigate('/login');
