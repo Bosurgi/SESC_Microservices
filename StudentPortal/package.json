@@ -24,7 +24,9 @@
     "@vaadin/router": "1.7.5",
     "construct-style-sheets-polyfill": "3.1.0",
     "lit": "3.1.0",
-    "react-icons": "^5.0.1"
+    "react-icons": "^5.0.1",
+    "react-router-dom": "^6.22.1",
+    "react-toastify": "^10.0.4"
   },
   "devDependencies": {
     "@rollup/plugin-replace": "5.0.4",
@@ -92,7 +94,7 @@
       "workbox-core": "7.0.0",
       "workbox-precaching": "7.0.0"
     },
-    "hash": "f27d28285aae1f81477b20dff1d8ddc851bbb0af869a5bb08afdfcd02b1ea9cf"
+    "hash": "d2a619f4f870bc82d2fce7950cf8924c48628b5a5fcfd18b490ac2469282e6fe"
   },
   "overrides": {
     "@vaadin/bundles": "$@vaadin/bundles",
@@ -116,6 +118,8 @@
     "@hilla/react-crud": "$@hilla/react-crud",
     "@hilla/generator-typescript-plugin-backbone": "$@hilla/generator-typescript-plugin-backbone",
     "@hilla/generator-typescript-cli": "$@hilla/generator-typescript-cli",
-    "react-icons": "$react-icons"
+    "react-icons": "$react-icons",
+    "react-toastify": "$react-toastify",
+    "react-router-dom": "$react-router-dom"
   }
 }

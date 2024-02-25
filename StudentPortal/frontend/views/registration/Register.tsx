@@ -5,19 +5,32 @@ import {Button} from "@hilla/react-components/Button.js";
 import {PasswordField} from "@hilla/react-components/PasswordField";
 import User from "Frontend/generated/com/sesc/studentportal/model/User";
 import {ErrorDialog} from "Frontend/components/ErrorDialog";
-import Role from "Frontend/generated/com/sesc/studentportal/model/Role";
-import {EmailField} from "@hilla/react-components/EmailField";
+// import Role from "Frontend/generated/com/sesc/studentportal/model/Role";
 import {UserEndpoint} from "Frontend/generated/endpoints";
+import {EmailField} from "@hilla/react-components/EmailField";
+import {useNavigate} from "react-router-dom";
+import {toast, ToastContainer} from "react-toastify";
 
 // TODO: Switch to AUTO FORMS by Hilla later - Allows to update backend automatically
 export default function Register() {
 
     const [user, setUser] = useState<User>(
-        {userName: '', email: '', password: '', firstName: '', lastName: '', role: Role.GUEST}
+        {username: '', password: '', roles: 'USER', firstname: '', surname: '', email: ''}
     );
     const [passwordConfirmation, setPasswordConfirmation] = useState<string>('');
 
     const [dialogOpened, setDialogOpened] = useState(false);
+
+    const [showToast, setShowToast] = useState(false);
+
+    const navigate = useNavigate();
+
+    // Toast Message to show the user that the registration was successful
+    const showToastMessage = () => {
+        toast("Successfully registered. You will be redirected shortly.", {
+            autoClose: 3000,
+        });
+    };
 
     const responsiveSteps = [
         {minWidth: '0', columns: 1},
@@ -35,7 +48,7 @@ export default function Register() {
                         errorMessage="First Name Required"
                         autoCapitalize={"words"}
                         label="First Name"
-                        onChange={(e) => setUser({...user, firstName: e.target.value})}
+                        onChange={(e) => setUser({...user, firstname: e.target.value})}
                         // style={{maxWidth}}
                     />
                     <TextField
@@ -44,7 +57,7 @@ export default function Register() {
                         autoCapitalize={"words"}
                         autocorrect={"on"}
                         label="Last Name"
-                        onChange={(e) => setUser({...user, lastName: e.target.value})}
+                        onChange={(e) => setUser({...user, surname: e.target.value})}
                     />
                     <EmailField
                         required
@@ -57,7 +70,7 @@ export default function Register() {
                         required
                         errorMessage="User Name Required"
                         label="Username"
-                        onChange={(e) => setUser({...user, userName: e.target.value})}
+                        onChange={(e) => setUser({...user, username: e.target.value})}
                     />
                     <PasswordField
                         errorMessage="Password Required"
@@ -75,10 +88,18 @@ export default function Register() {
                 </FormLayout>
             </div>
 
+            <ToastContainer/>
+
+
             <Button theme="primary"
-                    onClick={() => {
+                    onClick={async () => {
                         if (isPasswordSame(user.password, passwordConfirmation)) {
-                            handleRegistration();
+                            await handleRegistration();
+                            // Showing the toast message and redirecting the user to the login page
+                            showToastMessage();
+                            setTimeout(() => {
+                                navigate('/login');
+                            }, 3000)
                         } else {
                             setDialogOpened(true);
                         }
@@ -107,6 +128,7 @@ export default function Register() {
         </div>
     );
 
+
     /**
      * Function to handle the registration of a user to the endpoint in the backend
      */
@@ -115,9 +137,14 @@ export default function Register() {
         console.log('Registering');
         // Use either the Controller or the Endpoint for the registration
         // let userToSend = await UserController.registerUser(user);
-        let userToSend = await UserEndpoint.registerUser(user);
-
+        try {
+            await UserEndpoint.registerUser(user);
+            setShowToast(true);
+        } catch (e) {
+            console.error('Error registering user', e);
+        }
     }
+
 
     /**
      * Function to check if the password and the password confirmation match

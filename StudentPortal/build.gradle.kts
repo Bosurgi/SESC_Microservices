@@ -45,6 +45,8 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation(kotlin("stdlib-jdk8"))
+    // Security
+    implementation("org.springframework.boot:spring-boot-starter-security")
 }
 
 dependencyManagement {
