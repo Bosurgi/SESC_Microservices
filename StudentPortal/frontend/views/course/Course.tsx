@@ -12,6 +12,7 @@ import Module from "Frontend/generated/com/sesc/studentportal/model/Module";
 import {useAuth} from "Frontend/auth";
 import {getUserByUsername} from "Frontend/generated/UserService";
 import {registerStudent} from "Frontend/generated/StudentEndpoint";
+import {updateRole} from "Frontend/generated/UserEndpoint";
 
 
 export default function Course() {
@@ -91,8 +92,11 @@ export default function Course() {
                                 if (!user?.student) {
                                     console.log("User is not a student");
                                     const student = await registerStudent(state.user?.name);
+                                    await updateRole(user, "ROLE_STUDENT");
+
                                     console.log("Student Registered: ", student);
                                     console.log(`Enrolling ${state.user?.name} to ${item.title}`);
+                                    console.log("authorities:", state.user?.authorities)
                                 }
                             }}>
                                 Enroll

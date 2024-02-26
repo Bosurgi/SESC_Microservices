@@ -18,6 +18,7 @@ export default function NavBar() {
 
             <div>
                 <h1 className="text-xl font-semibold">Student Portal</h1>
+                {state.user?.authorities}
             </div>
             <div className="hidden gap-5 md:flex">
                 <NavLink to="/">Home</NavLink>

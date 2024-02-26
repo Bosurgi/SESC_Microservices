@@ -1,17 +1,20 @@
 package com.sesc.studentportal.services;
 
 import com.sesc.studentportal.misc.UserInfo;
-import com.sesc.studentportal.model.UserDetail;
+import com.sesc.studentportal.model.User;
 import com.sesc.studentportal.repository.UserRepository;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import dev.hilla.BrowserCallable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,10 +30,22 @@ public class JpaUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository
-                .findUserByUsername(username)
-                .map(UserDetail::new)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+        User user = userRepository.findUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not exists by Username"));
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthorities(List.of(user.getRoles().split(","))));
+
+    }
+
+    private Collection<? extends GrantedAuthority> getAuthorities(List<String> split) {
+        return getGrantedAuthorities(split);
+    }
+
+    private List<GrantedAuthority> getGrantedAuthorities(List<String> split) {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for (String role : split) {
+            authorities.add(new SimpleGrantedAuthority(role));
+        }
+        return authorities;
     }
 
     public UserInfo getUserInfo() {
