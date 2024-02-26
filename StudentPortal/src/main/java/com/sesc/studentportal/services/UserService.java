@@ -7,6 +7,7 @@ import com.sesc.studentportal.repository.UserRepository;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import dev.hilla.BrowserCallable;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -103,7 +104,7 @@ public class UserService {
 
     /***
      * Updates the role of a user.
-     * @param id the user ID in the database
+     * @param username the username in the database
      * @param role the role to update
      * @return the updated User object.
      */
@@ -115,6 +116,13 @@ public class UserService {
             userRepository.save(userToUpdate);
         }
         return userToUpdate;
+    }
+
+    public List<String> getRoles(String username) {
+        User user = userRepository.findUserByUsername(username).orElseThrow(
+                () -> new UsernameNotFoundException("User not exists by Username")
+        );
+        return List.of(user.getRoles().split(","));
     }
 
     // CONSTRUCTOR //

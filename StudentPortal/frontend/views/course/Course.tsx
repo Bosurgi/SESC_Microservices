@@ -13,6 +13,7 @@ import {useAuth} from "Frontend/auth";
 import {getUserByUsername} from "Frontend/generated/UserService";
 import {registerStudent} from "Frontend/generated/StudentEndpoint";
 import {updateRole} from "Frontend/generated/UserEndpoint";
+import {JpaUserDetailService} from "Frontend/generated/endpoints";
 
 
 export default function Course() {
@@ -39,7 +40,7 @@ export default function Course() {
             setModuleList(newModules);
             setFilteredModules(newModules);
         })
-    }, []);
+    }, [state]);
 
     return (
         <>
@@ -93,10 +94,10 @@ export default function Course() {
                                     console.log("User is not a student");
                                     const student = await registerStudent(state.user?.name);
                                     await updateRole(user, "ROLE_STUDENT");
-
-                                    console.log("Student Registered: ", student);
+                                    await JpaUserDetailService.update(state.user);
+                                    // TODO: Apply the enrolment here before refreshing the page
                                     console.log(`Enrolling ${state.user?.name} to ${item.title}`);
-                                    console.log("authorities:", state.user?.authorities)
+                                    window.location.reload();
                                 }
                             }}>
                                 Enroll
