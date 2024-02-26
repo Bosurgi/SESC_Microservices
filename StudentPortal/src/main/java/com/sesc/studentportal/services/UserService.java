@@ -71,7 +71,6 @@ public class UserService {
             userToUpdate.setPassword(user.getPassword());
             userToUpdate.setRoles(user.getRoles());
             userToUpdate.setEmail(user.getEmail());
-//            userToUpdate.setRole(user.getRole());
             userRepository.save(userToUpdate);
         }
         return userToUpdate;
@@ -100,6 +99,22 @@ public class UserService {
 //            // TODO: Throw Exception
 //            return null;
 //        }
+    }
+
+    /***
+     * Updates the role of a user.
+     * @param id the user ID in the database
+     * @param role the role to update
+     * @return the updated User object.
+     */
+    public User updateRole(String username, String role) {
+        User userToUpdate = userRepository.findUserByUsername(username).orElse(null);
+        if (userToUpdate != null) {
+            String currentRole = userToUpdate.getRoles();
+            userToUpdate.setRoles(currentRole + "," + role);
+            userRepository.save(userToUpdate);
+        }
+        return userToUpdate;
     }
 
     // CONSTRUCTOR //

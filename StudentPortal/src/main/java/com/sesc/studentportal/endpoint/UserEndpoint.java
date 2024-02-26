@@ -29,4 +29,8 @@ public class UserEndpoint {
     public Optional<User> getUserByUsername(String username) {
         return userService.getUserByUsername(username);
     }
+
+    public User updateRole(User user, String role) {
+        return userService.updateRole(user.getUsername(), role);
+    }
 }
