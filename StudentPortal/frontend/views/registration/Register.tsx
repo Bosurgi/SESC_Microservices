@@ -5,18 +5,18 @@ import {Button} from "@hilla/react-components/Button.js";
 import {PasswordField} from "@hilla/react-components/PasswordField";
 import User from "Frontend/generated/com/sesc/studentportal/model/User";
 import {ErrorDialog} from "Frontend/components/ErrorDialog";
-// import Role from "Frontend/generated/com/sesc/studentportal/model/Role";
 import {UserEndpoint} from "Frontend/generated/endpoints";
 import {EmailField} from "@hilla/react-components/EmailField";
 import {useNavigate} from "react-router-dom";
 import {toast, ToastContainer} from "react-toastify";
 import {EndpointError} from "@hilla/frontend";
+import {Path, Roles} from "Frontend/util/Constants";
 
 // TODO: Switch to AUTO FORMS by Hilla later - Allows to update backend automatically
 export default function Register() {
 
     const [user, setUser] = useState<User>(
-        {username: '', password: '', roles: 'USER', firstname: '', surname: '', email: ''}
+        {username: '', password: '', roles: Roles.user, firstname: '', surname: '', email: ''}
     );
     const [passwordConfirmation, setPasswordConfirmation] = useState<string>('');
 
@@ -102,7 +102,7 @@ export default function Register() {
                                 // Showing the toast message and redirecting the user to the login page
                                 showToastMessage();
                                 setTimeout(() => {
-                                    navigate('/login');
+                                    navigate(Path.login);
                                 }, 3000)
                             } // End of Try
                             catch (error) {

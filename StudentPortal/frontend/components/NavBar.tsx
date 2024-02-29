@@ -23,16 +23,16 @@ export default function NavBar() {
                 // TODO: Change the roles to be a Type or Enum
                 state.user?.authorities.includes(Roles.student) ? (
                     <div className="hidden gap-5 md:flex">
-                        <NavLink to="/">Home</NavLink>
-                        <NavLink to="/profile">Profile</NavLink>
-                        <NavLink to="/courses">Courses</NavLink>
-                        <NavLink to="/enrolments">Enrolled</NavLink>
-                        <NavLink to="/graduation">Graduation</NavLink>
+                        <NavLink to={Path.home}>Home</NavLink>
+                        <NavLink to={Path.profile}>Profile</NavLink>
+                        <NavLink to={Path.courses}>Courses</NavLink>
+                        <NavLink to={Path.enrolments}>Enrolled</NavLink>
+                        <NavLink to={Path.graduation}>Graduation</NavLink>
                     </div>
                 ) : (
                     <div className="hidden gap-5 md:flex">
-                        <NavLink to="/">Home</NavLink>
-                        <NavLink to="/courses">Courses</NavLink>
+                        <NavLink to={Path.home}>Home</NavLink>
+                        <NavLink to={Path.courses}>Courses</NavLink>
                     </div>
                 )
             }
