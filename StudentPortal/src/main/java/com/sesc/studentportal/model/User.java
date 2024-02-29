@@ -19,11 +19,12 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
     private String password;
     private String firstname;
     private String surname;
+    @Column(name = "email", unique = true)
     private String email;
     private String roles;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

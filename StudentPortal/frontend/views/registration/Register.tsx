@@ -10,6 +10,7 @@ import {UserEndpoint} from "Frontend/generated/endpoints";
 import {EmailField} from "@hilla/react-components/EmailField";
 import {useNavigate} from "react-router-dom";
 import {toast, ToastContainer} from "react-toastify";
+import {EndpointError} from "@hilla/frontend";
 
 // TODO: Switch to AUTO FORMS by Hilla later - Allows to update backend automatically
 export default function Register() {
@@ -19,7 +20,9 @@ export default function Register() {
     );
     const [passwordConfirmation, setPasswordConfirmation] = useState<string>('');
 
-    const [dialogOpened, setDialogOpened] = useState(false);
+    const [isPasswordDialogOpened, setIsPasswordDialogOpened] = useState(false);
+
+    const [isUserRegisteredDialogOpened, setIsUserRegisteredDialogOpened] = useState(false);
 
     const [showToast, setShowToast] = useState(false);
 
@@ -27,7 +30,7 @@ export default function Register() {
 
     // Toast Message to show the user that the registration was successful
     const showToastMessage = () => {
-        toast("Successfully registered. You will be redirected shortly.", {
+        toast("Successfully registered. You will be redirected to the login page shortly.", {
             autoClose: 3000,
         });
     };
@@ -94,37 +97,31 @@ export default function Register() {
             <Button theme="primary"
                     onClick={async () => {
                         if (isPasswordSame(user.password, passwordConfirmation)) {
-                            await handleRegistration();
-                            // Showing the toast message and redirecting the user to the login page
-                            showToastMessage();
-                            setTimeout(() => {
-                                navigate('/login');
-                            }, 3000)
+                            try {
+                                await handleRegistration();
+                                // Showing the toast message and redirecting the user to the login page
+                                showToastMessage();
+                                setTimeout(() => {
+                                    navigate('/login');
+                                }, 3000)
+                            } // End of Try
+                            catch (error) {
+                                if (error instanceof EndpointError) {
+                                    setIsUserRegisteredDialogOpened(true);
+                                }
+                            }
                         } else {
-                            setDialogOpened(true);
+                            setIsPasswordDialogOpened(true);
                         }
                     }}>Register
             </Button>
 
             {/*// Showing the dialog if there is an error*/}
-            <ErrorDialog message={"Password not matching"} dialogOpened={dialogOpened} setDialogOpen={setDialogOpened}/>
+            <ErrorDialog message={"Password not matching"} dialogOpened={isPasswordDialogOpened}
+                         setDialogOpen={setIsPasswordDialogOpened}/>
 
-
-            {/*{{dialogOpened} && <ErrorDialog isOpen={dialogOpened} message="Password not matching"/>}*/}
-
-            {/*<Dialog opened={dialogOpened}>*/}
-            {/*    <div className="p-4">*/}
-            {/*        <h1 className="text-2xl font-bold">Error</h1>*/}
-            {/*        <p>*/}
-            {/*            Password not matching*/}
-            {/*        </p>*/}
-            {/*        <Button className="flex" onClick={() => {*/}
-            {/*            setDialogOpened(false)*/}
-            {/*        }}>*/}
-            {/*            Close*/}
-            {/*        </Button>*/}
-            {/*    </div>*/}
-            {/*</Dialog>*/}
+            <ErrorDialog message={"Username not available"} dialogOpened={isUserRegisteredDialogOpened}
+                         setDialogOpen={setIsUserRegisteredDialogOpened}/>
         </div>
     );
 
@@ -136,13 +133,7 @@ export default function Register() {
 
         console.log('Registering');
         // Use either the Controller or the Endpoint for the registration
-        // let userToSend = await UserController.registerUser(user);
-        try {
-            await UserEndpoint.registerUser(user);
-            setShowToast(true);
-        } catch (e) {
-            console.error('Error registering user', e);
-        }
+        await UserEndpoint.registerUser(user);
     }
 
 

@@ -4,6 +4,7 @@ import com.sesc.studentportal.model.User;
 import com.sesc.studentportal.services.UserService;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import dev.hilla.Endpoint;
+import dev.hilla.exception.EndpointException;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,8 +24,12 @@ public class UserEndpoint {
         this.userService = userService;
     }
 
-    public User registerUser(User user) {
-        return userService.createUser(user);
+    public User registerUser(User user) throws EndpointException {
+        try {
+            return userService.createUser(user);
+        } catch (Exception e) {
+            throw new EndpointException("User already exists");
+        }
     }
 
     public Optional<User> getUserByUsername(String username) {
