@@ -18,8 +18,8 @@ public class StudentPortalApplication implements AppShellConfigurator {
     @Bean
     CommandLineRunner commandLineRunner(UserRepository users) {
         return args -> {
-            users.save(new User("admin", "admin", "ADMIN"));
-            users.save(new User("user", "user", "USER"));
+            users.save(new User("admin", "admin", "ROLE_ADMIN"));
+            users.save(new User("user", "user", "ROLE_USER"));
         };
     }
 

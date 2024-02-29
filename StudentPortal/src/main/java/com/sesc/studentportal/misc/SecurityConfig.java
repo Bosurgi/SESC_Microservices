@@ -2,10 +2,8 @@ package com.sesc.studentportal.misc;
 
 import com.sesc.studentportal.services.JpaUserDetailService;
 import com.vaadin.flow.spring.security.VaadinWebSecurity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -72,10 +70,10 @@ public class SecurityConfig extends VaadinWebSecurity {
         return NoOpPasswordEncoder.getInstance();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(jpaUserDetailService);
-    }
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(jpaUserDetailService);
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
