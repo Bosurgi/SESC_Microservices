@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /***
- * Entity for a student which extends the User class
+ * Entity for a student
  */
 @Entity
 //@EqualsAndHashCode(callSuper = true)
