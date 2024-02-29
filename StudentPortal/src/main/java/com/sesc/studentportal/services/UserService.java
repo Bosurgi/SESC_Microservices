@@ -4,14 +4,20 @@ import com.sesc.studentportal.model.Student;
 import com.sesc.studentportal.model.User;
 import com.sesc.studentportal.repository.StudentRepository;
 import com.sesc.studentportal.repository.UserRepository;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
+import dev.hilla.BrowserCallable;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /***
  * Service for the User entity where the business logic for the User entity is defined.
  */
+@BrowserCallable
+@AnonymousAllowed
 @Service
 public class UserService {
 
@@ -41,8 +47,8 @@ public class UserService {
      * @param username the username of the user to get.
      * @return the User object.
      */
-    public User getUserByUsername(String username) {
-        return userRepository.findUserByUserName(username);
+    public Optional<User> getUserByUsername(String username) {
+        return userRepository.findUserByUsername(username);
     }
 
     /***
@@ -62,10 +68,10 @@ public class UserService {
     public User updateUser(Long id, User user) {
         User userToUpdate = userRepository.findById(id).orElse(null);
         if (userToUpdate != null) {
-            userToUpdate.setUserName(user.getUserName());
+            userToUpdate.setUsername(user.getUsername());
             userToUpdate.setPassword(user.getPassword());
+            userToUpdate.setRoles(user.getRoles());
             userToUpdate.setEmail(user.getEmail());
-            userToUpdate.setRole(user.getRole());
             userRepository.save(userToUpdate);
         }
         return userToUpdate;
@@ -86,13 +92,37 @@ public class UserService {
      * @return the User object.
      */
     public User createUser(@NotNull User user) {
-        if (userRepository.findUserByUserName(user.getUserName()) == null) {
-            userRepository.save(user);
-            return user;
-        } else {
-            // TODO: Throw Exception
-            return null;
+        // TODO: Check if the user is already registered
+//        if (userRepository.findUserByUsername(user.getUsername()) == null) {
+//            userRepository.save(user);
+        return userRepository.save(user);
+//        } else {
+//            // TODO: Throw Exception
+//            return null;
+//        }
+    }
+
+    /***
+     * Updates the role of a user.
+     * @param username the username in the database
+     * @param role the role to update
+     * @return the updated User object.
+     */
+    public User updateRole(String username, String role) {
+        User userToUpdate = userRepository.findUserByUsername(username).orElse(null);
+        if (userToUpdate != null) {
+            String currentRole = userToUpdate.getRoles();
+            userToUpdate.setRoles(currentRole + "," + role);
+            userRepository.save(userToUpdate);
         }
+        return userToUpdate;
+    }
+
+    public List<String> getRoles(String username) {
+        User user = userRepository.findUserByUsername(username).orElseThrow(
+                () -> new UsernameNotFoundException("User not exists by Username")
+        );
+        return List.of(user.getRoles().split(","));
     }
 
     // CONSTRUCTOR //
