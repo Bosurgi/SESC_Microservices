@@ -19,6 +19,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Service which manages the User entity authentication and authorizations.
+ * It also takes care of fetching the user authentication information based on the User present in the database.
+ */
 @BrowserCallable
 @AnonymousAllowed
 public class JpaUserDetailService implements UserDetailsService {
@@ -29,6 +33,14 @@ public class JpaUserDetailService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * It fetches a user by looking for it by its username using the Repository.
+     * If the user is not found, it throws a UsernameNotFoundException.
+     *
+     * @param username the username of the user to be fetched.
+     * @return the UserDetails object.
+     * @throws UsernameNotFoundException if the user is not found.
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findUserByUsername(username)
@@ -36,18 +48,36 @@ public class JpaUserDetailService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthorities(List.of(user.getRoles().split(","))));
     }
 
-    private Collection<? extends GrantedAuthority> getAuthorities(List<String> split) {
-        return getGrantedAuthorities(split);
+    /**
+     * Converts a list of strings into a list of GrantedAuthority objects and returns it as a Collection.
+     *
+     * @param stringAuthorities the list of strings to be converted in authorities.
+     * @return the Collection of GrantedAuthority objects.
+     */
+    private Collection<? extends GrantedAuthority> getAuthorities(List<String> stringAuthorities) {
+        return getGrantedAuthorities(stringAuthorities);
     }
 
-    private List<GrantedAuthority> getGrantedAuthorities(List<String> split) {
+    /**
+     * Converts a list of strings into a list of GrantedAuthority objects.
+     *
+     * @param stringAuthorities the list of strings to be converted in authorities.
+     * @return the list of GrantedAuthority objects.
+     */
+
+    private List<GrantedAuthority> getGrantedAuthorities(List<String> stringAuthorities) {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for (String role : split) {
+        for (String role : stringAuthorities) {
             authorities.add(new SimpleGrantedAuthority(role));
         }
         return authorities;
     }
 
+    /**
+     * Gets the user information from the Security Context and returns it as a UserInfo object.
+     *
+     * @return the UserInfo object.
+     */
     public UserInfo getUserInfo() {
         Authentication auth = SecurityContextHolder.getContext()
                 .getAuthentication();
@@ -58,6 +88,12 @@ public class JpaUserDetailService implements UserDetailsService {
         return new UserInfo(auth.getName(), authorities);
     }
 
+    /**
+     * Updates the user information in the Security Context and returns the updated UserInfo object.
+     *
+     * @param userInfo the current User object which holds the Authorities to be updated.
+     * @return the updated UserInfo object.
+     */
     public UserInfo update(UserInfo userInfo) {
         UserDetails userDetails = loadUserByUsername(userInfo.getName());
 
