@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
-@Deprecated
 public class UserDetail implements UserDetails {
 
     private User user;
@@ -28,6 +27,7 @@ public class UserDetail implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+
         return Arrays.stream(user
                         .getRoles()
                         .split(","))

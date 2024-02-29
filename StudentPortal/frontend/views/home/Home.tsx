@@ -9,7 +9,6 @@ export default function Home() {
             <div className="flex flex-col min-h-screen">
 
                 {!state.user ?
-
                     (<section className="">
                         <div className="flex flex-col items-center justify-center gap-8 p-4">
                             <h1 className="text-4xl font-semibold">Student Portal</h1>

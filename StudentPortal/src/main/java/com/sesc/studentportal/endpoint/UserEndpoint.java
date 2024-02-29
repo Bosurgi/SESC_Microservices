@@ -5,6 +5,7 @@ import com.sesc.studentportal.services.UserService;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import dev.hilla.Endpoint;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -32,5 +33,9 @@ public class UserEndpoint {
 
     public User updateRole(User user, String role) {
         return userService.updateRole(user.getUsername(), role);
+    }
+
+    public List<String> getRoles(String username) {
+        return userService.getRoles(username);
     }
 }
