@@ -1,4 +1,3 @@
-import {HiOutlineMenu} from "react-icons/hi";
 import {Button} from "@hilla/react-components/Button";
 import {NavLink, useNavigate} from 'react-router-dom';
 import {useAuth} from "Frontend/auth";
@@ -15,20 +14,28 @@ export default function NavBar() {
 
     return (
         <div className="flex justify-between items-center gap-8 p-5">
-
             <div>
                 <h1 className="text-xl font-semibold">Student Portal</h1>
-                {state.user?.authorities}
             </div>
-            <div className="hidden gap-5 md:flex">
-                <NavLink to="/">Home</NavLink>
-                <NavLink to="/courses">Courses</NavLink>
-                <NavLink to="/enrolments">Enrolled</NavLink>
-                <NavLink to="/graduation">Graduation</NavLink>
-            </div>
-            <button className="hover:bg-neutral-300 p-3 rounded-lg md:hidden">
-                <HiOutlineMenu size={24}/>
-            </button>
+            {
+                // Render specific links based on User Role
+                // TODO: Change the roles to be a Type or Enum
+                state.user?.authorities.includes("ROLE_STUDENT") ? (
+                    <div className="hidden gap-5 md:flex">
+                        <NavLink to="/">Home</NavLink>
+                        <NavLink to="/profile">Profile</NavLink>
+                        <NavLink to="/courses">Courses</NavLink>
+                        <NavLink to="/enrolments">Enrolled</NavLink>
+                        <NavLink to="/graduation">Graduation</NavLink>
+                    </div>
+                ) : (
+                    <div className="hidden gap-5 md:flex">
+                        <NavLink to="/">Home</NavLink>
+                        <NavLink to="/courses">Courses</NavLink>
+                    </div>
+                )
+            }
+
             {/* Render Log In or Log Out Button if user is authenticated*/}
 
             {!state.user ? (
