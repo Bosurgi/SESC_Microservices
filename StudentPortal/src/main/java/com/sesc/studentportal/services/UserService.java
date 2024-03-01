@@ -104,18 +104,17 @@ public class UserService {
 
     /***
      * Updates the role of a user.
-     * @param username the username in the database
+     * @param user the username in the database
      * @param role the role to update
      * @return the updated User object.
      */
     public User updateRole(String username, String role) {
         User userToUpdate = userRepository.findUserByUsername(username).orElse(null);
-        if (userToUpdate != null) {
-            String currentRole = userToUpdate.getRoles();
-            userToUpdate.setRoles(currentRole + "," + role);
-            userRepository.save(userToUpdate);
-        }
-        return userToUpdate;
+        String currentRole = userToUpdate.getRoles();
+        userToUpdate.setRoles(currentRole + "," + role);
+        // Removing association to prevent the cascade consequentially the stack overflow error
+        userToUpdate.setStudent(null);
+        return userRepository.save(userToUpdate);
     }
 
     public List<String> getRoles(String username) {

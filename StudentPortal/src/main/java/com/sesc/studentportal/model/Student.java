@@ -2,10 +2,7 @@ package com.sesc.studentportal.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.ArrayList;
@@ -43,8 +40,9 @@ public class Student {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Enrolments> enrolments = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "userId")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "student")
+//    @JoinColumn(name = "userId")
+    @ToString.Exclude
     private User user;
 
 

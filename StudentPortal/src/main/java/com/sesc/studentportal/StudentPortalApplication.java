@@ -1,6 +1,7 @@
 package com.sesc.studentportal;
 
 import com.sesc.studentportal.model.User;
+import com.sesc.studentportal.repository.StudentRepository;
 import com.sesc.studentportal.repository.UserRepository;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import org.springframework.boot.CommandLineRunner;
@@ -16,7 +17,7 @@ public class StudentPortalApplication implements AppShellConfigurator {
     }
 
     @Bean
-    CommandLineRunner commandLineRunner(UserRepository users) {
+    CommandLineRunner commandLineRunner(UserRepository users, StudentRepository students) {
         return args -> {
             users.save(new User("admin", "admin", "ROLE_ADMIN"));
             users.save(new User("user", "user", "ROLE_USER"));
