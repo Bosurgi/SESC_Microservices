@@ -55,4 +55,9 @@ public class UserEndpoint {
     public Student getStudentByUser(User user) {
         return userService.findStudentFromUser(user);
     }
+
+    // TODO: Add the updateUserInformation method to the UserEndpoint class
+    public User updateUserInformation(User user) {
+        return userService.updateUser(user.getUserId(), user);
+    }
 }
