@@ -1,6 +1,7 @@
 import {Button} from "@hilla/react-components/Button";
 import {NavLink, useNavigate} from 'react-router-dom';
 import {useAuth} from "Frontend/auth";
+import {Path, Roles} from "Frontend/util/Constants";
 
 export default function NavBar() {
 
@@ -9,7 +10,7 @@ export default function NavBar() {
     const {state, logout} = useAuth();
 
     const handleSignIn = () => {
-        navigate('/login');
+        navigate(Path.login);
     };
 
     return (
@@ -20,18 +21,18 @@ export default function NavBar() {
             {
                 // Render specific links based on User Role
                 // TODO: Change the roles to be a Type or Enum
-                state.user?.authorities.includes("ROLE_STUDENT") ? (
+                state.user?.authorities.includes(Roles.student) ? (
                     <div className="hidden gap-5 md:flex">
-                        <NavLink to="/">Home</NavLink>
-                        <NavLink to="/profile">Profile</NavLink>
-                        <NavLink to="/courses">Courses</NavLink>
-                        <NavLink to="/enrolments">Enrolled</NavLink>
-                        <NavLink to="/graduation">Graduation</NavLink>
+                        <NavLink to={Path.home}>Home</NavLink>
+                        <NavLink to={Path.profile}>Profile</NavLink>
+                        <NavLink to={Path.courses}>Courses</NavLink>
+                        <NavLink to={Path.enrolments}>Enrolled</NavLink>
+                        <NavLink to={Path.graduation}>Graduation</NavLink>
                     </div>
                 ) : (
                     <div className="hidden gap-5 md:flex">
-                        <NavLink to="/">Home</NavLink>
-                        <NavLink to="/courses">Courses</NavLink>
+                        <NavLink to={Path.home}>Home</NavLink>
+                        <NavLink to={Path.courses}>Courses</NavLink>
                     </div>
                 )
             }

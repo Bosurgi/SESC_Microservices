@@ -34,13 +34,13 @@ public class StudentService {
         Student student = null;
         if (user.isPresent()) {
             User userToRegister = user.get();
-            student = new Student(userToRegister.getFirstname(), userToRegister.getSurname());
-            student.setUser(userToRegister);
-            student.setFirstName(userToRegister.getFirstname());
-            student.setSurname(userToRegister.getSurname());
+            student = new Student(userToRegister.getSurname(), userToRegister.getFirstname());
+            userToRegister.setStudent(student);
+//            student.setUser(userToRegister);
             student.setIsEnrolled(true);
             studentRepository.save(student);
         }
         return student;
     }
+
 }

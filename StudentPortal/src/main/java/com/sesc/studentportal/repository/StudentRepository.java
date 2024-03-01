@@ -12,11 +12,11 @@ import org.springframework.stereotype.Repository;
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
     /***
-     * Find a student by its id
-     * @param id the student ID
+     * Find a student by its User id
+     * @param userId the user ID
      * @return the Student
      */
-    Student findStudentByStudentId(Long id);
+    Student findStudentByStudentId(Long userId);
 
     /***
      * Find a student by its name

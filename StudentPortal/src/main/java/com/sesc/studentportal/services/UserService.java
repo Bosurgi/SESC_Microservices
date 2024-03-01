@@ -61,18 +61,29 @@ public class UserService {
 
     /***
      * Updates a user by their id.
+     * It also updates the corresponding Student if needed.
      * @param id The id of the user to update.
      * @param user The user object to update.
      * @return The updated user object.
      */
     public User updateUser(Long id, User user) {
         User userToUpdate = userRepository.findById(id).orElse(null);
+        Student student = user.getStudent();
         if (userToUpdate != null) {
-            userToUpdate.setUsername(user.getUsername());
-            userToUpdate.setPassword(user.getPassword());
+//            Username shouldn't be changed but if it needs to be changed, uncomment the line below
+//            userToUpdate.setUsername(user.getUsername());
+
+//            For future implementation of password change uncomment below
+//            userToUpdate.setPassword(user.getPassword());
+
             userToUpdate.setRoles(user.getRoles());
             userToUpdate.setEmail(user.getEmail());
+            userToUpdate.setFirstname(user.getFirstname());
+            userToUpdate.setSurname(user.getSurname());
+            student.setFirstName(user.getFirstname());
+            student.setSurname(user.getSurname());
             userRepository.save(userToUpdate);
+            studentRepository.save(student);
         }
         return userToUpdate;
     }
@@ -110,12 +121,9 @@ public class UserService {
      */
     public User updateRole(String username, String role) {
         User userToUpdate = userRepository.findUserByUsername(username).orElse(null);
-        if (userToUpdate != null) {
-            String currentRole = userToUpdate.getRoles();
-            userToUpdate.setRoles(currentRole + "," + role);
-            userRepository.save(userToUpdate);
-        }
-        return userToUpdate;
+        String currentRole = userToUpdate.getRoles();
+        userToUpdate.setRoles(currentRole + "," + role);
+        return userRepository.saveAndFlush(userToUpdate);
     }
 
     public List<String> getRoles(String username) {

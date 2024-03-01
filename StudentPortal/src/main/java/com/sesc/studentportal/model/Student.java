@@ -1,5 +1,6 @@
 package com.sesc.studentportal.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -43,8 +44,8 @@ public class Student {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Enrolments> enrolments = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "userId")
+    @OneToOne(mappedBy = "student")
+    @JsonIgnore
     private User user;
 
 
