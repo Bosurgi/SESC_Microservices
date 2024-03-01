@@ -25,9 +25,12 @@ public class User {
     private String email;
     @Column(name = "roles", updatable = true, insertable = true)
     private String roles;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @ToString.Exclude()
-    @JoinColumn(name = "studentId", referencedColumnName = "studentId")
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_student",
+            joinColumns = {@JoinColumn(name = "userId", referencedColumnName = "userId")},
+            inverseJoinColumns = {@JoinColumn(name = "studentId", referencedColumnName = "studentId")})
+    @ToString.Exclude
     private Student student;
 
     public User(String userName, String password, String roles) {

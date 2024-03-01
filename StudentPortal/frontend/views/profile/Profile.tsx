@@ -1,6 +1,6 @@
 import {useAuth} from "Frontend/auth";
 import {useEffect, useState} from "react";
-import {UserEndpoint, UserService} from "Frontend/generated/endpoints";
+import {UserService} from "Frontend/generated/endpoints";
 import User from "Frontend/generated/com/sesc/studentportal/model/User";
 import Student from "Frontend/generated/com/sesc/studentportal/model/Student";
 
@@ -19,23 +19,12 @@ export default function Profile() {
         });
     }, [state]);
 
-
-    useEffect(() => {
-        if (user && user.userId) {
-            // TODO: Need to call endpoint if not undefined
-            UserEndpoint.getStudentByUser(user).then((student) => {
-                setStudent(student);
-                console.log(student);
-            })
-        }
-    }, [user]);
-
-    // TODO: Change the roles to be a Type or Enum and implement proper page
     return (
         <div>
             <h1>Profile</h1>
             <p>Name: {state.user?.name}</p>
             <p>Role: {state.user?.authorities.join(", ")}</p>
+            <p>Student ID: {user?.student?.studentNumber}</p>
         </div>
     )
 }
