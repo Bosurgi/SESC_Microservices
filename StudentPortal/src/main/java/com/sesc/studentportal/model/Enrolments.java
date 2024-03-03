@@ -25,7 +25,7 @@ public class Enrolments {
     @JoinColumn(name = "studentId")
     private Student student;
     // Foreign Key to Module
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "moduleId")
     private Module module;
 

@@ -3,12 +3,10 @@ import {useEffect, useState} from "react";
 import {UserEndpoint, UserService} from "Frontend/generated/endpoints";
 import User from "Frontend/generated/com/sesc/studentportal/model/User";
 import {Button} from "@hilla/react-components/Button";
-import Student from "Frontend/generated/com/sesc/studentportal/model/Student";
 
 export default function Profile() {
     const {state} = useAuth();
     const [user, setUser] = useState<User>();
-    const [student, setStudent] = useState<Student>();
     const [editing, setEditing] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -16,6 +14,7 @@ export default function Profile() {
         surname: "",
         email: "",
     });
+
 
     useEffect(() => {
         UserService.getUserByUsername(state.user?.name).then((user) => {

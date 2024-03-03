@@ -13,8 +13,9 @@ import {useAuth} from "Frontend/auth";
 import {getUserByUsername} from "Frontend/generated/UserService";
 import {registerStudent} from "Frontend/generated/StudentEndpoint";
 import {updateRole} from "Frontend/generated/UserEndpoint";
-import {JpaUserDetailService} from "Frontend/generated/endpoints";
+import {EnrolmentEndpoint, JpaUserDetailService} from "Frontend/generated/endpoints";
 import {Roles} from "Frontend/util/Constants";
+import Student from "Frontend/generated/com/sesc/studentportal/model/Student";
 
 
 export default function Course() {
@@ -26,6 +27,8 @@ export default function Course() {
 
     // Details State for managing the module details
     const [details, setDetails] = useState<Module[]>([]);
+
+    const [student, setStudent] = useState<Student>();
 
     const {state} = useAuth();
 
@@ -96,9 +99,11 @@ export default function Course() {
                                     await updateRole(state.user?.name, Roles.student);
                                     await JpaUserDetailService.update(state.user);
                                     const student = await registerStudent(state.user?.name);
-                                    // TODO: Apply the enrolment here before refreshing the page
+                                    console.log(student);
                                     console.log(`Enrolling ${state.user?.name} to ${item.title}`);
-                                    window.location.reload();
+                                    console.log(item)
+                                    await EnrolmentEndpoint.createEnrolment(student, item)
+                                    // window.location.reload();
                                 }
                             }}>
                                 Enroll

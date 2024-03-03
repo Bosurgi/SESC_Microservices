@@ -4,9 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -15,8 +14,6 @@ import java.util.List;
  */
 @Entity
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 public class Module {
     @Id
@@ -29,9 +26,10 @@ public class Module {
     private String description;
     private Double fee;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "enrolmentId")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "module")
+//    @JoinColumn(name = "enrolmentId")
     @JsonIgnore // It ignores the enrolments field when serializing to JSON
+    @ToString.Exclude
     private List<Enrolments> enrolments;
 
     /***
