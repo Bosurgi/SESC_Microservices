@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.ArrayList;
@@ -18,14 +16,9 @@ import java.util.List;
 @Entity
 //@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@Getter
-@Setter
 @Data
 @Table(name = "students")
 public class Student {
-    //        extends User {
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "studentId")
@@ -41,7 +34,8 @@ public class Student {
 
     private Boolean isEnrolled;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Enrolments> enrolments = new ArrayList<>();
 
     @OneToOne(mappedBy = "student")

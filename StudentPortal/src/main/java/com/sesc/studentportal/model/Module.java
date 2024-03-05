@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /***
@@ -27,10 +28,9 @@ public class Module {
     private Double fee;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "module")
-//    @JoinColumn(name = "enrolmentId")
     @JsonIgnore // It ignores the enrolments field when serializing to JSON
     @ToString.Exclude
-    private List<Enrolments> enrolments;
+    private List<Enrolments> enrolments = new ArrayList<>();
 
     /***
      * Constructor for a module with title, description and fee

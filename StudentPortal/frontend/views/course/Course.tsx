@@ -10,7 +10,7 @@ import {GridColumn} from "@hilla/react-components/GridColumn";
 import {Button} from "@hilla/react-components/Button";
 import Module from "Frontend/generated/com/sesc/studentportal/model/Module";
 import {useAuth} from "Frontend/auth";
-import {getUserByUsername} from "Frontend/generated/UserService";
+import {findStudentFromUser, getUserByUsername} from "Frontend/generated/UserService";
 import {registerStudent} from "Frontend/generated/StudentEndpoint";
 import {updateRole} from "Frontend/generated/UserEndpoint";
 import {EnrolmentEndpoint, JpaUserDetailService} from "Frontend/generated/endpoints";
@@ -94,6 +94,10 @@ export default function Course() {
                                 // Enrol the user to the module here
                                 // TODO: Implement the enrolment logic for the backend
                                 const user = await getUserByUsername(state.user?.name);
+                                const student = await findStudentFromUser(user);
+                                setStudent(student);
+                                console.log(student)
+
                                 if (!user?.student) {
                                     console.log("User is not a student");
                                     await updateRole(state.user?.name, Roles.student);
@@ -103,7 +107,9 @@ export default function Course() {
                                     console.log(`Enrolling ${state.user?.name} to ${item.title}`);
                                     console.log(item)
                                     await EnrolmentEndpoint.createEnrolment(student, item)
-                                    // window.location.reload();
+                                    window.location.reload();
+                                } else {
+                                    await EnrolmentEndpoint.createEnrolment(student, item)
                                 }
                             }}>
                                 Enroll

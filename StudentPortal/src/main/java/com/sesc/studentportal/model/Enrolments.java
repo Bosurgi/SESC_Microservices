@@ -2,16 +2,12 @@ package com.sesc.studentportal.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /***
  * Entity for a student's enrolment to a module
  */
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "enrolments")
@@ -21,11 +17,11 @@ public class Enrolments {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long enrolmentId;
     // Foreign Key to Student
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "studentId")
     private Student student;
     // Foreign Key to Module
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "moduleId")
     private Module module;
 

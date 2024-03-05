@@ -22,7 +22,7 @@ public class EnrolmentEndpoint {
         try {
             return enrolmentService.createEnrolment(student, module);
         } catch (Exception e) {
-            throw new EndpointException("Student " + student.getStudentId() + " is already enrolled in module " + module.getModuleId());
+            throw new EndpointException(e + "Student " + student.getStudentId() + " is already enrolled in module " + module.getTitle());
         }
     }
 }
