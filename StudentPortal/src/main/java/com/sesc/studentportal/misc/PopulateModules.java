@@ -44,6 +44,8 @@ public class PopulateModules {
                 moduleRepository.saveAll(moduleList);
             };
         }
-        return null;
+        return args -> {
+
+        };
     }
 }

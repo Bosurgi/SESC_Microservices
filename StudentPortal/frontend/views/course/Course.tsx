@@ -16,6 +16,7 @@ import {updateRole} from "Frontend/generated/UserEndpoint";
 import {EnrolmentEndpoint, JpaUserDetailService} from "Frontend/generated/endpoints";
 import {Roles} from "Frontend/util/Constants";
 import Student from "Frontend/generated/com/sesc/studentportal/model/Student";
+import Enrolments from "Frontend/generated/com/sesc/studentportal/model/Enrolments";
 
 
 export default function Course() {
@@ -29,6 +30,11 @@ export default function Course() {
     const [details, setDetails] = useState<Module[]>([]);
 
     const [student, setStudent] = useState<Student>();
+
+    // TODO: Implement the enrolment Button Change using states
+    const [enrolmentList, setEnrolmentList] = useState<Enrolments[]>([]);
+
+    const [modulesEnrolled, setModulesEnrolled] = useState<Module[]>([]);
 
     const {state} = useAuth();
 
