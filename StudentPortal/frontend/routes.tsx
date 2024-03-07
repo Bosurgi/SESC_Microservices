@@ -6,7 +6,8 @@ import Register from "Frontend/views/registration/Register";
 import Course from "Frontend/views/course/Course";
 import {protectRoutes} from "@hilla/react-auth";
 import Profile from "Frontend/views/profile/Profile";
-import {Roles} from "Frontend/util/Constants";
+import {Path, Roles} from "Frontend/util/Constants";
+import Enrolments from "Frontend/views/enrolments/Enrolments";
 
 export const routes = protectRoutes([
     {
@@ -26,6 +27,14 @@ export const routes = protectRoutes([
                 element: <Profile/>,
                 handle: {
                     title: 'Profile',
+                    rolesAllowed: [Roles.student],
+                }
+            },
+            {
+                path: Path.enrolments,
+                element: <Enrolments/>,
+                handle: {
+                    title: 'Enrolments',
                     rolesAllowed: [Roles.student],
                 }
             },

@@ -43,24 +43,19 @@ export default function Course() {
 
 // Function to fetch the current student's enrollments
     async function getCurrentStudentEnrolments(student: Student | undefined) {
-        if (student) {
-            try {
-                const studentEnrolments = await EnrolmentEndpoint.getModulesFromEnrolments(student);
-                // Ensure studentEnrolments is not undefined
-                if (studentEnrolments) {
-                    // Filter out undefined values if any
-                    const validEnrolments = studentEnrolments.filter(enrolment => enrolment !== undefined) as Module[];
-                    setModulesEnrolled(validEnrolments);
-                } else {
-                    // If studentEnrolments is undefined, set modulesEnrolled to undefined
-                    setModulesEnrolled(undefined);
-                }
-            } catch (error) {
-                console.error("Error fetching student enrolments:", error);
+        try {
+            const studentEnrolments = await EnrolmentEndpoint.getModulesFromEnrolments(student);
+            // Ensure studentEnrolments is not undefined
+            if (studentEnrolments) {
+                // Filter out undefined values if any
+                const validEnrolments = studentEnrolments.filter(enrolment => enrolment !== undefined) as Module[];
+                setModulesEnrolled(validEnrolments);
+            } else {
+                // If studentEnrolments is undefined, set modulesEnrolled to undefined
+                setModulesEnrolled(undefined);
             }
-        } else {
-            // If student is undefined, set modulesEnrolled to undefined
-            setModulesEnrolled(undefined);
+        } catch (error) {
+            console.error("Error fetching student enrolments:", error);
         }
     }
 
@@ -88,16 +83,21 @@ export default function Course() {
         const getCurrentStudent = async (user: User | undefined) => {
             const student = user?.student;
             setCurrentStudent(student);
-            getCurrentStudentEnrolments(student);
+            if (!student) {
+                console.error("User is not a student");
+                return;
+            }
+            await getCurrentStudentEnrolments(student);
             console.log("CurrentStudent: ", student);
         };
-        getCurrentUser();
+        void getCurrentUser();
     }, [state]);
 
 
     return (
         <>
-            <VerticalLayout className="p-8">
+            <VerticalLayout className="flex flex-col l-auto items-center justify-center p-8">
+                <h1 className="text-2xl font-semibold mb-8">Courses</h1>
                 <TextField
                     placeholder="Search"
                     style={{width: '30%'}}

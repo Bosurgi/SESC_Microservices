@@ -4,11 +4,15 @@ import com.sesc.studentportal.model.Enrolments;
 import com.sesc.studentportal.model.Module;
 import com.sesc.studentportal.model.Student;
 import com.sesc.studentportal.repository.EnrolmentRepository;
+import dev.hilla.BrowserCallable;
+import jakarta.annotation.security.PermitAll;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@BrowserCallable
+@PermitAll
 public class EnrolmentsService {
 
     private final EnrolmentRepository enrolmentRepository;
@@ -46,6 +50,11 @@ public class EnrolmentsService {
 
     public List<Module> getModulesFromEnrolments(Student student) {
         List<Enrolments> enrolments = enrolmentRepository.findEnrolmentsByStudent(student);
+        return enrolments.stream().map(Enrolments::getModule).toList();
+    }
+
+    public List<Module> getModulesFromEnrolments(String studentNumber) {
+        List<Enrolments> enrolments = enrolmentRepository.findEnrolmentsByStudent_StudentNumber(studentNumber);
         return enrolments.stream().map(Enrolments::getModule).toList();
     }
 

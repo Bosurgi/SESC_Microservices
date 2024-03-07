@@ -33,4 +33,5 @@ public interface ModuleRepository extends JpaRepository<Module, Long> {
      */
     @Query("SELECT m FROM Module m WHERE m.title LIKE %?1%")
     public List<Module> search(String keyword);
+
 }
