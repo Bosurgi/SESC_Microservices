@@ -2,12 +2,9 @@ package com.sesc.studentportal.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.ToString;
 
-@Getter
-@Setter
 @Entity
 @NoArgsConstructor
 @Data
@@ -26,9 +23,14 @@ public class User {
     private String surname;
     @Column(name = "email", unique = true)
     private String email;
+    @Column(name = "roles", updatable = true, insertable = true)
     private String roles;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "studentId")
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_student",
+            joinColumns = {@JoinColumn(name = "userId", referencedColumnName = "userId")},
+            inverseJoinColumns = {@JoinColumn(name = "studentId", referencedColumnName = "studentId")})
+    @ToString.Exclude
     private Student student;
 
     public User(String userName, String password, String roles) {

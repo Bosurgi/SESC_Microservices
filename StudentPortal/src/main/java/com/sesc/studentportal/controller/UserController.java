@@ -72,6 +72,16 @@ public class UserController {
         return userService.createUser(user);
     }
 
+    @GetMapping("/username/{username}")
+    public User getUserByUsername(@PathVariable String username) {
+        if (userService.getUserByUsername(username).isPresent()) {
+            return userService.getUserByUsername(username).get();
+        } else {
+            // TODO: Modify this with custom Exception
+            throw new RuntimeException("User not found");
+        }
+    }
+
     // CONSTRUCTOR //
 
     /***

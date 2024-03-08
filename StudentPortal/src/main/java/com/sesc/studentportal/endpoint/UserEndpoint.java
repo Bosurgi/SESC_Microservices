@@ -1,5 +1,6 @@
 package com.sesc.studentportal.endpoint;
 
+import com.sesc.studentportal.model.Student;
 import com.sesc.studentportal.model.User;
 import com.sesc.studentportal.services.UserService;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
@@ -24,6 +25,13 @@ public class UserEndpoint {
         this.userService = userService;
     }
 
+    /**
+     * Registers a User and saves it into the database.
+     *
+     * @param user the user to be registered
+     * @return the registered user
+     * @throws EndpointException if the user already exists it throws an exception to the frontend.
+     */
     public User registerUser(User user) throws EndpointException {
         try {
             return userService.createUser(user);
@@ -36,11 +44,20 @@ public class UserEndpoint {
         return userService.getUserByUsername(username);
     }
 
-    public User updateRole(User user, String role) {
-        return userService.updateRole(user.getUsername(), role);
+    public User updateRole(String username, String role) {
+        return userService.updateRole(username, role);
     }
 
     public List<String> getRoles(String username) {
         return userService.getRoles(username);
+    }
+
+    public Student getStudentByUser(User user) {
+        return userService.findStudentFromUser(user);
+    }
+
+    // TODO: Add the updateUserInformation method to the UserEndpoint class
+    public User updateUserInformation(User user) {
+        return userService.updateUser(user.getUserId(), user);
     }
 }

@@ -2,6 +2,7 @@ import {LoginForm} from "@hilla/react-components/LoginForm";
 import {Navigate, NavLink} from "react-router-dom";
 import {useAuth} from "Frontend/auth";
 import {useState} from "react";
+import {Path} from "Frontend/util/Constants";
 
 export default function Login() {
     const {state, login} = useAuth();
@@ -24,7 +25,7 @@ export default function Login() {
                     if (error) {
                         setError(true);
                     } else {
-                        setUrl(redirectUrl ?? defaultUrl ?? '/courses');
+                        setUrl(redirectUrl ?? defaultUrl ?? Path.courses);
                     }
                 }}
             />
