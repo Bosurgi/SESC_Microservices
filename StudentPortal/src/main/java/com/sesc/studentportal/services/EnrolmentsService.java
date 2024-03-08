@@ -48,11 +48,12 @@ public class EnrolmentsService {
         return enrolmentRepository.findEnrolmentsByStudent(student);
     }
 
-    public List<Module> getModulesFromEnrolments(Student student) {
-        List<Enrolments> enrolments = enrolmentRepository.findEnrolmentsByStudent(student);
-        return enrolments.stream().map(Enrolments::getModule).toList();
-    }
-
+    /**
+     * It gets all the modules a student is enrolled in by their student number.
+     *
+     * @param studentNumber the student number
+     * @return a list of modules
+     */
     public List<Module> getModulesFromEnrolments(String studentNumber) {
         List<Enrolments> enrolments = enrolmentRepository.findEnrolmentsByStudent_StudentNumber(studentNumber);
         return enrolments.stream().map(Enrolments::getModule).toList();
