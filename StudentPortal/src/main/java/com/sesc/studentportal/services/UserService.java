@@ -94,8 +94,10 @@ public class UserService {
      * @return the Student object associated with the User.
      */
     public Student findStudentFromUser(@NotNull User user) {
-        return studentRepository.findStudentByStudentId(user.getUserId());
+        Student student = studentRepository.findStudentByUser(user);
+        return student;
     }
+
 
     /***
      * Creates a new User checking if another student is not already registered with the same username.

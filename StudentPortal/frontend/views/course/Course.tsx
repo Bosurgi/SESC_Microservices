@@ -7,14 +7,17 @@ import {useEffect, useState} from "react";
 import {getModules} from "Frontend/generated/ModuleEndpoint";
 import Details from "Frontend/components/Details";
 import {GridColumn} from "@hilla/react-components/GridColumn";
-import {Button} from "@hilla/react-components/Button";
 import Module from "Frontend/generated/com/sesc/studentportal/model/Module";
 import {useAuth} from "Frontend/auth";
-import {getUserByUsername} from "Frontend/generated/UserService";
+import {getUserByUsername, updateRole} from "Frontend/generated/UserService";
+import {EnrolmentEndpoint, JpaUserDetailService} from "Frontend/generated/endpoints";
+import Student from "Frontend/generated/com/sesc/studentportal/model/Student";
+import Enrolments from "Frontend/generated/com/sesc/studentportal/model/Enrolments";
+import User from "Frontend/generated/com/sesc/studentportal/model/User";
+import {Button} from "@hilla/react-components/Button";
 import {registerStudent} from "Frontend/generated/StudentEndpoint";
-import {updateRole} from "Frontend/generated/UserEndpoint";
-import {JpaUserDetailService} from "Frontend/generated/endpoints";
 import {Roles} from "Frontend/util/Constants";
+import {getStudentByUser} from "Frontend/generated/UserEndpoint";
 
 
 export default function Course() {
@@ -27,7 +30,34 @@ export default function Course() {
     // Details State for managing the module details
     const [details, setDetails] = useState<Module[]>([]);
 
+    const [currentStudent, setCurrentStudent] = useState<Student>();
+
+    const [currentUser, setCurrentUser] = useState<User>();
+
+    // TODO: Implement the enrolment Button Change using states
+    const [enrolmentList, setEnrolmentList] = useState<Enrolments[]>([]);
+
+    const [modulesEnrolled, setModulesEnrolled] = useState<Module[] | undefined>([]);
+
     const {state} = useAuth();
+
+// Function to fetch the current student's enrollments
+    async function getCurrentStudentEnrolments(student: Student | undefined) {
+        try {
+            const studentEnrolments = await EnrolmentEndpoint.getModulesFromEnrolments(student);
+            // Ensure studentEnrolments is not undefined
+            if (studentEnrolments) {
+                // Filter out undefined values if any
+                const validEnrolments = studentEnrolments.filter(enrolment => enrolment !== undefined) as Module[];
+                setModulesEnrolled(validEnrolments);
+            } else {
+                // If studentEnrolments is undefined, set modulesEnrolled to undefined
+                setModulesEnrolled(undefined);
+            }
+        } catch (error) {
+            console.error("Error fetching student enrolments:", error);
+        }
+    }
 
     // Fetch the modules from the backend and filter them
     useEffect(() => {
@@ -40,12 +70,34 @@ export default function Course() {
             }));
             setModuleList(newModules);
             setFilteredModules(newModules);
-        })
+        });
+
+        const getCurrentUser = async () => {
+            const user = await getUserByUsername(state.user?.name);
+            setCurrentUser(user);
+            console.log(user);
+            // Call getCurrentStudent here after setting currentUser
+            await getCurrentStudent(user);
+        };
+
+        const getCurrentStudent = async (user: User | undefined) => {
+            const student = user?.student;
+            setCurrentStudent(student);
+            if (!student) {
+                console.error("User is not a student");
+                return;
+            }
+            await getCurrentStudentEnrolments(student);
+            console.log("CurrentStudent: ", student);
+        };
+        void getCurrentUser();
     }, [state]);
+
 
     return (
         <>
-            <VerticalLayout className="p-8">
+            <VerticalLayout className="flex flex-col l-auto items-center justify-center p-8">
+                <h1 className="text-2xl font-semibold mb-8">Courses</h1>
                 <TextField
                     placeholder="Search"
                     style={{width: '30%'}}
@@ -86,23 +138,51 @@ export default function Course() {
                     </GridSortColumn>
 
                     <GridColumn>
-                        {({item}) => (
-                            <Button className="primary" onClick={async () => {
-                                // Enrol the user to the module here
-                                // TODO: Implement the enrolment logic for the backend
-                                const user = await getUserByUsername(state.user?.name);
-                                if (!user?.student) {
-                                    console.log("User is not a student");
-                                    await updateRole(state.user?.name, Roles.student);
-                                    await JpaUserDetailService.update(state.user);
-                                    const student = await registerStudent(state.user?.name);
-                                    // TODO: Apply the enrolment here before refreshing the page
-                                    console.log(`Enrolling ${state.user?.name} to ${item.title}`);
-                                    window.location.reload();
-                                }
-                            }}>
-                                Enroll
-                            </Button>)}
+                        {({item}) => {
+                            if (modulesEnrolled?.find((module) => module.title === item.title)) {
+                                return <Button className="primary" disabled>Enrolled</Button>
+                            } else {
+                                return <Button className="primary" onClick={async () => {
+                                    if (!currentUser?.student) {
+                                        console.log("User is not a student");
+                                        await updateRole(state.user?.name, Roles.student);
+                                        await JpaUserDetailService.update(state.user);
+                                        await registerStudent(state.user?.name);
+                                        console.log(`Enrolling ${state.user?.name} to ${item.title}`);
+                                        console.log(item)
+                                        const student = await getStudentByUser(currentUser);
+                                        await EnrolmentEndpoint.createEnrolment(student, item)
+                                        window.location.reload();
+                                    } else {
+                                        await EnrolmentEndpoint.createEnrolment(currentStudent, item)
+                                        await getCurrentStudentEnrolments(currentStudent);
+                                        // console.log(student)
+                                    }
+                                }}>
+                                    Enroll
+                                </Button>
+                            }
+                        }}
+                        {/*{({item}) => (*/}
+                        {/*    <Button className="primary" onClick={async () => {*/}
+                        {/*        if (!currentUser?.student) {*/}
+                        {/*            console.log("User is not a student");*/}
+                        {/*            await updateRole(state.user?.name, Roles.student);*/}
+                        {/*            await JpaUserDetailService.update(state.user);*/}
+                        {/*            await registerStudent(state.user?.name);*/}
+                        {/*            console.log(`Enrolling ${state.user?.name} to ${item.title}`);*/}
+                        {/*            console.log(item)*/}
+                        {/*            const student = await getStudentByUser(currentUser);*/}
+                        {/*            await EnrolmentEndpoint.createEnrolment(student, item)*/}
+                        {/*            window.location.reload();*/}
+                        {/*        } else {*/}
+                        {/*            await EnrolmentEndpoint.createEnrolment(currentStudent, item)*/}
+                        {/*            // console.log(student)*/}
+                        {/*        }*/}
+                        {/*    }}>*/}
+                        {/*        Enroll*/}
+                        {/*    </Button>)}*/}
+
                     </GridColumn>
                 </Grid>
             </VerticalLayout>

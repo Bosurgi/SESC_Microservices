@@ -28,4 +28,6 @@ public interface EnrolmentRepository extends JpaRepository<Enrolments, Long> {
      * @return the list of Enrolments for the student
      */
     List<Enrolments> findEnrolmentsByStudent(Student student);
+
+    List<Enrolments> findEnrolmentsByStudent_StudentNumber(String studentNumber);
 }
