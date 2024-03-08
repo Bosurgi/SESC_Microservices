@@ -45,7 +45,7 @@ public class EnrolmentEndpoint {
         return enrolmentService.getAllEnrolmentsFromStudent(student);
     }
 
-    public List<Module> getModulesFromEnrolments(Student student) {
-        return enrolmentService.getModulesFromEnrolments(student);
+    public List<Module> getModulesFromEnrolments(String studentNumber) {
+        return enrolmentService.getModulesFromEnrolments(studentNumber);
     }
 }
