@@ -10,9 +10,8 @@ import {GridColumn} from "@hilla/react-components/GridColumn";
 import Module from "Frontend/generated/com/sesc/studentportal/model/Module";
 import {useAuth} from "Frontend/auth";
 import {getUserByUsername, updateRole} from "Frontend/generated/UserService";
-import {EnrolmentEndpoint, JpaUserDetailService} from "Frontend/generated/endpoints";
+import {EnrolmentEndpoint, IntegrationService, JpaUserDetailService} from "Frontend/generated/endpoints";
 import Student from "Frontend/generated/com/sesc/studentportal/model/Student";
-import Enrolments from "Frontend/generated/com/sesc/studentportal/model/Enrolments";
 import User from "Frontend/generated/com/sesc/studentportal/model/User";
 import {Button} from "@hilla/react-components/Button";
 import {registerStudent} from "Frontend/generated/StudentEndpoint";
@@ -34,8 +33,6 @@ export default function Course() {
 
     const [currentUser, setCurrentUser] = useState<User>();
 
-    // TODO: Implement the enrolment Button Change using states
-    const [enrolmentList, setEnrolmentList] = useState<Enrolments[]>([]);
 
     const [modulesEnrolled, setModulesEnrolled] = useState<Module[] | undefined>([]);
 
@@ -44,7 +41,7 @@ export default function Course() {
 // Function to fetch the current student's enrollments
     async function getCurrentStudentEnrolments(student: Student | undefined) {
         try {
-            const studentEnrolments = await EnrolmentEndpoint.getModulesFromEnrolments(student);
+            const studentEnrolments = await EnrolmentEndpoint.getModulesFromEnrolments(student?.studentNumber);
             // Ensure studentEnrolments is not undefined
             if (studentEnrolments) {
                 // Filter out undefined values if any
@@ -151,37 +148,19 @@ export default function Course() {
                                         console.log(`Enrolling ${state.user?.name} to ${item.title}`);
                                         console.log(item)
                                         const student = await getStudentByUser(currentUser);
+                                        // Creating Student in Library Service
+                                        await IntegrationService.createStudentLibrary(student?.studentNumber);
                                         await EnrolmentEndpoint.createEnrolment(student, item)
                                         window.location.reload();
                                     } else {
                                         await EnrolmentEndpoint.createEnrolment(currentStudent, item)
                                         await getCurrentStudentEnrolments(currentStudent);
-                                        // console.log(student)
                                     }
                                 }}>
                                     Enroll
                                 </Button>
                             }
                         }}
-                        {/*{({item}) => (*/}
-                        {/*    <Button className="primary" onClick={async () => {*/}
-                        {/*        if (!currentUser?.student) {*/}
-                        {/*            console.log("User is not a student");*/}
-                        {/*            await updateRole(state.user?.name, Roles.student);*/}
-                        {/*            await JpaUserDetailService.update(state.user);*/}
-                        {/*            await registerStudent(state.user?.name);*/}
-                        {/*            console.log(`Enrolling ${state.user?.name} to ${item.title}`);*/}
-                        {/*            console.log(item)*/}
-                        {/*            const student = await getStudentByUser(currentUser);*/}
-                        {/*            await EnrolmentEndpoint.createEnrolment(student, item)*/}
-                        {/*            window.location.reload();*/}
-                        {/*        } else {*/}
-                        {/*            await EnrolmentEndpoint.createEnrolment(currentStudent, item)*/}
-                        {/*            // console.log(student)*/}
-                        {/*        }*/}
-                        {/*    }}>*/}
-                        {/*        Enroll*/}
-                        {/*    </Button>)}*/}
 
                     </GridColumn>
                 </Grid>
