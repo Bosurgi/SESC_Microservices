@@ -2,6 +2,8 @@ package com.sesc.studentportal.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sesc.studentportal.dto.Account;
+import com.sesc.studentportal.dto.Invoice;
 import dev.hilla.BrowserCallable;
 import jakarta.annotation.security.PermitAll;
 import org.springframework.beans.factory.annotation.Value;
@@ -61,7 +63,7 @@ public class IntegrationService {
      *
      * @param studentId the Unique Student Number
      */
-    public void createStudentLibrary(String studentId) {
+    public void createStudentAccount(String studentId) {
         Map<String, String> requestBody = new HashMap<>();
         // Sanitising the data to be sent to the Endpoint as requested by Documentation
         requestBody.put("studentId", studentId);
@@ -83,6 +85,48 @@ public class IntegrationService {
                 .subscribe(response -> {
                     // We could implement a callback below to handle the response if needed.
                     System.out.println("Library Service Response: " + response);
+                });
+
+        // Sending the HTTP POST request to the Finance Service
+        webClientBuilder.baseUrl(financeHost)
+                .build()
+                .post()
+                .uri(financeCreateStudent)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(jsonBody) // The JSON body
+                .retrieve()
+                .bodyToMono(String.class)
+                .subscribe(response -> {
+                    // We could implement a callback below to handle the response if needed.
+                    System.out.println("Finance Service Response: " + response);
+                });
+    }
+
+    // TODO: Send Invoice in here to finance
+    public Invoice createCourseFeeInvoice(Invoice invoice) {
+        return webClientBuilder.baseUrl(financeHost)
+                .build()
+                .post()
+                .uri(financeModuleEnrol)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(invoice)
+                .retrieve()
+                .bodyToMono(Invoice.class)
+                .block();
+    }
+
+    // TODO: Get Account Status in here as a response
+
+    public Account getStudentPaymentStatus(String studentId) {
+        return (Account) webClientBuilder.baseUrl(financeHost)
+                .build()
+                .get()
+                .uri(financeUserStatus + studentId)
+                .retrieve()
+                .bodyToMono(Account.class)
+                .subscribe(response -> {
+                    // We could implement a callback below to handle the response if needed.
+                    System.out.println("Finance Service Response: " + response);
                 });
     }
 }

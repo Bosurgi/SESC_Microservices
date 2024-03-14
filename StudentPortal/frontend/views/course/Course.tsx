@@ -33,7 +33,6 @@ export default function Course() {
 
     const [currentUser, setCurrentUser] = useState<User>();
 
-
     const [modulesEnrolled, setModulesEnrolled] = useState<Module[] | undefined>([]);
 
     const {state} = useAuth();
@@ -81,7 +80,7 @@ export default function Course() {
             const student = user?.student;
             setCurrentStudent(student);
             if (!student) {
-                console.error("User is not a student");
+                console.log("User is not a student");
                 return;
             }
             await getCurrentStudentEnrolments(student);
@@ -141,19 +140,23 @@ export default function Course() {
                             } else {
                                 return <Button className="primary" onClick={async () => {
                                     if (!currentUser?.student) {
+                                        // TODO: Produce an Invoice to send to the finance endpoint
                                         console.log("User is not a student");
                                         await updateRole(state.user?.name, Roles.student);
                                         await JpaUserDetailService.update(state.user);
                                         await registerStudent(state.user?.name);
-                                        console.log(`Enrolling ${state.user?.name} to ${item.title}`);
-                                        console.log(item)
                                         const student = await getStudentByUser(currentUser);
-                                        // Creating Student in Library Service
-                                        await IntegrationService.createStudentLibrary(student?.studentNumber);
-                                        await EnrolmentEndpoint.createEnrolment(student, item)
+                                        // Creating Student in Library Service and Finance Service
+                                        await IntegrationService.createStudentAccount(student?.studentNumber);
+                                        await EnrolmentEndpoint.createEnrolment(student, item);
+                                        // Sending invoice to the Finance Service
+                                        const invoice = await EnrolmentEndpoint.createInvoice(student, item);
+                                        console.log(invoice)
                                         window.location.reload();
                                     } else {
-                                        await EnrolmentEndpoint.createEnrolment(currentStudent, item)
+                                        await EnrolmentEndpoint.createEnrolment(currentStudent, item);
+                                        const invoice = await EnrolmentEndpoint.createInvoice(currentStudent, item);
+                                        console.log(invoice)
                                         await getCurrentStudentEnrolments(currentStudent);
                                     }
                                 }}>
