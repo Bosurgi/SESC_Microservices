@@ -20,7 +20,6 @@ export default function NavBar() {
             </div>
             {
                 // Render specific links based on User Role
-                // TODO: Change the roles to be a Type or Enum
                 state.user?.authorities.includes(Roles.student) ? (
                     <div className="hidden gap-5 md:flex">
                         <NavLink to={Path.home}>Home</NavLink>
