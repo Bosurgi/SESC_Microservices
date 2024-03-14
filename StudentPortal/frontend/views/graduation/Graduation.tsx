@@ -9,7 +9,7 @@ export default function Graduation() {
 
     const [currentUser, setCurrentUser] = useState<User | undefined>();
     const [currentStudent, setCurrentStudent] = useState<Student>();
-    const [graduationStatus, setGraduationStatus] = useState<boolean>(false);
+    const [graduationStatus, setGraduationStatus] = useState<boolean>(true);
     const {state} = useAuth();
 
     useEffect(() => {

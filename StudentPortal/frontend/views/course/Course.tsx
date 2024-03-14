@@ -14,7 +14,7 @@ import {EnrolmentEndpoint, IntegrationService, JpaUserDetailService} from "Front
 import Student from "Frontend/generated/com/sesc/studentportal/model/Student";
 import User from "Frontend/generated/com/sesc/studentportal/model/User";
 import {Button} from "@hilla/react-components/Button";
-import {registerStudent} from "Frontend/generated/StudentEndpoint";
+import {registerStudent, updateStudent} from "Frontend/generated/StudentEndpoint";
 import {Roles} from "Frontend/util/Constants";
 import {getStudentByUser} from "Frontend/generated/UserEndpoint";
 
@@ -53,6 +53,23 @@ export default function Course() {
         } catch (error) {
             console.error("Error fetching student enrolments:", error);
         }
+    }
+
+    /**
+     * Function to update the student's invoice reference number
+     * @param student the Student object
+     * @param invoiceNumber the Invoice number
+     */
+    async function updateStudentInvoice(student: Student | undefined, invoiceNumber: string | undefined) {
+        if (student && invoiceNumber) {
+            student.invoiceReferenceNumber = (student.invoiceReferenceNumber || '') + invoiceNumber.concat(',');
+            try {
+                await updateStudent(student);
+            } catch (error) {
+                console.error("Error updating student invoice:", error);
+            }
+        }
+
     }
 
     // Fetch the modules from the backend and filter them
@@ -140,8 +157,6 @@ export default function Course() {
                             } else {
                                 return <Button className="primary" onClick={async () => {
                                     if (!currentUser?.student) {
-                                        // TODO: Produce an Invoice to send to the finance endpoint
-                                        console.log("User is not a student");
                                         await updateRole(state.user?.name, Roles.student);
                                         await JpaUserDetailService.update(state.user);
                                         await registerStudent(state.user?.name);
@@ -151,12 +166,12 @@ export default function Course() {
                                         await EnrolmentEndpoint.createEnrolment(student, item);
                                         // Sending invoice to the Finance Service
                                         const invoice = await EnrolmentEndpoint.createInvoice(student, item);
-                                        console.log(invoice)
+                                        await updateStudentInvoice(student, invoice?.reference);
                                         window.location.reload();
                                     } else {
                                         await EnrolmentEndpoint.createEnrolment(currentStudent, item);
                                         const invoice = await EnrolmentEndpoint.createInvoice(currentStudent, item);
-                                        console.log(invoice)
+                                        await updateStudentInvoice(currentStudent, invoice?.reference);
                                         await getCurrentStudentEnrolments(currentStudent);
                                     }
                                 }}>

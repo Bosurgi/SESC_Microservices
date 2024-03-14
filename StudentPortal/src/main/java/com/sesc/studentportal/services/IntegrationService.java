@@ -73,6 +73,7 @@ public class IntegrationService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Error converting request body to JSON");
         }
+
         // Sending the HTTP POST request to the Library Service
         webClientBuilder.baseUrl(libraryHost)
                 .build()
@@ -102,7 +103,12 @@ public class IntegrationService {
                 });
     }
 
-    // TODO: Send Invoice in here to finance
+    /**
+     * This method is used to create an Invoice for a Student and send it to the Finance Service.
+     *
+     * @param invoice the Invoice to be created
+     * @return the created Invoice in Finance Service
+     */
     public Invoice createCourseFeeInvoice(Invoice invoice) {
         return webClientBuilder.baseUrl(financeHost)
                 .build()
@@ -115,7 +121,12 @@ public class IntegrationService {
                 .block();
     }
 
-    // TODO: Get Account Status in here as a response
+    /**
+     * This method is used to get the Payment Status of a Student from the Finance Service.
+     *
+     * @param studentId the Unique Student Number
+     * @return the Account status of the Student
+     */
 
     public Account getStudentPaymentStatus(String studentId) {
         return (Account) webClientBuilder.baseUrl(financeHost)

@@ -34,6 +34,8 @@ public class Student {
 
     private Boolean isEnrolled;
 
+    private String invoiceReferenceNumber;
+
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Enrolments> enrolments = new ArrayList<>();
