@@ -9,6 +9,7 @@ import Profile from "Frontend/views/profile/Profile";
 import {Path, Roles} from "Frontend/util/Constants";
 import Enrolments from "Frontend/views/enrolments/Enrolments";
 import Graduation from "Frontend/views/graduation/Graduation";
+import Invoices from "Frontend/views/invoices/Invoices";
 
 export const routes = protectRoutes([
     {
@@ -53,6 +54,16 @@ export const routes = protectRoutes([
                     rolesAllowed: [Roles.student],
                 }
             },
+
+            // Invoices //
+            {
+                path: Path.invoices,
+                element: <Invoices/>,
+                handle: {
+                    title: 'Invoices',
+                    rolesAllowed: [Roles.student],
+                },
+            }
 
         ],
     },

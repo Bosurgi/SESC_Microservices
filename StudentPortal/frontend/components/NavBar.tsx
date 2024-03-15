@@ -26,6 +26,7 @@ export default function NavBar() {
                         <NavLink to={Path.profile}>Profile</NavLink>
                         <NavLink to={Path.courses}>Courses</NavLink>
                         <NavLink to={Path.enrolments}>Enrolled</NavLink>
+                        <NavLink to={Path.invoices}>Invoices</NavLink>
                         <NavLink to={Path.graduation}>Graduation</NavLink>
                     </div>
                 ) : (

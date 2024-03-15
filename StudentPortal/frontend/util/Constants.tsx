@@ -4,7 +4,8 @@ const enum Path {
     profile = '/profile',
     enrolments = '/enrolments',
     graduation = '/graduation',
-    login = '/login'
+    login = '/login',
+    invoices = '/invoices',
 }
 
 const enum Roles {
