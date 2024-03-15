@@ -32,7 +32,6 @@ export default function Home() {
                                     can find all
                                     the information
                                     regarding your courses, your enrolments and your graduation.
-                                    Please Login to continue.
                                 </p>
                             </div>
 
