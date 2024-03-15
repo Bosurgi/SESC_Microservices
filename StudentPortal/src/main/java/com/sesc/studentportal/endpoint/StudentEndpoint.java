@@ -31,4 +31,8 @@ public class StudentEndpoint {
         return userService.findStudentFromUser(user);
     }
 
+    public Student updateStudent(Student student) {
+        return studentService.updateStudent(student);
+    }
+
 }

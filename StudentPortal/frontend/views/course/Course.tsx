@@ -10,12 +10,11 @@ import {GridColumn} from "@hilla/react-components/GridColumn";
 import Module from "Frontend/generated/com/sesc/studentportal/model/Module";
 import {useAuth} from "Frontend/auth";
 import {getUserByUsername, updateRole} from "Frontend/generated/UserService";
-import {EnrolmentEndpoint, JpaUserDetailService} from "Frontend/generated/endpoints";
+import {EnrolmentEndpoint, IntegrationService, JpaUserDetailService} from "Frontend/generated/endpoints";
 import Student from "Frontend/generated/com/sesc/studentportal/model/Student";
-import Enrolments from "Frontend/generated/com/sesc/studentportal/model/Enrolments";
 import User from "Frontend/generated/com/sesc/studentportal/model/User";
 import {Button} from "@hilla/react-components/Button";
-import {registerStudent} from "Frontend/generated/StudentEndpoint";
+import {registerStudent, updateStudent} from "Frontend/generated/StudentEndpoint";
 import {Roles} from "Frontend/util/Constants";
 import {getStudentByUser} from "Frontend/generated/UserEndpoint";
 
@@ -34,9 +33,6 @@ export default function Course() {
 
     const [currentUser, setCurrentUser] = useState<User>();
 
-    // TODO: Implement the enrolment Button Change using states
-    const [enrolmentList, setEnrolmentList] = useState<Enrolments[]>([]);
-
     const [modulesEnrolled, setModulesEnrolled] = useState<Module[] | undefined>([]);
 
     const {state} = useAuth();
@@ -44,7 +40,7 @@ export default function Course() {
 // Function to fetch the current student's enrollments
     async function getCurrentStudentEnrolments(student: Student | undefined) {
         try {
-            const studentEnrolments = await EnrolmentEndpoint.getModulesFromEnrolments(student);
+            const studentEnrolments = await EnrolmentEndpoint.getModulesFromEnrolments(student?.studentNumber);
             // Ensure studentEnrolments is not undefined
             if (studentEnrolments) {
                 // Filter out undefined values if any
@@ -57,6 +53,23 @@ export default function Course() {
         } catch (error) {
             console.error("Error fetching student enrolments:", error);
         }
+    }
+
+    /**
+     * Function to update the student's invoice reference number
+     * @param student the Student object
+     * @param invoiceNumber the Invoice number
+     */
+    async function updateStudentInvoice(student: Student | undefined, invoiceNumber: string | undefined) {
+        if (student && invoiceNumber) {
+            student.invoiceReferenceNumber = (student.invoiceReferenceNumber || '') + invoiceNumber.concat(',');
+            try {
+                await updateStudent(student);
+            } catch (error) {
+                console.error("Error updating student invoice:", error);
+            }
+        }
+
     }
 
     // Fetch the modules from the backend and filter them
@@ -84,7 +97,7 @@ export default function Course() {
             const student = user?.student;
             setCurrentStudent(student);
             if (!student) {
-                console.error("User is not a student");
+                console.log("User is not a student");
                 return;
             }
             await getCurrentStudentEnrolments(student);
@@ -144,44 +157,28 @@ export default function Course() {
                             } else {
                                 return <Button className="primary" onClick={async () => {
                                     if (!currentUser?.student) {
-                                        console.log("User is not a student");
                                         await updateRole(state.user?.name, Roles.student);
                                         await JpaUserDetailService.update(state.user);
                                         await registerStudent(state.user?.name);
-                                        console.log(`Enrolling ${state.user?.name} to ${item.title}`);
-                                        console.log(item)
                                         const student = await getStudentByUser(currentUser);
-                                        await EnrolmentEndpoint.createEnrolment(student, item)
+                                        // Creating Student in Library Service and Finance Service
+                                        await IntegrationService.createStudentAccount(student?.studentNumber);
+                                        await EnrolmentEndpoint.createEnrolment(student, item);
+                                        // Sending invoice to the Finance Service
+                                        const invoice = await EnrolmentEndpoint.createInvoice(student, item);
+                                        await updateStudentInvoice(student, invoice?.reference);
                                         window.location.reload();
                                     } else {
-                                        await EnrolmentEndpoint.createEnrolment(currentStudent, item)
+                                        await EnrolmentEndpoint.createEnrolment(currentStudent, item);
+                                        const invoice = await EnrolmentEndpoint.createInvoice(currentStudent, item);
+                                        await updateStudentInvoice(currentStudent, invoice?.reference);
                                         await getCurrentStudentEnrolments(currentStudent);
-                                        // console.log(student)
                                     }
                                 }}>
                                     Enroll
                                 </Button>
                             }
                         }}
-                        {/*{({item}) => (*/}
-                        {/*    <Button className="primary" onClick={async () => {*/}
-                        {/*        if (!currentUser?.student) {*/}
-                        {/*            console.log("User is not a student");*/}
-                        {/*            await updateRole(state.user?.name, Roles.student);*/}
-                        {/*            await JpaUserDetailService.update(state.user);*/}
-                        {/*            await registerStudent(state.user?.name);*/}
-                        {/*            console.log(`Enrolling ${state.user?.name} to ${item.title}`);*/}
-                        {/*            console.log(item)*/}
-                        {/*            const student = await getStudentByUser(currentUser);*/}
-                        {/*            await EnrolmentEndpoint.createEnrolment(student, item)*/}
-                        {/*            window.location.reload();*/}
-                        {/*        } else {*/}
-                        {/*            await EnrolmentEndpoint.createEnrolment(currentStudent, item)*/}
-                        {/*            // console.log(student)*/}
-                        {/*        }*/}
-                        {/*    }}>*/}
-                        {/*        Enroll*/}
-                        {/*    </Button>)}*/}
 
                     </GridColumn>
                 </Grid>

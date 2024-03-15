@@ -1,5 +1,7 @@
 package com.sesc.studentportal.services;
 
+import com.sesc.studentportal.dto.Account;
+import com.sesc.studentportal.dto.Invoice;
 import com.sesc.studentportal.model.Enrolments;
 import com.sesc.studentportal.model.Module;
 import com.sesc.studentportal.model.Student;
@@ -8,6 +10,7 @@ import dev.hilla.BrowserCallable;
 import jakarta.annotation.security.PermitAll;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -16,9 +19,11 @@ import java.util.List;
 public class EnrolmentsService {
 
     private final EnrolmentRepository enrolmentRepository;
+    private final IntegrationService integrationService;
 
-    public EnrolmentsService(EnrolmentRepository enrolmentRepository) {
+    public EnrolmentsService(EnrolmentRepository enrolmentRepository, IntegrationService integrationService) {
         this.enrolmentRepository = enrolmentRepository;
+        this.integrationService = integrationService;
     }
 
     /**
@@ -57,6 +62,27 @@ public class EnrolmentsService {
     public List<Module> getModulesFromEnrolments(String studentNumber) {
         List<Enrolments> enrolments = enrolmentRepository.findEnrolmentsByStudent_StudentNumber(studentNumber);
         return enrolments.stream().map(Enrolments::getModule).toList();
+    }
+
+    /**
+     * It creates an invoice for the tuition fees of a module and sends it to the finance service through
+     * the integration Service
+     *
+     * @param student the Student to create the invoice for
+     * @param module  the Module to create the invoice for
+     * @return the created invoice
+     */
+    public Invoice createInvoice(Student student, Module module) {
+        Account account = new Account();
+        account.setStudentId(student.getStudentNumber());
+
+        // Creating the invoice setting its Tuition Fees and setting the Due Date to 6 months
+        Invoice invoice = new Invoice();
+        invoice.setAccount(account);
+        invoice.setAmount(module.getFee());
+        invoice.setDueDate(LocalDate.now().plusMonths(6));
+        invoice.setType(Invoice.Type.TUITION_FEES);
+        return integrationService.createCourseFeeInvoice(invoice);
     }
 
 }

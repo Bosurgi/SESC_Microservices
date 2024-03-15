@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="uk.ac.leedsbeckett.finance.controller.AccountControllerIntegrationTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2024-03-08T16:17:15" hostname="BOSU_DESKTOP" time="0.545">
+  <properties/>
+  <testcase name="a_givenAccount_whenGetAccountById_thenStatus200()" classname="uk.ac.leedsbeckett.finance.controller.AccountControllerIntegrationTest" time="0.385"/>
+  <testcase name="b_givenAccount_whenDelete_thenStatus204()" classname="uk.ac.leedsbeckett.finance.controller.AccountControllerIntegrationTest" time="0.011"/>
+  <testcase name="givenAccount_whenGetAccountByStudentId_thenStatus200()" classname="uk.ac.leedsbeckett.finance.controller.AccountControllerIntegrationTest" time="0.016"/>
+  <testcase name="givenAccounts_whenGetAccounts_thenStatus200()" classname="uk.ac.leedsbeckett.finance.controller.AccountControllerIntegrationTest" time="0.021"/>
+  <testcase name="givenExistingAccount_whenPostNewAccount_thenStatus422()" classname="uk.ac.leedsbeckett.finance.controller.AccountControllerIntegrationTest" time="0.034"/>
+  <testcase name="givenNoAccount_whenDelete_thenStatus404()" classname="uk.ac.leedsbeckett.finance.controller.AccountControllerIntegrationTest" time="0.009"/>
+  <testcase name="givenNoAccount_whenGetAccountById_thenStatus404()" classname="uk.ac.leedsbeckett.finance.controller.AccountControllerIntegrationTest" time="0.009"/>
+  <testcase name="givenNoAccount_whenGetAccountByStudentId_thenStatus404()" classname="uk.ac.leedsbeckett.finance.controller.AccountControllerIntegrationTest" time="0.009"/>
+  <testcase name="givenNoAccount_whenPostNewAccount_thenStatus201()" classname="uk.ac.leedsbeckett.finance.controller.AccountControllerIntegrationTest" time="0.012"/>
+  <testcase name="givenNoAccounts_whenGetAccounts_thenStatus200_andLinkToSelf()" classname="uk.ac.leedsbeckett.finance.controller.AccountControllerIntegrationTest" time="0.012"/>
+  <testcase name="whenPostNewAccount_withEmptyAccountValue_thenStatus422()" classname="uk.ac.leedsbeckett.finance.controller.AccountControllerIntegrationTest" time="0.009"/>
+  <testcase name="whenPostNewAccount_withEmptyJson_thenStatus400()" classname="uk.ac.leedsbeckett.finance.controller.AccountControllerIntegrationTest" time="0.009"/>
+  <system-out><![CDATA[2024-03-08 16:17:14.529  INFO 33604 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [uk.ac.leedsbeckett.finance.controller.AccountControllerIntegrationTest], using SpringBootContextLoader
+2024-03-08 16:17:14.530  INFO 33604 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [uk.ac.leedsbeckett.finance.controller.AccountControllerIntegrationTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2024-03-08 16:17:14.530  INFO 33604 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [uk.ac.leedsbeckett.finance.controller.AccountControllerIntegrationTest]: AccountControllerIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-03-08 16:17:14.542  INFO 33604 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration uk.ac.leedsbeckett.finance.FinanceApplication for test class uk.ac.leedsbeckett.finance.controller.AccountControllerIntegrationTest
+2024-03-08 16:17:14.545  INFO 33604 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2024-03-08 16:17:14.545  INFO 33604 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@d43f205, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@2da0770, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@3efd3302, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@531292ed, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@41538150, org.springframework.test.context.support.DirtiesContextTestExecutionListener@1360ef8d, org.springframework.test.context.transaction.TransactionalTestExecutionListener@44d2bbc0, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@310cc4d, org.springframework.test.context.event.EventPublishingTestExecutionListener@5e94947e, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@4a1c14a6, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@1bc1aa9e, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@1e366f0f, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@647b3fd3, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@4e68aede, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@586b78d7]
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.6.1)
+
+2024-03-08 16:17:14.615  INFO 33604 --- [    Test worker] a.l.f.c.AccountControllerIntegrationTest : Starting AccountControllerIntegrationTest using Java 16.0.2 on BOSU_Desktop with PID 33604 (started by Bosurgi in D:\Documents\Projects\SESC\SESC_Microservices\finance)
+2024-03-08 16:17:14.615  INFO 33604 --- [    Test worker] a.l.f.c.AccountControllerIntegrationTest : The following profiles are active: test
+2024-03-08 16:17:14.766  INFO 33604 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-03-08 16:17:14.776  INFO 33604 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 2 JPA repository interfaces.
+2024-03-08 16:17:14.946  INFO 33604 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-03-08 16:17:14.953  INFO 33604 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2024-03-08 16:17:15.125  INFO 33604 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2024-03-08 16:17:15.134  INFO 33604 --- [    Test worker] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2024-03-08 16:17:15.246  INFO 33604 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-03-08 16:17:15.246  INFO 33604 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-03-08 16:17:15.467  WARN 33604 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-03-08 16:17:15.834  INFO 33604 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-03-08 16:17:15.834  INFO 33604 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-03-08 16:17:15.835  INFO 33604 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2024-03-08 16:17:15.843  INFO 33604 --- [    Test worker] a.l.f.c.AccountControllerIntegrationTest : Started AccountControllerIntegrationTest in 1.295 seconds (JVM running for 9.045)
+2024-03-08 16:17:16.309  WARN 33604 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 23505, SQLState: 23505
+2024-03-08 16:17:16.309 ERROR 33604 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : Unique index or primary key violation: "PUBLIC.UK_17IO542RMNLPVHCC041W5790H_INDEX_E ON PUBLIC.ACCOUNT(STUDENT_ID) VALUES 9"; SQL statement:
+insert into account (id, student_id) values (null, ?) [23505-200]
+2024-03-08 16:17:16.389  WARN 33604 --- [    Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: org.springframework.http.ResponseEntity<?> uk.ac.leedsbeckett.finance.controller.AccountController.newAccount(uk.ac.leedsbeckett.finance.model.Account)]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

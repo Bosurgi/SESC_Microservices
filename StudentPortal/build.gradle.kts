@@ -34,9 +34,13 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-rest")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
-//    implementation("com.vaadin:vaadin-spring-boot-starter")
+    // API Calls
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    // Hilla
     implementation("dev.hilla:hilla-react-spring-boot-starter")
+    // Lombok Annotations
     compileOnly("org.projectlombok:lombok")
+
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("org.projectlombok:lombok")

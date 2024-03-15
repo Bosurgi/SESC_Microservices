@@ -1,5 +1,6 @@
 package com.sesc.studentportal.endpoint;
 
+import com.sesc.studentportal.dto.Invoice;
 import com.sesc.studentportal.model.Enrolments;
 import com.sesc.studentportal.model.Module;
 import com.sesc.studentportal.model.Student;
@@ -45,7 +46,24 @@ public class EnrolmentEndpoint {
         return enrolmentService.getAllEnrolmentsFromStudent(student);
     }
 
+    /**
+     * It gets all the modules a student is enrolled in by their student number.
+     *
+     * @param studentNumber the Student Unique Number
+     * @return a list of Modules the student is enrolled to
+     */
     public List<Module> getModulesFromEnrolments(String studentNumber) {
         return enrolmentService.getModulesFromEnrolments(studentNumber);
+    }
+
+    /**
+     * Creating Student Invoice
+     *
+     * @param student the student to create the invoice for
+     * @param module  the module the student is enrolling to
+     * @return the Invoice
+     */
+    public Invoice createInvoice(Student student, Module module) {
+        return enrolmentService.createInvoice(student, module);
     }
 }

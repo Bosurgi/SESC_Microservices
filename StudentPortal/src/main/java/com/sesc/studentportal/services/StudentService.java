@@ -36,11 +36,19 @@ public class StudentService {
             User userToRegister = user.get();
             student = new Student(userToRegister.getSurname(), userToRegister.getFirstname());
             userToRegister.setStudent(student);
-//            student.setUser(userToRegister);
             student.setIsEnrolled(true);
             studentRepository.save(student);
         }
         return student;
     }
 
+    /**
+     * It updates a Student with new information provided
+     *
+     * @param student the Student to update
+     * @return the updated Student
+     */
+    public Student updateStudent(Student student) {
+        return studentRepository.save(student);
+    }
 }

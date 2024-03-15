@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - PortalControllerIntegrationTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>PortalControllerIntegrationTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/uk.ac.leedsbeckett.finance.controller.html">uk.ac.leedsbeckett.finance.controller</a> &gt; PortalControllerIntegrationTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">8</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.372s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">givenInvoiceWithNonExistingReference_whenPostPayInvoice_thenStatus404()</td>
+<td class="success">0.023s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">givenInvoiceWithNullReference_whenPostPayInvoice_thenStatus404()</td>
+<td class="success">0.007s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">givenInvoice_whenPostFindInvoice_thenStatus200()</td>
+<td class="success">0.085s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">givenInvoice_whenPostPayInvoice_thenStatus200_andInvoicePaid()</td>
+<td class="success">0.013s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">givenNoInvoice_whenPostFindInvoice_thenStatus404()</td>
+<td class="success">0.010s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">whenGetPortalInvoice_thenStatus200()</td>
+<td class="success">0.009s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">whenGetPortal_thenStatus200()</td>
+<td class="success">0.217s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">whenGetRoot_thenRedirectToPortal_AndStatus302()</td>
+<td class="success">0.008s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2024-03-08 16:17:17.654  INFO 33604 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [uk.ac.leedsbeckett.finance.controller.PortalControllerIntegrationTest], using SpringBootContextLoader
+2024-03-08 16:17:17.655  INFO 33604 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [uk.ac.leedsbeckett.finance.controller.PortalControllerIntegrationTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2024-03-08 16:17:17.655  INFO 33604 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [uk.ac.leedsbeckett.finance.controller.PortalControllerIntegrationTest]: PortalControllerIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-03-08 16:17:17.657  INFO 33604 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration uk.ac.leedsbeckett.finance.FinanceApplication for test class uk.ac.leedsbeckett.finance.controller.PortalControllerIntegrationTest
+2024-03-08 16:17:17.659  INFO 33604 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2024-03-08 16:17:17.659  INFO 33604 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@3ffa424d, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@652cb87d, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@463c5d0f, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@5304cee, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@68b59e2f, org.springframework.test.context.support.DirtiesContextTestExecutionListener@685a3c14, org.springframework.test.context.transaction.TransactionalTestExecutionListener@4c2ad035, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@4b7ab262, org.springframework.test.context.event.EventPublishingTestExecutionListener@f7a19c4, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@36f93ea3, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@2c48eb31, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@323fa578, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@6d543ec2, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@12a719ed, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@79dd79eb]
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.6.1)
+
+2024-03-08 16:17:17.677  INFO 33604 --- [    Test worker] .a.l.f.c.PortalControllerIntegrationTest : Starting PortalControllerIntegrationTest using Java 16.0.2 on BOSU_Desktop with PID 33604 (started by Bosurgi in D:\Documents\Projects\SESC\SESC_Microservices\finance)
+2024-03-08 16:17:17.677  INFO 33604 --- [    Test worker] .a.l.f.c.PortalControllerIntegrationTest : The following profiles are active: test
+2024-03-08 16:17:17.816  INFO 33604 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-03-08 16:17:17.824  INFO 33604 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 2 JPA repository interfaces.
+2024-03-08 16:17:17.840  INFO 33604 --- [    Test worker] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-03-08 16:17:17.883  INFO 33604 --- [    Test worker] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:54e9cf90-cdbd-43bd-9269-85957ae42b08;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-03-08 16:17:17.912  INFO 33604 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-03-08 16:17:17.917  INFO 33604 --- [    Test worker] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2024-03-08 16:17:17.945  INFO 33604 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-03-08 16:17:17.945  INFO 33604 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-03-08 16:17:18.050  WARN 33604 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-03-08 16:17:18.298  INFO 33604 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-03-08 16:17:18.298  INFO 33604 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-03-08 16:17:18.298  INFO 33604 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-03-08 16:17:18.305  INFO 33604 --- [    Test worker] .a.l.f.c.PortalControllerIntegrationTest : Started PortalControllerIntegrationTest in 0.644 seconds (JVM running for 11.507)
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 7.3.1</a> at 8 Mar 2024, 16:17:20</p>
+</div>
+</div>
+</body>
+</html>
