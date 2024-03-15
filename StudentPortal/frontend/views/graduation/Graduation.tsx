@@ -9,31 +9,26 @@ export default function Graduation() {
 
     const [currentUser, setCurrentUser] = useState<User | undefined>();
     const [currentStudent, setCurrentStudent] = useState<Student>();
-    const [graduationStatus, setGraduationStatus] = useState<boolean>(true);
+    const [graduationStatus, setGraduationStatus] = useState<boolean>();
     const {state} = useAuth();
 
+    // TODO: Fix correct graduation status checker
     useEffect(() => {
         // Fetch the current student from user
-        const getCurrentUser = async () => {
+        const getStudentStatus = async () => {
             const user = await getUserByUsername(state.user?.name);
             setCurrentUser(user);
             const student = await getStudentByUser(user);
             setCurrentStudent(student);
-        }
-
-        const getStudentPaymentStatus = async () => {
-            await getCurrentUser();
-
-            if (currentStudent) {
-                const account = await IntegrationService.getStudentPaymentStatus(currentStudent.studentNumber);
+            if (student) {
+                const account = await IntegrationService.getStudentPaymentStatus(student.studentNumber);
                 if (account) {
                     setGraduationStatus(account.hasOutstandingBalance);
                 }
             }
         }
-        void getStudentPaymentStatus();
-
-    }, []);
+        void getStudentStatus();
+    }, [state]);
 
 
     return (

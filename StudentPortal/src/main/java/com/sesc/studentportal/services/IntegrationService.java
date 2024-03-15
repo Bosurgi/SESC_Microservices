@@ -129,15 +129,12 @@ public class IntegrationService {
      */
 
     public Account getStudentPaymentStatus(String studentId) {
-        return (Account) webClientBuilder.baseUrl(financeHost)
+        return webClientBuilder.baseUrl(financeHost)
                 .build()
                 .get()
                 .uri(financeUserStatus + studentId)
                 .retrieve()
                 .bodyToMono(Account.class)
-                .subscribe(response -> {
-                    // We could implement a callback below to handle the response if needed.
-                    System.out.println("Finance Service Response: " + response);
-                });
+                .block();
     }
 }
