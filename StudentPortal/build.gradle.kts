@@ -27,7 +27,7 @@ repositories {
 
 extra["snippetsDir"] = file("build/generated-snippets")
 extra["hillaVersion"] = "2.5.5"
-//extra["vaadinVersion"] = "24.3.3"
+extra["springCloudVersion"] = "2023.0.0"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -51,12 +51,16 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     // Security
     implementation("org.springframework.boot:spring-boot-starter-security")
+
+    // Eureka Client
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 }
 
 dependencyManagement {
     imports {
 //        mavenBom("com.vaadin:vaadin-bom:${property("vaadinVersion")}")
         mavenBom("dev.hilla:hilla-bom:${property("hillaVersion")}")
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
     }
 }
 

@@ -9,3 +9,5 @@ mysqlclient
 waitress~=2.0.0
 
 Werkzeug~=2.0.2
+dnspython
+py_eureka_client~=0.8.12
