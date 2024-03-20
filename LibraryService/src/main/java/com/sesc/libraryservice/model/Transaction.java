@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -25,8 +26,8 @@ public class Transaction {
     private Book book;
 
     @Temporal(TemporalType.DATE)
-    private Date dateBorrowed;
+    private LocalDate dateBorrowed;
 
     @Temporal(TemporalType.DATE)
-    private Date dateReturned;
+    private LocalDate dateReturned;
 }
