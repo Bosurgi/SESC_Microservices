@@ -6,7 +6,10 @@ import lombok.Getter;
 public enum LibraryConstants {
     FINE_PER_DAY(50),
     MAX_DAYS(14),
-    FINE_NAME("LIBRARY_FINE");
+    FINE_NAME("LIBRARY_FINE"),
+    DEFAULT_PIN("0000"),
+    STUDENT_ROLE("STUDENT"),
+    ADMIN_ROLE("ADMIN");
 
     private final Object value;
 
