@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -20,10 +20,10 @@ public class Fine {
         @JoinColumn(name = "transaction_id")
         private Transaction transaction;
 
-        private int amount;
+        private double amount;
 
         @Temporal(TemporalType.DATE)
-        private Date due;
+        private LocalDate due;
 
         private String type;
 
