@@ -15,9 +15,9 @@ public class TransactionController {
 
     private final TransactionService transactionService;
     private final BookService bookService;
-
     private final StudentService studentService;
 
+    // CONSTRUCTOR //
     public TransactionController(
             TransactionService transactionService,
             BookService bookService,
@@ -29,17 +29,12 @@ public class TransactionController {
         this.studentService = studentService;
     }
 
-    @PostMapping("/return/{transactionId}")
-    public ResponseEntity<Transaction> returnBook(@PathVariable Long transactionId) {
-        try {
-            Transaction transaction = transactionService.findTransactionById(transactionId);
-            return ResponseEntity.ok(transactionService.returnTransaction(transaction));
-
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
+    /**
+     * Creates a transaction when a student borrows a book.
+     * @param studentId the studentId borrowing the book
+     * @param bookIsbn the bookIsbn borrowed by the student
+     * @return the new Transaction with HTTP Status code
+     */
     @PostMapping("/borrow")
     public ResponseEntity<Transaction> borrowBook(@RequestParam String studentId, @RequestParam String bookIsbn) {
         try{
@@ -52,4 +47,21 @@ public class TransactionController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /**
+     * Updates the transaction when a book is returned.
+     * @param transactionId the transactionId to update
+     * @return the new Transaction with HTTP Status code
+     */
+    @PostMapping("/return/{transactionId}")
+    public ResponseEntity<Transaction> returnBook(@PathVariable Long transactionId) {
+        try {
+            Transaction transaction = transactionService.findTransactionById(transactionId);
+            return ResponseEntity.ok(transactionService.returnTransaction(transaction));
+
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
