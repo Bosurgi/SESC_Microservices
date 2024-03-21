@@ -33,13 +33,9 @@ public class TransactionController {
     }
 
     @PostMapping("/return")
-    public ResponseEntity<Transaction> returnBook(@RequestParam String studentId, @RequestParam String bookIsbn) {
-        // Fetching Book and Student to create the Transaction
-        Book book = bookService.findBookByIsbn(bookIsbn);
-        Student student = studentService.getStudentById(studentId);
-
-        Transaction transaction = transactionService.createTransaction(student, book);
-        return ResponseEntity.ok(transaction);
+    public ResponseEntity<Transaction> returnBook(@RequestParam Long transactionId) {
+        Transaction transaction = transactionService.findTransactionById(transactionId);
+        return ResponseEntity.ok(transactionService.returnTransaction(transaction));
     }
 
     @PostMapping("/borrow")
@@ -47,8 +43,7 @@ public class TransactionController {
         // Fetching Book and Student to create the Transaction
         Book book = bookService.findBookByIsbn(bookIsbn);
         Student student = studentService.getStudentById(studentId);
-        // TODO: Implement different service Logic for borrowing
-        Transaction transaction = transactionService.createTransaction(student, book);
+        Transaction transaction = transactionService.borrowTransaction(student, book);
         return ResponseEntity.ok(transaction);
     }
 }

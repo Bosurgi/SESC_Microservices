@@ -32,7 +32,7 @@ public class TransactionService {
      * @param book the book borrowed by the student
      * @return the transaction created
      */
-    public Transaction createTransaction(Student student, Book book) {
+    public Transaction borrowTransaction(Student student, Book book) {
         Transaction transaction = new Transaction();
         LocalDate date = LocalDate.now();
         transaction.setStudent(student);
@@ -46,7 +46,10 @@ public class TransactionService {
      * @param transaction the transaction to be updated
      * @return the updated transaction
      */
-    public Transaction updateTransaction(Transaction transaction) {
+    public Transaction returnTransaction(Transaction transaction) {
+        transaction.setDateReturned(LocalDate.now());
+        // Checking for late returns
+        recordLateReturn(transaction);
         return transactionRepository.save(transaction);
     }
 
