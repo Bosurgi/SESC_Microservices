@@ -1,0 +1,38 @@
+version: '3.9'
+
+networks:
+  default:
+    external: true
+    name: finance_default
+
+services:
+
+  librarycustomdb:
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_PASSWORD: library
+      POSTGRES_USER: library
+      POSTGRES_DB: library
+#    volumes:
+#      - ./modules-data.sql:/docker-entrypoint-initdb.d/modules-data.sql
+#      - pgdata:/var/lib/postgresql/data
+
+  librarycustom:
+
+    build:
+      dockerfile: Dockerfile
+
+    ports:
+      - "8082:8082"
+
+    expose:
+      - "8082"
+
+    depends_on:
+      - librarycustomdb
+
+    networks:
+      - default
