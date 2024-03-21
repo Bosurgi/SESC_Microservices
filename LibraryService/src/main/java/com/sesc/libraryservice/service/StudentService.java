@@ -5,6 +5,8 @@ import com.sesc.libraryservice.model.Student;
 import com.sesc.libraryservice.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class StudentService {
 
@@ -36,5 +38,15 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
+    public Student getStudentById(String studentId) {
+        return studentRepository.findStudentByStudentId(studentId);
+    }
 
+    /**
+     * Gets all the students from the database.
+     * @return a List of Students
+     */
+    public List<Student> getAllStudents() {
+        return studentRepository.findAll();
+    }
 }
