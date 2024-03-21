@@ -7,10 +7,7 @@ import com.sesc.libraryservice.service.BookService;
 import com.sesc.libraryservice.service.StudentService;
 import com.sesc.libraryservice.service.TransactionService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/transactions")
@@ -32,18 +29,27 @@ public class TransactionController {
         this.studentService = studentService;
     }
 
-    @PostMapping("/return")
-    public ResponseEntity<Transaction> returnBook(@RequestParam Long transactionId) {
-        Transaction transaction = transactionService.findTransactionById(transactionId);
-        return ResponseEntity.ok(transactionService.returnTransaction(transaction));
+    @PostMapping("/return/{transactionId}")
+    public ResponseEntity<Transaction> returnBook(@PathVariable Long transactionId) {
+        try {
+            Transaction transaction = transactionService.findTransactionById(transactionId);
+            return ResponseEntity.ok(transactionService.returnTransaction(transaction));
+
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping("/borrow")
     public ResponseEntity<Transaction> borrowBook(@RequestParam String studentId, @RequestParam String bookIsbn) {
-        // Fetching Book and Student to create the Transaction
+        try{
         Book book = bookService.findBookByIsbn(bookIsbn);
         Student student = studentService.getStudentById(studentId);
         Transaction transaction = transactionService.borrowTransaction(student, book);
+        // Fetching Book and Student to create the Transaction
         return ResponseEntity.ok(transaction);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
