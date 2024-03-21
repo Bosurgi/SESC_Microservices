@@ -40,7 +40,7 @@ public class StudentController {
      * @param studentId the studentId of the student to create
      * @return the created student entity and HTTP status code
      */
-    @PostMapping("/students/{studentId}")
+    @PostMapping("/students/register/{studentId}")
     public ResponseEntity<Student> createStudent(@PathVariable String studentId) {
         Student student = studentService.createStudent(studentId);
         return ResponseEntity.ok(student);
