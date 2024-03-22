@@ -3,6 +3,8 @@ package com.sesc.libraryservice.service;
 import com.sesc.libraryservice.constants.LibraryConstants;
 import com.sesc.libraryservice.model.Student;
 import com.sesc.libraryservice.repository.StudentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +13,12 @@ import java.util.List;
 public class StudentService {
 
     private final StudentRepository studentRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public StudentService(StudentRepository studentRepository) {
+    @Autowired
+    public StudentService(StudentRepository studentRepository, PasswordEncoder passwordEncoder) {
         this.studentRepository = studentRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -24,14 +29,16 @@ public class StudentService {
      */
     public Student createStudent(String studentId) throws RuntimeException {
         // Check if the student already exists
-        if (studentRepository.findStudentByStudentId(studentId) != null) {
+        if (studentRepository.findStudentByStudentId(studentId).isPresent()) {
             throw new RuntimeException("Student with ID " + studentId + " already exists");
         }
 
         // Create a new student entity
         Student student = new Student();
         student.setStudentId(studentId);
-        student.setPassword(LibraryConstants.DEFAULT_PIN.getStringValue());
+        // Encoding the default pin using BCrypt encoder
+        String encodedPassword = passwordEncoder.encode(LibraryConstants.DEFAULT_PIN.getStringValue());
+        student.setPassword(encodedPassword);
         student.setRole(LibraryConstants.STUDENT_ROLE.getStringValue());
 
         // Save the student entity in the database
@@ -39,11 +46,12 @@ public class StudentService {
     }
 
     public Student getStudentById(String studentId) {
-        return studentRepository.findStudentByStudentId(studentId);
+        return studentRepository.findStudentByStudentId(studentId).orElse(null);
     }
 
     /**
      * Gets all the students from the database.
+     *
      * @return a List of Students
      */
     public List<Student> getAllStudents() {

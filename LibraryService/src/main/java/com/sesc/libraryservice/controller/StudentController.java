@@ -1,5 +1,6 @@
 package com.sesc.libraryservice.controller;
 
+import com.sesc.libraryservice.dto.StudentRequest;
 import com.sesc.libraryservice.model.Student;
 import com.sesc.libraryservice.service.StudentService;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ public class StudentController {
 
     /**
      * Get a student by the studentId
+     *
      * @param studentId the studentId to search for
      * @return the student entity along with HTTP Status code.
      */
@@ -37,12 +39,17 @@ public class StudentController {
 
     /**
      * Post request endpoint to create a student
-     * @param studentId the studentId of the student to create
+     *
+     * @param studentRequest the POJO of the student to create
      * @return the created student entity and HTTP status code
      */
-    @PostMapping("/students/register/{studentId}")
-    public ResponseEntity<Student> createStudent(@PathVariable String studentId) {
-        Student student = studentService.createStudent(studentId);
-        return ResponseEntity.ok(student);
+    @PostMapping("/students/register/")
+    public ResponseEntity<Student> createStudent(@RequestBody StudentRequest studentRequest) {
+        try {
+            Student student = studentService.createStudent(studentRequest.getStudentId());
+            return ResponseEntity.ok(student);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
