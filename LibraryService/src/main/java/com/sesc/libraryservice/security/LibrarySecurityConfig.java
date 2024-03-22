@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configurers.LogoutConf
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
 
 @Configuration
@@ -31,13 +32,15 @@ public class LibrarySecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/api/v1/students/register/").permitAll()
-                        .requestMatchers("/api/v1/auth/login").permitAll()
                         .anyRequest().authenticated())
 
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .permitAll())
                 .csrf(AbstractHttpConfigurer::disable)
+
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")))
 
                 .logout(LogoutConfigurer::permitAll);
 
