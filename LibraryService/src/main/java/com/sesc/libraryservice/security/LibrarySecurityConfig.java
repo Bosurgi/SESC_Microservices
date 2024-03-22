@@ -29,19 +29,15 @@ public class LibrarySecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((requests) -> requests.anyRequest().permitAll())
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/api/v1/students/register/").permitAll()
+                        .requestMatchers("/api/v1/auth/login").permitAll()
+                        .anyRequest().authenticated())
+
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/login")
+                        .permitAll())
                 .csrf(AbstractHttpConfigurer::disable)
-
-//                .authorizeHttpRequests((requests) -> requests
-//                        .requestMatchers("/", "/home").permitAll()
-//                        .anyRequest().authenticated()
-//                )
-
-
-//                .formLogin((form) -> form
-//                        .loginPage("/login")
-//                        .permitAll()
-//                )
 
                 .logout(LogoutConfigurer::permitAll);
 
