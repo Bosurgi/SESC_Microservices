@@ -47,7 +47,7 @@ public class LibraryUserDetailsService implements UserDetailsService {
     private Collection<? extends GrantedAuthority> getAuthorities(String roles) {
         List<String> roleList = Arrays.asList(roles.split(","));
         return roleList.stream()
-                .map(role -> (GrantedAuthority) () -> "ROLE_" + role)
+                .map(role -> (GrantedAuthority) () -> role)
                 .toList();
     }
 }
