@@ -23,6 +23,8 @@ public class Student {
 
     private String role;
 
+    private boolean isFirstLogin;
+
     @OneToMany(mappedBy = "student")
     private List<Transaction> transactions;
 }

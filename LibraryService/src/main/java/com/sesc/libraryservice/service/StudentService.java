@@ -40,6 +40,7 @@ public class StudentService {
         String encodedPassword = passwordEncoder.encode(LibraryConstants.DEFAULT_PIN.getStringValue());
         student.setPassword(encodedPassword);
         student.setRole(LibraryConstants.STUDENT_ROLE.getStringValue());
+        student.setFirstLogin(true);
 
         // Save the student entity in the database
         return studentRepository.save(student);
