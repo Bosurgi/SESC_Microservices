@@ -4,6 +4,7 @@ import com.sesc.libraryservice.model.Student;
 import com.sesc.libraryservice.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -47,7 +48,7 @@ public class LibraryUserDetailsService implements UserDetailsService {
     private Collection<? extends GrantedAuthority> getAuthorities(String roles) {
         List<String> roleList = Arrays.asList(roles.split(","));
         return roleList.stream()
-                .map(role -> (GrantedAuthority) () -> role)
+                .map(SimpleGrantedAuthority::new)
                 .toList();
     }
 }
