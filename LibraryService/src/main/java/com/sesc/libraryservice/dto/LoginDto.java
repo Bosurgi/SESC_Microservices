@@ -9,4 +9,5 @@ import lombok.Data;
 public class LoginDto {
     private String studentId;
     private String password;
+    private boolean isFirstLogin;
 }
