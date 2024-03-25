@@ -46,6 +46,23 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
+    public Student updateStudent(Student student) {
+        Student studentToUpdate = studentRepository.findStudentByStudentId(student.getStudentId())
+                .orElseThrow(() -> new RuntimeException("Student with ID " + student.getStudentId() + " not found"));
+
+        studentToUpdate.setPassword(student.getPassword());
+        studentToUpdate.setRole(student.getRole());
+        studentToUpdate.setFirstLogin(student.isFirstLogin());
+
+        return studentRepository.save(studentToUpdate);
+    }
+
+    /**
+     * Gets a student by the studentId.
+     *
+     * @param studentId the ID of the student
+     * @return the student entity
+     */
     public Student getStudentById(String studentId) {
         return studentRepository.findStudentByStudentId(studentId).orElse(null);
     }
