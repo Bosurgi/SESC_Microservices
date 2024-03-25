@@ -3,13 +3,20 @@ package com.sesc.libraryservice.controller;
 import com.sesc.libraryservice.dto.LoginDto;
 import com.sesc.libraryservice.model.Student;
 import com.sesc.libraryservice.service.StudentService;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class AuthController {
@@ -71,8 +78,24 @@ public class AuthController {
         // Save the updated student information
         studentService.updateStudent(student);
 
+        // Update the authentication object with the new role to give user access to the website
+        updateAuthenticationWithRole(auth, student.getRole());
+
         // Redirect to the home page or any other appropriate page
         return "redirect:/";
     }
 
+    /**
+     * Helper method to update the authentication object with the new role
+     *
+     * @param auth the authentication object
+     * @param role the new role to add
+     */
+    private void updateAuthenticationWithRole(Authentication auth, String role) {
+        List<GrantedAuthority> updatedAuthorities = new ArrayList<>(auth.getAuthorities());
+        updatedAuthorities.add(new SimpleGrantedAuthority(role));
+
+        Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
+        SecurityContextHolder.getContext().setAuthentication(newAuth);
+    }
 }
