@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Books</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navbar Fragment -->
+<div th:replace="fragments/navbar"></div>
+
+<div class="container mx-auto">
+    <h1 class="text-3xl font-bold mb-4">Books</h1>
+    <table class="min-w-full divide-y divide-gray-200">
+        <!-- Grid Titles -->
+        <thead>
+        <tr>
+            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                Title
+            </th>
+            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                Author
+            </th>
+            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                ISBN
+            </th>
+            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                Year
+            </th>
+            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                Copies
+            </th>
+        </tr>
+        </thead>
+
+        <!-- Populating the Grid if there are books available -->
+        <tbody>
+        <tr th:if="${books.isEmpty()}">
+            <td colspan="5" class="px-6 py-4 whitespace-no-wrap">No Books Available</td>
+        </tr>
+        <tr th:each="book : ${books}">
+            <td class="px-6 py-4 whitespace-no-wrap"><span th:text="${book.getTitle()}">Title</span></td>
+            <td class="px-6 py-4 whitespace-no-wrap"><span th:text="${book.getAuthor()}">Author</span></td>
+            <td class="px-6 py-4 whitespace-no-wrap"><span th:text="${book.getIsbn()}">ISBN</span></td>
+            <td class="px-6 py-4 whitespace-no-wrap"><span th:text="${book.getYear()}">Year</span></td>
+            <td class="px-6 py-4 whitespace-no-wrap"><span th:text="${book.getCopies()}">Copies</span></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

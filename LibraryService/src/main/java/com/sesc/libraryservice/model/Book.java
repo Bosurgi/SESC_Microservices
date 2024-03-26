@@ -30,4 +30,12 @@ public class Book {
 
     private int copies;
 
+    // CONSTRUCTOR WITHOUT ID//
+    public Book(String isbn, String title, String author, int year, int copies) {
+        this.isbn = isbn;
+        this.title = title;
+        this.author = author;
+        this.year = year;
+        this.copies = copies;
+    }
 }
