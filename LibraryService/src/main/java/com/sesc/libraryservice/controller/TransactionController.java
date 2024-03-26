@@ -8,6 +8,7 @@ import com.sesc.libraryservice.service.StudentService;
 import com.sesc.libraryservice.service.TransactionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -48,15 +49,19 @@ public class TransactionController {
      * @return the new Transaction with HTTP Status code
      */
     @PostMapping("/borrow")
-    public ResponseEntity<Transaction> borrowBook(@RequestParam String studentId, @RequestParam String bookIsbn) {
+    public String borrowBook(@RequestParam String studentId, @RequestParam String bookIsbn, Model model) {
         try {
+            // Fetching Book and Student to create the Transaction
             Book book = bookService.findBookByIsbn(bookIsbn);
             Student student = studentService.getStudentById(studentId);
             Transaction transaction = transactionService.borrowTransaction(student, book);
-            // Fetching Book and Student to create the Transaction
-            return ResponseEntity.ok(transaction);
+
+            // Adding success message
+            model.addAttribute("success", "Book borrowed successfully");
+            return "borrow";
         } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+            model.addAttribute("error", "Error borrowing book");
+            return "borrow";
         }
     }
 
