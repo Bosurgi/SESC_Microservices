@@ -1,12 +1,14 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>Home</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <!-- this is where we refer the css file from src/main/resources/static/main.css -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
+
+<div th:replace="fragments/navbar"></div>
+
 <h1 class="mt-2 text-xl" th:text="'Hello!'"/>
 <p th:text="'Welcome to the home page!'"/>
 </body>
