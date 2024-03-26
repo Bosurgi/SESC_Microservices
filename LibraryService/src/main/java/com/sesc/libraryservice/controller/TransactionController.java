@@ -7,9 +7,10 @@ import com.sesc.libraryservice.service.BookService;
 import com.sesc.libraryservice.service.StudentService;
 import com.sesc.libraryservice.service.TransactionService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequestMapping("/api/v1/transactions")
 public class TransactionController {
 
@@ -30,19 +31,30 @@ public class TransactionController {
     }
 
     /**
+     * It gets the Borrow Book Page
+     *
+     * @return the borrow page
+     */
+    @GetMapping("/borrow")
+    public String borrowBookPage() {
+        return "borrow";
+    }
+
+    /**
      * Creates a transaction when a student borrows a book.
+     *
      * @param studentId the studentId borrowing the book
-     * @param bookIsbn the bookIsbn borrowed by the student
+     * @param bookIsbn  the bookIsbn borrowed by the student
      * @return the new Transaction with HTTP Status code
      */
     @PostMapping("/borrow")
     public ResponseEntity<Transaction> borrowBook(@RequestParam String studentId, @RequestParam String bookIsbn) {
-        try{
-        Book book = bookService.findBookByIsbn(bookIsbn);
-        Student student = studentService.getStudentById(studentId);
-        Transaction transaction = transactionService.borrowTransaction(student, book);
-        // Fetching Book and Student to create the Transaction
-        return ResponseEntity.ok(transaction);
+        try {
+            Book book = bookService.findBookByIsbn(bookIsbn);
+            Student student = studentService.getStudentById(studentId);
+            Transaction transaction = transactionService.borrowTransaction(student, book);
+            // Fetching Book and Student to create the Transaction
+            return ResponseEntity.ok(transaction);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
@@ -50,6 +62,7 @@ public class TransactionController {
 
     /**
      * Updates the transaction when a book is returned.
+     *
      * @param transactionId the transactionId to update
      * @return the new Transaction with HTTP Status code
      */

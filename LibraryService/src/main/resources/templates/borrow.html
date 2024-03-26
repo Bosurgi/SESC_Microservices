@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Borrow Book</title>
+</head>
+<body>
+
+<!-- Navbar fragment -->
+<div th:replace="fragments/navbar"></div>
+
+<h1>Borrow a Book</h1>
+<!-- Use Thymeleaf expression to get authenticated user's ID -->
+<form action="/api/v1/transactions/borrow" method="post">
+    <input type="hidden" name="studentId" th:value="${#authentication.principal.username}"/>
+    <label for="isbn">ISBN:</label>
+    <input type="text" id="isbn" name="bookIsbn" required>
+    <button type="submit">Borrow</button>
+</form>
+</body>
+</html>
