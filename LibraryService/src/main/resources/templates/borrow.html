@@ -1,21 +1,39 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Borrow Book</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
 
-<!-- Navbar fragment -->
+<!-- Navbar -->
 <div th:replace="fragments/navbar"></div>
 
-<h1>Borrow a Book</h1>
-<!-- Use Thymeleaf expression to get authenticated user's ID -->
-<form action="/api/v1/transactions/borrow" method="post">
-    <input type="hidden" name="studentId" th:value="${#authentication.principal.username}"/>
-    <label for="isbn">ISBN:</label>
-    <input type="text" id="isbn" name="bookIsbn" required>
-    <button type="submit">Borrow</button>
-</form>
+<body class="bg-gray-100">
+
+<div class="container mx-auto mt-8">
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-md mx-auto">
+        <h1 class="text-2xl font-bold mb-4">Borrow Book</h1>
+        <!-- Borrow Book Form -->
+        <form th:action="@{/api/v1/transactions/borrow}" method="post">
+            <div class="mb-4">
+                <input type="hidden" name="studentId" th:value="${#authentication.principal.username}"/>
+
+                <label for="isbn" class="block text-gray-700 text-sm font-bold mb-2">ISBN</label>
+                <input id="isbn" name="bookIsbn" type="text"
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       placeholder="Enter ISBN" required>
+            </div>
+            <div class="flex items-center justify-between">
+                <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Borrow
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>
+
