@@ -54,20 +54,24 @@ public class AuthController {
     public String changePassword(@RequestParam("currentPassword") String currentPassword,
                                  @RequestParam("newPassword") String newPassword,
                                  @RequestParam("confirmPassword") String confirmPassword,
-                                 Authentication auth) {
-
+                                 Authentication auth,
+                                 Model model) {
         // Validate if the new password and confirm password match
         if (!newPassword.equals(confirmPassword)) {
             // Handle password mismatch error
-            // TODO: Password mismatch error handling below to implement below is an example
-            return "redirect:/changepassword?error=passwordMismatch";
+            model.addAttribute("passNotMatching", "Passwords do not match");
+            return "changepassword";
         }
 
         // Retrieve the student from the authentication object
         Student student = studentService.getStudentById(auth.getName());
-        System.out.println("Authorities: " + auth.getAuthorities());
 
-        // TODO: Implement the password validation logic below here
+        // Check if the current password is not the same
+        if (!passwordEncoder.matches(currentPassword, student.getPassword())) {
+            // Handle incorrect password error
+            model.addAttribute("samePassword", "Please use a different password from the default one");
+            return "changepassword";
+        }
 
         newPassword = passwordEncoder.encode(newPassword);
         // Update the student's password, role, and first login status

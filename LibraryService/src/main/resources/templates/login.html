@@ -6,9 +6,12 @@
     <!-- Include Tailwind CSS from CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
+
 <div class="bg-white p-8 rounded shadow-md w-80">
     <h1 class="text-2xl font-bold mb-4">Login</h1>
+
     <form th:action="@{/login}" method="post" th:object="${loginDto}">
         <div class="mb-4">
             <label for="studentId" class="block text-gray-700">Username:</label>
