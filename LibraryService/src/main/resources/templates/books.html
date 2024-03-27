@@ -42,11 +42,11 @@
                 <td colspan="5" class="px-6 py-4 whitespace-no-wrap">No Books Available</td>
             </tr>
             <tr th:each="book : ${books}">
-                <td class="px-6 py-4 whitespace-no-wrap"><span th:text="${book.getTitle()}">Title</span></td>
-                <td class="px-6 py-4 whitespace-no-wrap"><span th:text="${book.getAuthor()}">Author</span></td>
-                <td class="px-6 py-4 whitespace-no-wrap"><span th:text="${book.getIsbn()}">ISBN</span></td>
-                <td class="px-6 py-4 whitespace-no-wrap"><span th:text="${book.getYear()}">Year</span></td>
-                <td class="px-6 py-4 whitespace-no-wrap"><span th:text="${book.getCopies()}">Copies</span></td>
+                <td class="px-6 py-4 whitespace-no-wrap"><span th:text="${book.getTitle()}"></span></td>
+                <td class="px-6 py-4 whitespace-no-wrap"><span th:text="${book.getAuthor()}"></span></td>
+                <td class="px-6 py-4 whitespace-no-wrap"><span th:text="${book.getIsbn()}"></span></td>
+                <td class="px-6 py-4 whitespace-no-wrap"><span th:text="${book.getYear()}"></span></td>
+                <td class="px-6 py-4 whitespace-no-wrap"><span th:text="${book.getCopies()}"></span></td>
             </tr>
             </tbody>
         </table>
