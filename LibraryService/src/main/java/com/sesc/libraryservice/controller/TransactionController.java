@@ -6,10 +6,12 @@ import com.sesc.libraryservice.model.Transaction;
 import com.sesc.libraryservice.service.BookService;
 import com.sesc.libraryservice.service.StudentService;
 import com.sesc.libraryservice.service.TransactionService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.List;
@@ -71,19 +73,28 @@ public class TransactionController {
     }
 
     /**
-     * Updates the transaction when a book is returned.
+     * It updates the transaction when a student returns a book.
+     * It also checks for late returns and records them.
      *
-     * @param transactionId the transactionId to update
-     * @return the new Transaction with HTTP Status code
+     * @param model     the model to add the success or error message to.
+     * @param principal the current logged user.
+     * @param bookIsbn  the bookIsbn returned by the student.
+     * @return the return page with the success or error message.
      */
-    @PostMapping("/return/{transactionId}")
-    public ResponseEntity<Transaction> returnBook(@PathVariable Long transactionId) {
+    @PostMapping("/return")
+    public String returnBook(Model model, Principal principal, @RequestParam String bookIsbn) {
         try {
-            Transaction transaction = transactionService.findTransactionById(transactionId);
-            return ResponseEntity.ok(transactionService.returnTransaction(transaction));
+            Book bookToReturn = bookService.findBookByIsbn(bookIsbn);
+            Student currentStudent = studentService.getStudentById(principal.getName());
+            Transaction transactionToUpdate = transactionService.findTransactionByBookAndStudent(bookToReturn, currentStudent);
+            transactionService.returnTransaction(transactionToUpdate);
+
+            model.addAttribute("success", "Book returned successfully");
+            return "return";
 
         } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+            model.addAttribute("error", "Error returning book");
+            return "return";
         }
     }
 

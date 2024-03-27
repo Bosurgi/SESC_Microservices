@@ -68,6 +68,10 @@ public class TransactionService {
         return transactionRepository.findTransactionByBook(book);
     }
 
+    public Transaction findTransactionByBookAndStudent(Book book, Student student) {
+        return transactionRepository.findTransactionByBookAndStudent(book, student);
+    }
+
     /**
      * It records a fine when a book is returned late.
      *

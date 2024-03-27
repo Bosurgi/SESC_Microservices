@@ -16,4 +16,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     List<Transaction> findAllByStudent(Student student);
 
     Transaction findTransactionByBook(Book book);
+
+    Transaction findTransactionByBookAndStudent(Book book, Student student);
+    
 }
