@@ -69,7 +69,7 @@ public class TransactionController {
             // Fetching Book and Student to create the Transaction
             Book book = bookService.findBookByIsbn(bookIsbn);
             Student student = studentService.getStudentById(principal.getName());
-            Transaction transaction = transactionService.borrowTransaction(student, book);
+            transactionService.borrowTransaction(student, book);
             // Update the book copies to reflect the borrowed book
             bookService.updateBookCopies(book.getId(), 1);
 
@@ -94,9 +94,13 @@ public class TransactionController {
     @PostMapping("/return")
     public String returnBook(Model model, Principal principal, @RequestParam String bookIsbn) {
         try {
+            // Fetching Book and Student to update the Transaction
             Book bookToReturn = bookService.findBookByIsbn(bookIsbn);
             Student currentStudent = studentService.getStudentById(principal.getName());
+            // Fetching the transaction based on book and student
             Transaction transactionToUpdate = transactionService.findTransactionByBookAndStudent(bookToReturn, currentStudent);
+            // Updating the transaction and book copies
+            bookService.updateBookCopies(bookToReturn.getId(), -1);
             transactionService.returnTransaction(transactionToUpdate);
 
             model.addAttribute("success", "Book returned successfully");
