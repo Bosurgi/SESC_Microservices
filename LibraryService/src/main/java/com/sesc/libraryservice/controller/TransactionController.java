@@ -55,6 +55,8 @@ public class TransactionController {
             Book book = bookService.findBookByIsbn(bookIsbn);
             Student student = studentService.getStudentById(studentId);
             Transaction transaction = transactionService.borrowTransaction(student, book);
+            // Update the book copies to reflect the borrowed book
+            bookService.updateBookCopies(book.getId(), 1);
 
             // Adding success message
             model.addAttribute("success", "Book borrowed successfully");

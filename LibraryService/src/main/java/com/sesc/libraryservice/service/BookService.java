@@ -34,4 +34,15 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
+    /**
+     * Updates the book copies when a student borrows a book.
+     *
+     * @param bookId       the bookId of the book borrowed
+     * @param borrowedCopy the number of copies borrowed
+     */
+    public void updateBookCopies(Long bookId, int borrowedCopy) {
+        Book book = findBookById(bookId);
+        book.setCopies(book.getCopies() - borrowedCopy);
+        bookRepository.save(book);
+    }
 }
