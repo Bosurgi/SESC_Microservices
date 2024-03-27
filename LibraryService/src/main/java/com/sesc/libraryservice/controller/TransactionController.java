@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -89,14 +90,14 @@ public class TransactionController {
     /**
      * It gets the Account Page with all transactions of a student
      *
-     * @param studentId the studentId to get transactions for
+     * @param principal the current logged user
      * @param model     the model to add the transactions to and display on the page
      * @return the account page
      */
     @GetMapping()
-    public String getTransactions(@RequestParam String studentId, Model model) {
+    public String getTransactions(Principal principal, Model model) {
         // Fetching current student and all transactions
-        Student currentStudent = studentService.getStudentById(studentId);
+        Student currentStudent = studentService.getStudentById(principal.getName());
         List<Transaction> transactions = transactionService.findAllTransactionsByStudent(currentStudent);
         // Adding the transactions to the model to display on the page
         model.addAttribute("transactions", transactions);
