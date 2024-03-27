@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/api/v1/transactions")
 public class TransactionController {
@@ -82,6 +84,23 @@ public class TransactionController {
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    /**
+     * It gets the Account Page with all transactions of a student
+     *
+     * @param studentId the studentId to get transactions for
+     * @param model     the model to add the transactions to and display on the page
+     * @return the account page
+     */
+    @GetMapping()
+    public String getTransactions(@RequestParam String studentId, Model model) {
+        // Fetching current student and all transactions
+        Student currentStudent = studentService.getStudentById(studentId);
+        List<Transaction> transactions = transactionService.findAllTransactionsByStudent(currentStudent);
+        // Adding the transactions to the model to display on the page
+        model.addAttribute("transactions", transactions);
+        return "account";
     }
 
 }

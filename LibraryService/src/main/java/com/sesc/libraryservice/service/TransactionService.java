@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Service
 public class TransactionService {
@@ -28,8 +29,9 @@ public class TransactionService {
 
     /**
      * It creates a transaction when a student borrows a book.
+     *
      * @param student the student borrowing the book
-     * @param book the book borrowed by the student
+     * @param book    the book borrowed by the student
      * @return the transaction created
      */
     public Transaction borrowTransaction(Student student, Book book) {
@@ -43,6 +45,7 @@ public class TransactionService {
 
     /**
      * It updates the transaction when a student returns a book.
+     *
      * @param transaction the transaction to be updated
      * @return the updated transaction
      */
@@ -53,8 +56,8 @@ public class TransactionService {
         return transactionRepository.save(transaction);
     }
 
-    public Transaction findTransactionByStudent(Student student) {
-        return transactionRepository.findTransactionByStudent(student);
+    public List<Transaction> findAllTransactionsByStudent(Student student) {
+        return transactionRepository.findAllByStudent(student);
     }
 
     public Transaction findTransactionById(Long id) {
@@ -67,6 +70,7 @@ public class TransactionService {
 
     /**
      * It records a fine when a book is returned late.
+     *
      * @param transaction the transaction to be updated
      */
     public void recordLateReturn(Transaction transaction) {
@@ -74,7 +78,7 @@ public class TransactionService {
         LocalDate dateReturned = transaction.getDateReturned();
 
         // Calculating the fine is book returned late
-        if(dateReturned.isAfter(dueDate)) {
+        if (dateReturned.isAfter(dueDate)) {
             long daysLate = ChronoUnit.DAYS.between(dueDate, dateReturned);
             double fineValue = daysLate * LibraryConstants.FINE_PER_DAY.getDoubleValue();
             Fine fine = new Fine();
