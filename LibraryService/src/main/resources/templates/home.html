@@ -5,11 +5,26 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-gray-100">
 
-<div th:replace="~{fragments/navbar}"></div>
+<div th:replace="~{fragments/navbar}" class="w-full"></div>
 
-<h1 class="mt-2 text-xl" th:text="'Hello!'"/>
-<p th:text="'Welcome to the home page!'"/>
+<div class="flex flex-col items-center justify-start h-screen pt-16">
+    <h1 class="text-3xl font-bold mb-4">Welcome to the Library Portal</h1>
+
+    <div class="mt-4 flex flex-col items-center justify-start">
+        <p class="text-lg font-bold">Maximum Borrowing Length</p>
+        <p class="ml-4">You can borrow books for up to 14 days.</p>
+    </div>
+
+    <div class="mt-8 flex flex-col items-center justify-start">
+        <p class="text-lg font-bold">Late Return Fine</p>
+        <p class="ml-4">If a book is returned late, a fine will be issued.</p>
+        <p class="ml-4">
+            The fine must be paid through the Finance
+            Portal using the provided Invoice Reference.</p>
+    </div>
+</div>
+
 </body>
 </html>
