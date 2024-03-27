@@ -47,7 +47,7 @@ public class TransactionController {
     /**
      * Creates a transaction when a student borrows a book.
      *
-     * @param studentId the studentId borrowing the book
+     * @param principal the current logged user
      * @param bookIsbn  the bookIsbn borrowed by the student
      * @return the new Transaction with HTTP Status code
      */
