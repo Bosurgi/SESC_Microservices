@@ -33,8 +33,7 @@
             <!-- Borrow Book Form -->
             <form th:action="@{/api/v1/transactions/borrow}" method="post">
                 <div class="mb-4">
-                    <input type="hidden" name="studentId" th:value="${#authentication.principal.username}"/>
-
+                    
                     <label for="isbn" class="block text-gray-700 text-sm font-bold mb-2">ISBN</label>
                     <input id="isbn" name="bookIsbn" type="text"
                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

@@ -52,11 +52,11 @@ public class TransactionController {
      * @return the new Transaction with HTTP Status code
      */
     @PostMapping("/borrow")
-    public String borrowBook(@RequestParam String studentId, @RequestParam String bookIsbn, Model model) {
+    public String borrowBook(Principal principal, @RequestParam String bookIsbn, Model model) {
         try {
             // Fetching Book and Student to create the Transaction
             Book book = bookService.findBookByIsbn(bookIsbn);
-            Student student = studentService.getStudentById(studentId);
+            Student student = studentService.getStudentById(principal.getName());
             Transaction transaction = transactionService.borrowTransaction(student, book);
             // Update the book copies to reflect the borrowed book
             bookService.updateBookCopies(book.getId(), 1);
