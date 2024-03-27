@@ -47,6 +47,16 @@ public class TransactionController {
     }
 
     /**
+     * It gets the Return Book Page
+     *
+     * @return the return page
+     */
+    @GetMapping("/return")
+    public String returnBookPage() {
+        return "return";
+    }
+
+    /**
      * Creates a transaction when a student borrows a book.
      *
      * @param principal the current logged user
@@ -94,6 +104,7 @@ public class TransactionController {
 
         } catch (Exception e) {
             model.addAttribute("error", "Error returning book");
+            System.out.println(e.getMessage());
             return "return";
         }
     }
