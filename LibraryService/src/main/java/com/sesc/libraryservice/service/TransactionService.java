@@ -47,13 +47,12 @@ public class TransactionService {
      * It updates the transaction when a student returns a book.
      *
      * @param transaction the transaction to be updated
-     * @return the updated transaction
      */
-    public Transaction returnTransaction(Transaction transaction) {
+    public void returnTransaction(Transaction transaction) {
         transaction.setDateReturned(LocalDate.now());
         // Checking for late returns
         recordLateReturn(transaction);
-        return transactionRepository.save(transaction);
+        transactionRepository.save(transaction);
     }
 
     public List<Transaction> findAllTransactionsByStudent(Student student) {

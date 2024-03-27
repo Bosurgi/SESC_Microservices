@@ -22,15 +22,16 @@ public enum LibraryConstants {
     }
 
     public long getLongValue() {
-        return (long) value;
+        return Long.parseLong(value.toString());
     }
 
     /**
      * It returns the value of the constant as a double.
+     *
      * @return the value of the constant as a double
      */
     public double getDoubleValue() {
-        return (double) value/100.0;
+        return Double.parseDouble(value.toString()) / 100;
     }
 
 }
