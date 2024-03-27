@@ -66,10 +66,17 @@ public class AuthController {
         // Retrieve the student from the authentication object
         Student student = studentService.getStudentById(auth.getName());
 
-        // Check if the current password is not the same
+        // Check if the password is correct
         if (!passwordEncoder.matches(currentPassword, student.getPassword())) {
             // Handle incorrect password error
-            model.addAttribute("samePassword", "Please use a different password from the default one");
+            model.addAttribute("verifyPassword", "Incorrect password");
+            return "changepassword";
+        }
+
+        // Check if the new password is the same as the current password
+        if (passwordEncoder.matches(newPassword, student.getPassword())) {
+            // Handle password reuse error
+            model.addAttribute("passwordReuse", "Use a different password");
             return "changepassword";
         }
 
