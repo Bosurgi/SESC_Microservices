@@ -14,11 +14,14 @@ import java.util.List;
 public class StudentService {
 
     private final StudentRepository studentRepository;
+
+    private final TransactionService transactionService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository, PasswordEncoder passwordEncoder) {
+    public StudentService(StudentRepository studentRepository, PasswordEncoder passwordEncoder, TransactionService transactionService) {
         this.studentRepository = studentRepository;
+        this.transactionService = transactionService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -74,12 +77,14 @@ public class StudentService {
      * @return a List of Students
      */
     public List<Student> getAllStudents() {
+        // TODO: Refactor this operation to Repository
         // The list of users to return
         List<Student> studentList = new ArrayList<>();
         // All the Student will include the Admin user which we are going to filter out
         List<Student> userList = studentRepository.findAll();
         for (Student student : userList) {
             if (!student.getRole().equals(LibraryConstants.ADMIN_ROLE.getStringValue())) {
+                student.setOverdueCount(transactionService.getNumberOfOverdueBooks(student));
                 studentList.add(student);
             }
         }

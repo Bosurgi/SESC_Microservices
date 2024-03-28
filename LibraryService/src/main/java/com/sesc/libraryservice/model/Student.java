@@ -28,6 +28,9 @@ public class Student {
 
     private boolean isFirstLogin;
 
+    @Transient
+    private Long overdueCount;
+
     @OneToMany(mappedBy = "student")
     @JsonIgnore
     @ToString.Exclude

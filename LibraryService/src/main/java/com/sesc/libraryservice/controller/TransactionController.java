@@ -126,7 +126,7 @@ public class TransactionController {
         Student currentStudent = studentService.getStudentById(principal.getName());
 
         // Creating a map of transactions and their overdue days
-        Map<Transaction, Long> transactionsMap = transactionService.getTransactionAndOverdue(currentStudent);
+        Map<Transaction, Long> transactionsMap = transactionService.getTransactionAndOverdueDays(currentStudent);
 
         // Adding the transactions to the model to display on the page
         model.addAttribute("transactions", transactionsMap);

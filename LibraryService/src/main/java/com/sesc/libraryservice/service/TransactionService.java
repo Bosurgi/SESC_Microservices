@@ -96,7 +96,7 @@ public class TransactionService {
     }
 
     /**
-     * It calculates the number of days a book is overdue.
+     * It calculates the number of days a book is overdue only if exceeds the maximum days.
      *
      * @param transaction the transaction to be checked
      * @return the number of days the book is overdue
@@ -116,7 +116,7 @@ public class TransactionService {
      * @param student the student to get transactions for
      * @return a map of transactions and their overdue days
      */
-    public Map<Transaction, Long> getTransactionAndOverdue(Student student) {
+    public Map<Transaction, Long> getTransactionAndOverdueDays(Student student) {
         // Find all transactions by Student
         List<Transaction> transactions = transactionRepository.findAllByStudent(student);
         // Creating a map of transactions and their overdue days
@@ -125,5 +125,16 @@ public class TransactionService {
             transactionsMap.put(transaction, getOverdue(transaction));
         }
         return transactionsMap;
+    }
+
+    /**
+     * It gets the number of overdue books of a student.
+     *
+     * @param student the student that might have overdue books
+     * @return the number of overdue books
+     */
+    public Long getNumberOfOverdueBooks(Student student) {
+        Map<Transaction, Long> transactionsMap = getTransactionAndOverdueDays(student);
+        return transactionsMap.values().stream().filter(value -> value > 0).count();
     }
 }
