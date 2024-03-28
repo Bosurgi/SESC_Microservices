@@ -1,4 +1,5 @@
 <div th:fragment="navbar">
+    <!-- TODO: Refactor into more fragments one for Student and one for Admin -->
     <div th:if="${#authorization.expression('hasAnyAuthority(''ADMIN'')')}">
         <nav class="bg-gray-800 py-4">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

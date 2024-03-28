@@ -4,6 +4,7 @@ import com.sesc.libraryservice.dto.StudentRequest;
 import com.sesc.libraryservice.model.Student;
 import com.sesc.libraryservice.service.StudentService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,10 +20,17 @@ public class StudentController {
         this.studentService = studentService;
     }
 
+    /**
+     * Get the student page with all the students
+     *
+     * @param model the model to add the students to
+     * @return the students page
+     */
     @GetMapping("/students")
-    public ResponseEntity<List<Student>> getAllStudents() {
+    public String getAllStudents(Model model) {
         List<Student> students = studentService.getAllStudents();
-        return ResponseEntity.ok(students);
+        model.addAttribute("students", students);
+        return "students";
     }
 
     /**

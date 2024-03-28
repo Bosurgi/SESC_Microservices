@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -73,6 +74,15 @@ public class StudentService {
      * @return a List of Students
      */
     public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+        // The list of users to return
+        List<Student> studentList = new ArrayList<>();
+        // All the Student will include the Admin user which we are going to filter out
+        List<Student> userList = studentRepository.findAll();
+        for (Student student : userList) {
+            if (!student.getRole().equals(LibraryConstants.ADMIN_ROLE.getStringValue())) {
+                studentList.add(student);
+            }
+        }
+        return studentList;
     }
 }
