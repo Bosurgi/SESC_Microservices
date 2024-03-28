@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.util.Map;
+import java.util.List;
 
 @Controller
 @RequestMapping("/api/v1/transactions")
@@ -122,14 +122,14 @@ public class TransactionController {
      */
     @GetMapping()
     public String getTransactions(Principal principal, Model model) {
-        // Fetching current student and all transactions
+        // Fetching current student
         Student currentStudent = studentService.getStudentById(principal.getName());
 
-        // Creating a map of transactions and their overdue days
-        Map<Transaction, Long> transactionsMap = transactionService.getTransactionAndOverdueDays(currentStudent);
+        // Getting the transactions and overdue days
+        List<Transaction> transactions = transactionService.getTransactionsAndOverdueDays(currentStudent);
 
         // Adding the transactions to the model to display on the page
-        model.addAttribute("transactions", transactionsMap);
+        model.addAttribute("transactions", transactions);
         return "account";
     }
 

@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class TransactionService {
@@ -114,17 +112,20 @@ public class TransactionService {
      * It gets all transactions of a student and their overdue days.
      *
      * @param student the student to get transactions for
-     * @return a map of transactions and their overdue days
+     * @return the list of transactions with overdue days
      */
-    public Map<Transaction, Long> getTransactionAndOverdueDays(Student student) {
+    public List<Transaction> getTransactionsAndOverdueDays(Student student) {
         // Find all transactions by Student
         List<Transaction> transactions = transactionRepository.findAllByStudent(student);
-        // Creating a map of transactions and their overdue days
-        Map<Transaction, Long> transactionsMap = new HashMap<>();
+        // Setting the Overdue Days for each transaction
         for (Transaction transaction : transactions) {
-            transactionsMap.put(transaction, getOverdue(transaction));
+            transaction.setOverdueDays(getOverdue(transaction));
         }
-        return transactionsMap;
+        return transactions;
+    }
+    
+    public List<Transaction> getAllTransactions() {
+        return transactionRepository.findAll();
     }
 
     /**
@@ -134,7 +135,7 @@ public class TransactionService {
      * @return the number of overdue books
      */
     public Long getNumberOfOverdueBooks(Student student) {
-        Map<Transaction, Long> transactionsMap = getTransactionAndOverdueDays(student);
-        return transactionsMap.values().stream().filter(value -> value > 0).count();
+        List<Transaction> transactions = getTransactionsAndOverdueDays(student);
+        return transactions.stream().filter(transaction -> transaction.getOverdueDays() > 0).count();
     }
 }

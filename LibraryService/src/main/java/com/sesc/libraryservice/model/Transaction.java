@@ -32,4 +32,16 @@ public class Transaction {
 
     @Temporal(TemporalType.DATE)
     private LocalDate dateReturned;
+
+    @Transient
+    private Long overdueDays;
+
+    public Transaction(Student student, Book book, LocalDate dateBorrowed, LocalDate dateReturned) {
+        this.student = student;
+        this.book = book;
+        this.dateBorrowed = dateBorrowed;
+        this.dateReturned = dateReturned;
+
+    }
 }
+
