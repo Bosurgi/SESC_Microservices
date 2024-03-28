@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/api/v1/students")
+@RequestMapping("/api/v1/")
 public class StudentController {
 
     private final StudentService studentService;
@@ -27,7 +27,7 @@ public class StudentController {
      * @param model the model to add the students to
      * @return the students page
      */
-    @GetMapping()
+    @GetMapping("/admin/students")
     public String getAllStudents(Model model) {
         List<Student> students = studentService.getAllStudents();
         model.addAttribute("students", students);
@@ -40,7 +40,7 @@ public class StudentController {
      * @param studentId the studentId to search for
      * @return the student entity along with HTTP Status code.
      */
-    @GetMapping("/{studentId}")
+    @GetMapping("students/{studentId}")
     public ResponseEntity<Student> getStudentById(@PathVariable String studentId) {
         Optional<Student> student = Optional.ofNullable(studentService.getStudentById(studentId));
         return student.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
@@ -52,7 +52,7 @@ public class StudentController {
      * @param studentRequest the POJO of the student to create
      * @return the created student entity and HTTP status code
      */
-    @PostMapping("/register/")
+    @PostMapping("students/register/")
     public ResponseEntity<Student> createStudent(@RequestBody StudentRequest studentRequest) {
         try {
             Student student = studentService.createStudent(studentRequest.getStudentId());

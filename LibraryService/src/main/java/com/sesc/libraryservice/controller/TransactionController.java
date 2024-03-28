@@ -17,7 +17,7 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api/v1/transactions")
+@RequestMapping("/api/v1/")
 public class TransactionController {
 
     private final TransactionService transactionService;
@@ -41,7 +41,7 @@ public class TransactionController {
      *
      * @return the borrow page
      */
-    @GetMapping("/borrow")
+    @GetMapping("transactions/borrow")
     public String borrowBookPage() {
         return "borrow";
     }
@@ -51,7 +51,7 @@ public class TransactionController {
      *
      * @return the return page
      */
-    @GetMapping("/return")
+    @GetMapping("transactions/return")
     public String returnBookPage() {
         return "return";
     }
@@ -63,7 +63,7 @@ public class TransactionController {
      * @param bookIsbn  the bookIsbn borrowed by the student
      * @return the new Transaction with HTTP Status code
      */
-    @PostMapping("/borrow")
+    @PostMapping("transactions/borrow")
     public String borrowBook(Principal principal, @RequestParam String bookIsbn, Model model) {
         try {
             // Fetching Book and Student to create the Transaction
@@ -91,7 +91,7 @@ public class TransactionController {
      * @param bookIsbn  the bookIsbn returned by the student.
      * @return the return page with the success or error message.
      */
-    @PostMapping("/return")
+    @PostMapping("transactions/return")
     public String returnBook(Model model, Principal principal, @RequestParam String bookIsbn) {
         try {
             // Fetching Book and Student to update the Transaction
@@ -120,7 +120,7 @@ public class TransactionController {
      * @param model     the model to add the transactions to and display on the page
      * @return the account page
      */
-    @GetMapping()
+    @GetMapping("/transactions")
     public String getTransactions(Principal principal, Model model) {
         // Fetching current student
         Student currentStudent = studentService.getStudentById(principal.getName());
@@ -131,6 +131,19 @@ public class TransactionController {
         // Adding the transactions to the model to display on the page
         model.addAttribute("transactions", transactions);
         return "account";
+    }
+
+    /**
+     * It gets the Admin Loans Page with all transactions
+     *
+     * @param model the model to add the transactions to and display on the page
+     * @return the admin loans page
+     */
+    @GetMapping("admin/loans")
+    public String getTransactions(Model model) {
+        List<Transaction> transactions = transactionService.getAllTransactions();
+        model.addAttribute("transactions", transactions);
+        return "admin/loans";
     }
 
 }

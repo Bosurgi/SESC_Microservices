@@ -123,9 +123,18 @@ public class TransactionService {
         }
         return transactions;
     }
-    
+
+    /**
+     * It gets all transactions in the database.
+     *
+     * @return the list of all transactions
+     */
     public List<Transaction> getAllTransactions() {
-        return transactionRepository.findAll();
+        List<Transaction> transactions = transactionRepository.findAll();
+        for (Transaction transaction : transactions) {
+            transaction.setOverdueDays(getOverdue(transaction));
+        }
+        return transactions;
     }
 
     /**
