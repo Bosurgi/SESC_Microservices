@@ -92,4 +92,19 @@ public class TransactionService {
             fineRepository.save(fine);
         }
     }
+
+    /**
+     * It calculates the number of days a book is overdue.
+     *
+     * @param transaction the transaction to be checked
+     * @return the number of days the book is overdue
+     */
+    public Long getOverdue(Transaction transaction) {
+        LocalDate dueDate = transaction.getDateBorrowed().plusDays(LibraryConstants.MAX_DAYS.getLongValue());
+        LocalDate currentDate = LocalDate.now();
+        if (currentDate.isAfter(dueDate)) {
+            return ChronoUnit.DAYS.between(dueDate, currentDate);
+        }
+        return 0L;
+    }
 }
