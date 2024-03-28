@@ -57,9 +57,9 @@ public class LibrarySecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/api/v1/students/register/").permitAll()
-                        // TODO: Manage authorities for the change password page
                         .requestMatchers("/changepassword").authenticated()
-                        .anyRequest().hasAnyAuthority("REGISTERED"))
+                        // TODO: Adding forbidden access to certain pages unless admin
+                        .anyRequest().hasAnyAuthority("REGISTERED", "ADMIN"))
 
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")

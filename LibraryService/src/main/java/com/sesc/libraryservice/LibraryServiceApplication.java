@@ -39,6 +39,7 @@ public class LibraryServiceApplication {
 
             // Testing Accounts
             studentRepository.save(new Student("c12345", passwordEncoder.encode("123"), "REGISTERED", false));
+            studentRepository.save(new Student("admin", passwordEncoder.encode("123"), "ADMIN", false));
 
             // Testing Transactions
             transactionRepository.save(new Transaction(null, studentRepository.findStudentByStudentId("c12345").get(), bookRepository.findBookByIsbn("9780061120084"), LocalDate.now(), null));
