@@ -44,7 +44,7 @@ public class LibraryServiceApplication {
             // Testing Transactions
             transactionRepository.save(new Transaction(null, studentRepository.findStudentByStudentId("c12345").get(), bookRepository.findBookByIsbn("9780061120084"), LocalDate.now(), null));
             transactionRepository.save(new Transaction(null, studentRepository.findStudentByStudentId("c12345").get(), bookRepository.findBookByIsbn("9780743273565"), LocalDate.of(2024, 3, 1), null));
-            transactionRepository.save(new Transaction(null, studentRepository.findStudentByStudentId("c12345").get(), bookRepository.findBookByIsbn("9780140389661"), LocalDate.of(2024, 3, 14), null));
+            transactionRepository.save(new Transaction(null, studentRepository.findStudentByStudentId("c12345").get(), bookRepository.findBookByIsbn("9780140389661"), LocalDate.of(2024, 3, 13), null));
         };
     }
 

@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TransactionService {
@@ -106,5 +108,22 @@ public class TransactionService {
             return ChronoUnit.DAYS.between(dueDate, currentDate);
         }
         return 0L;
+    }
+
+    /**
+     * It gets all transactions of a student and their overdue days.
+     *
+     * @param student the student to get transactions for
+     * @return a map of transactions and their overdue days
+     */
+    public Map<Transaction, Long> getTransactionAndOverdue(Student student) {
+        // Find all transactions by Student
+        List<Transaction> transactions = transactionRepository.findAllByStudent(student);
+        // Creating a map of transactions and their overdue days
+        Map<Transaction, Long> transactionsMap = new HashMap<>();
+        for (Transaction transaction : transactions) {
+            transactionsMap.put(transaction, getOverdue(transaction));
+        }
+        return transactionsMap;
     }
 }
