@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Overdue Books</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<!-- Navbar -->
+<div th:replace="~{fragments/navbar}"></div>
+
+<body class="bg-gray-100">
+
+<div class="container mx-auto mt-8">
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h1 class="text-2xl font-bold mb-4">Overdue Books</h1>
+
+        <!-- Booking History Table -->
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+            <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Book Title
+                </th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ISBN</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date
+                    Borrowed
+                </th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student ID
+                </th>
+            </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+            <!-- Iterate over booking history and display each transaction -->
+            <tr th:each="transaction : ${transactions}">
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900" th:text="${transaction.book.title}"></div>
+                </td>
+
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900" th:text="${transaction.book.isbn}"></div>
+                </td>
+
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900"
+                         th:text="${#temporals.format(transaction.dateBorrowed, 'dd-MM-yyyy')}"></div>
+                </td>
+
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900" th:text="${transaction.student.studentId}"></div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

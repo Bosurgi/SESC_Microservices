@@ -138,6 +138,19 @@ public class TransactionService {
     }
 
     /**
+     * It gets all overdue transactions in the database.
+     *
+     * @return the list of all overdue transactions
+     */
+    public List<Transaction> getAllOverdueTransactions() {
+        List<Transaction> transactions = transactionRepository.findAll();
+        for (Transaction transaction : transactions) {
+            transaction.setOverdueDays(getOverdue(transaction));
+        }
+        return transactions.stream().filter(transaction -> transaction.getOverdueDays() > 0).toList();
+    }
+
+    /**
      * It gets the number of overdue books of a student.
      *
      * @param student the student that might have overdue books

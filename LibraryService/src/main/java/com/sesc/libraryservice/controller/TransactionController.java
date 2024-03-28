@@ -146,4 +146,16 @@ public class TransactionController {
         return "admin/loans";
     }
 
+    /**
+     * It gets the Admin Overdue Page with all overdue transactions
+     *
+     * @param model the model to add the transactions to and display on the page
+     * @return the admin overdue page
+     */
+    @GetMapping("admin/overdue")
+    public String getOverdueTransactions(Model model) {
+        List<Transaction> transactions = transactionService.getAllOverdueTransactions();
+        model.addAttribute("transactions", transactions);
+        return "admin/overdue";
+    }
 }
