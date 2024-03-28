@@ -1,5 +1,6 @@
 package com.sesc.libraryservice.security;
 
+import com.sesc.libraryservice.constants.LibraryConstants;
 import com.sesc.libraryservice.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -59,8 +60,12 @@ public class LibrarySecurityConfig {
                         .requestMatchers("/api/v1/students/register/").permitAll()
                         .requestMatchers("/changepassword").authenticated()
                         // TODO: Adding forbidden access to certain pages unless admin
-                        .requestMatchers("/api/v1/students/").hasAuthority("ADMIN")
-                        .anyRequest().hasAnyAuthority("REGISTERED", "ADMIN"))
+                        .requestMatchers("/api/v1/students/").hasAuthority(LibraryConstants.ADMIN_ROLE.getStringValue())
+
+                        .anyRequest().hasAnyAuthority(
+                                LibraryConstants.REGISTERED_ROLE.getStringValue(),
+                                LibraryConstants.ADMIN_ROLE.getStringValue())
+                )
 
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")

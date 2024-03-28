@@ -9,6 +9,7 @@ public enum LibraryConstants {
     FINE_NAME("LIBRARY_FINE"),
     DEFAULT_PIN("0000"),
     STUDENT_ROLE("STUDENT"),
+    REGISTERED_ROLE("REGISTERED"),
     ADMIN_ROLE("ADMIN");
 
     private final Object value;
