@@ -41,7 +41,8 @@
                 </td>
                 <!-- Calculate the number of overdue books -->
                 <td class="px-6 py-4 whitespace-no-wrap">
-                    <span th:text="${student.overdueCount}"></span>
+                    <span th:if="${student.overdueCount > 0}" th:text="${student.overdueCount}"></span>
+                    <span th:unless="${student.overdueCount > 0}">None</span>
                 </td>
             </tr>
             </tbody>
