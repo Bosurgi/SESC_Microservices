@@ -32,4 +32,11 @@ public class Student {
     @JsonIgnore
     @ToString.Exclude
     private List<Transaction> transactions;
+
+    public Student(String studentId, String password, String role, boolean isFirstLogin) {
+        this.studentId = studentId;
+        this.password = password;
+        this.role = role;
+        this.isFirstLogin = isFirstLogin;
+    }
 }
