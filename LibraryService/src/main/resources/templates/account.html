@@ -36,29 +36,29 @@
             <!-- Iterate over booking history and display each transaction -->
             <tr th:each="transaction : ${transactions}">
                 <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900" th:text="${transaction.key.book.title}"></div>
+                    <div class="text-sm text-gray-900" th:text="${transaction.book.title}"></div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900" th:text="${transaction.key.book.isbn}"></div>
+                    <div class="text-sm text-gray-900" th:text="${transaction.book.isbn}"></div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-sm text-gray-900"
-                         th:text="${#temporals.format(transaction.key.dateBorrowed, 'dd-MM-yyyy')}"></div>
+                         th:text="${#temporals.format(transaction.dateBorrowed, 'dd-MM-yyyy')}"></div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900" th:if="${transaction.key.dateReturned}"
-                         th:text="${#temporals.format(transaction.key.dateReturned, 'dd-MM-yyyy')}"></div>
-                    <div class="text-sm text-gray-500" th:unless="${transaction.key.dateReturned}">Not returned yet
+                    <div class="text-sm text-gray-900" th:if="${transaction.dateReturned}"
+                         th:text="${#temporals.format(transaction.dateReturned, 'dd-MM-yyyy')}"></div>
+                    <div class="text-sm text-gray-500" th:unless="${transaction.dateReturned}">Not returned yet
                     </div>
                 </td>
 
                 <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900" th:if="${transaction.value == 0}">
+                    <div class="text-sm text-gray-900" th:if="${transaction.overdueDays == 0}">
                         On Time
                     </div>
-                    <div class="text-sm text-gray-900" th:if="${transaction.value > 0}">
-                        <span th:text="${transaction.value}"></span>
-                        <span th:text="${transaction.value > 1 ? ' Days' : ' Day'}"></span>
+                    <div class="text-sm text-gray-900" th:if="${transaction.overdueDays > 0}">
+                        <span th:text="${transaction.overdueDays}"></span>
+                        <span th:text="${transaction.overdueDays > 1 ? ' Days' : ' Day'}"></span>
                     </div>
                 </td>
             </tr>
