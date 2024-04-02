@@ -6,33 +6,33 @@
                 <div class="flex justify-between items-center">
                     <div class="flex-shrink-0">
                         <!-- Logo or Image Here below -->
-                        <a href="/" class="text-white text-xl font-bold">Library Portal</a>
+                        <a class="text-white text-xl font-bold" href="/">Library Portal</a>
                     </div>
                     <div class="hidden md:block">
                         <ul class="ml-4 flex space-x-4">
                             <!-- Navigation Links for Admin -->
-                            <li><a href="/api/v1/books"
-                                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Books</a>
+                            <li><a class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                   href="/api/v1/books">Books</a>
                             </li>
-                            <li><a href="/api/v1/admin/students"
-                                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Students</a>
+                            <li><a class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                   href="/api/v1/admin/students">Students</a>
                             </li>
-                            <li><a href="/api/v1/admin/loans"
-                                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Current
+                            <li><a class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                   href="/api/v1/admin/loans">Current
                                 Loans</a></li>
-                            <li><a href="/api/v1/admin/overdue"
-                                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Overdue</a>
+                            <li><a class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                   href="/api/v1/admin/overdue">Overdue</a>
                             </li>
                         </ul>
                     </div>
                     <div class="flex items-center">
-                        <a href="/add-book"
-                           class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Add
+                        <a class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                           href="/api/v1/admin/add-books">Add
                             Book</a>
                         <!-- Render LogOut button -->
                         <form action="/logout" method="post">
-                            <button type="submit"
-                                    class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            <button class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                    type="submit">
                                 Log out
                             </button>
                         </form>
@@ -47,25 +47,25 @@
                 <div class="flex justify-between items-center">
                     <div class="flex-shrink-0">
                         <!-- Logo or Image Here below -->
-                        <a href="/" class="text-white text-xl font-bold">Library Portal</a>
+                        <a class="text-white text-xl font-bold" href="/">Library Portal</a>
                     </div>
                     <div class="hidden md:block">
                         <ul class="ml-4 flex space-x-4">
                             <!-- Navigation Links -->
-                            <li><a href="/api/v1/transactions"
-                                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Profile</a>
+                            <li><a class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                   href="/api/v1/transactions">Profile</a>
                             </li>
 
-                            <li><a href="/api/v1/books"
-                                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Books</a>
+                            <li><a class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                   href="/api/v1/books">Books</a>
                             </li>
 
-                            <li><a href="/api/v1/transactions/borrow"
-                                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Borrow</a>
+                            <li><a class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                   href="/api/v1/transactions/borrow">Borrow</a>
                             </li>
 
-                            <li><a href="/api/v1/transactions/return"
-                                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Return</a>
+                            <li><a class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                   href="/api/v1/transactions/return">Return</a>
                             </li>
                         </ul>
                     </div>
@@ -73,15 +73,15 @@
                         <!-- Render LogIn or LogOut button based on user authentication -->
                         <div th:if="${#authorization.expression('isAuthenticated()')}">
                             <form action="/logout" method="post">
-                                <button type="submit"
-                                        class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                                <button class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                        type="submit">
                                     Log out
                                 </button>
                             </form>
                         </div>
                         <div th:unless="${#authorization.expression('isAuthenticated()')}">
-                            <a href="/login"
-                               class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Log
+                            <a class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                               href="/login">Log
                                 in</a>
                         </div>
                     </div>
