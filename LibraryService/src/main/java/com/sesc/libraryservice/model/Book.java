@@ -38,4 +38,11 @@ public class Book {
         this.year = year;
         this.copies = copies;
     }
+
+    public Book(String isbn, String title, String author, int year) {
+        this.isbn = isbn;
+        this.title = title;
+        this.author = author;
+        this.year = year;
+    }
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api/v1/books")
+@RequestMapping("/api/v1/")
 public class BookController {
 
     private final BookService bookService;
@@ -24,7 +24,7 @@ public class BookController {
      *
      * @return List of Books and HTTP Status code
      */
-    @GetMapping()
+    @GetMapping("/books")
     public String getAllBooks(Model model) {
         List<Book> books = bookService.findAllBooks();
         model.addAttribute("books", books);
@@ -49,10 +49,38 @@ public class BookController {
      * @param book the book to add
      * @return the created book entity and HTTP status code.
      */
-    @PostMapping
-    public ResponseEntity<Book> addBook(@RequestBody Book book) {
+    @PostMapping("/admin/add-book")
+    public String addBook(@ModelAttribute Book book, Model model) {
         Book newBook = bookService.saveBook(book);
-        return ResponseEntity.ok(newBook);
+        if (newBook != null) {
+            model.addAttribute("success", "Book added successfully");
+        } else {
+            model.addAttribute("error", "Failed to add book");
+        }
+        return "admin/add-book";
+    }
+
+    /**
+     * Get the add book page
+     *
+     * @return the add book page
+     */
+    @GetMapping("/admin/add-books")
+    public String addBook() {
+        return "admin/add-book";
+    }
+
+    @PostMapping("/admin/search-book")
+    public String searchBook(@RequestParam String bookIsbn, Model model) {
+        // Calling the Google API
+        Book book = bookService.findBookFromAPI(bookIsbn);
+        if (book != null) {
+            model.addAttribute("book", book);
+            return "admin/add-book-details";
+        } else {
+            model.addAttribute("error", "Book not found");
+            return "admin/add-book";
+        }
     }
 
     /**
