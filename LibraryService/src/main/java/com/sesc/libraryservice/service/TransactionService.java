@@ -5,6 +5,7 @@ import com.sesc.libraryservice.model.Book;
 import com.sesc.libraryservice.model.Fine;
 import com.sesc.libraryservice.model.Student;
 import com.sesc.libraryservice.model.Transaction;
+import com.sesc.libraryservice.repository.BookRepository;
 import com.sesc.libraryservice.repository.FineRepository;
 import com.sesc.libraryservice.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
@@ -19,12 +20,17 @@ public class TransactionService {
 
     private final FineRepository fineRepository;
 
+    private final BookRepository bookRepository;
+
     public TransactionService(
             TransactionRepository transactionRepository,
-            FineRepository fineRepository
+            FineRepository fineRepository,
+            BookRepository bookRepository
     ) {
         this.transactionRepository = transactionRepository;
         this.fineRepository = fineRepository;
+        this.bookRepository = bookRepository;
+
     }
 
     /**
@@ -32,15 +38,17 @@ public class TransactionService {
      *
      * @param student the student borrowing the book
      * @param book    the book borrowed by the student
-     * @return the transaction created
      */
-    public Transaction borrowTransaction(Student student, Book book) {
+    public void borrowTransaction(Student student, Book book) throws RuntimeException {
+        if (bookRepository.findBookByIsbn(book.getIsbn()) == null) {
+            throw new RuntimeException("Book not found");
+        }
         Transaction transaction = new Transaction();
         LocalDate date = LocalDate.now();
         transaction.setStudent(student);
         transaction.setBook(book);
         transaction.setDateBorrowed(date);
-        return transactionRepository.save(transaction);
+        transactionRepository.save(transaction);
     }
 
     /**
