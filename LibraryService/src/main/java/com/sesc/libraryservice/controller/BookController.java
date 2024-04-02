@@ -65,7 +65,7 @@ public class BookController {
      *
      * @return the add book page
      */
-    @GetMapping("/admin/add-books")
+    @GetMapping("/admin/add-book")
     public String addBook() {
         return "admin/add-book";
     }
