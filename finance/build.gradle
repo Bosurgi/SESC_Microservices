@@ -4,6 +4,10 @@ plugins {
     id 'java'
 }
 
+ext {
+    springCloudVersion = "2021.0.8"
+}
+
 group = 'uk.ac.leedsbeckett'
 version = '1.0.0'
 sourceCompatibility = '11'
@@ -21,6 +25,7 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3:3.12.0'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     testImplementation 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
@@ -33,4 +38,10 @@ test {
 
 jar {
     enabled = false //strangely enough, this creates only the one jar we need
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+    }
 }
