@@ -1,14 +1,15 @@
 package com.sesc.studentportal;
 
 import com.sesc.studentportal.misc.EndpointConfig;
-import com.vaadin.flow.component.page.AppShellConfigurator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
+@EnableDiscoveryClient
 @EnableConfigurationProperties(EndpointConfig.class)
-public class StudentPortalApplication implements AppShellConfigurator {
+public class StudentPortalApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(StudentPortalApplication.class, args);

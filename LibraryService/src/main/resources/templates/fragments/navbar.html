@@ -1,0 +1,100 @@
+<div th:fragment="navbar">
+    <!-- TODO: Refactor into more fragments one for Student and one for Admin -->
+    <div th:if="${#authorization.expression('hasAnyAuthority(''ADMIN'')')}">
+        <nav class="bg-gray-800 py-4">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center">
+                    <div class="flex-shrink-0">
+                        <!-- Logo or Image Here below -->
+                        <a class="text-white text-xl font-bold" href="/">Library Portal</a>
+                    </div>
+                    <div class="hidden md:block">
+                        <ul class="ml-4 flex space-x-4">
+                            <!-- Navigation Links for Admin -->
+                            <li>
+                                <a class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                   href="/api/v1/books">Books</a>
+                            </li>
+                            <li>
+                                <a class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                   href="/api/v1/admin/students">Students</a>
+                            </li>
+                            <li>
+                                <a class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                   href="/api/v1/admin/loans">Current
+                                    Loans</a></li>
+                            <li>
+                                <a class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                   href="/api/v1/admin/overdue">Overdue</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="flex items-center">
+                        <a class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                           href="/api/v1/admin/add-book">Add
+                            Book</a>
+                        <!-- Render LogOut button -->
+                        <form action="/logout" method="post">
+                            <button class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                    type="submit">
+                                Log out
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div th:unless="${#authorization.expression('hasAnyAuthority(''ADMIN'')')}">
+        <nav class="bg-gray-800 py-4">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center">
+                    <div class="flex-shrink-0">
+                        <!-- Logo or Image Here below -->
+                        <a class="text-white text-xl font-bold" href="/">Library Portal</a>
+                    </div>
+                    <div class="hidden md:block">
+                        <ul class="ml-4 flex space-x-4">
+                            <!-- Navigation Links -->
+                            <li>
+                                <a class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                   href="/api/v1/transactions">Profile</a>
+                            </li>
+
+                            <li>
+                                <a class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                   href="/api/v1/books">Books</a>
+                            </li>
+
+                            <li>
+                                <a class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                   href="/api/v1/transactions/borrow">Borrow</a>
+                            </li>
+
+                            <li>
+                                <a class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                   href="/api/v1/transactions/return">Return</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="flex items-center">
+                        <!-- Render LogIn or LogOut button based on user authentication -->
+                        <div th:if="${#authorization.expression('isAuthenticated()')}">
+                            <form action="/logout" method="post">
+                                <button class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                        type="submit">
+                                    Log out
+                                </button>
+                            </form>
+                        </div>
+                        <div th:unless="${#authorization.expression('isAuthenticated()')}">
+                            <a class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                               href="/login">Log
+                                in</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>

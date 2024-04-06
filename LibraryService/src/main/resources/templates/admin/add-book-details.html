@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Book Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<!-- Navbar -->
+<div th:replace="~{fragments/navbar}"></div>
+
+<body class="bg-gray-100">
+
+<div class="flex flex-col items-center justify-between mt-16">
+
+    <!-- Success message div -->
+    <div class="w-full" th:if="${success}">
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative max-w-screen-lg mx-auto">
+            <span class="block text-center" th:text="${success}"></span>
+        </div>
+    </div>
+
+    <!-- Error message div -->
+    <div class="w-full" th:if="${error}">
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative max-w-screen-lg mx-auto">
+            <span class="block text-center" th:text="${error}"></span>
+        </div>
+    </div>
+
+    <div class="container mx-auto mt-8">
+        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-md mx-auto">
+            <h1 class="text-2xl font-bold mb-4">Add Book Details</h1>
+            <!-- Display Book Details -->
+            <div>
+                <h2>Title: <span th:text="${book.title}"></span></h2>
+                <h3>Author: <span th:text="${book.author}"></span></h3>
+                <h3>Year: <span th:text="${book.year}"></span></h3>
+                <h3>ISBN: <span th:text="${book.isbn}"></span></h3>
+            </div>
+            <!-- Modify Quantity Form -->
+            <form method="post" th:action="@{/api/v1/admin/add-book}">
+                <input name="isbn" th:value="${book.isbn}" type="hidden">
+                <input name="title" th:value="${book.title}" type="hidden">
+                <input name="year" th:value="${book.year}" type="hidden">
+                <input name="author" th:value="${book.author}" type="hidden">
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="copies">Quantity</label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                           id="copies" name="copies"
+                           placeholder="Enter quantity"
+                           required type="number">
+                </div>
+                <div class="flex items-center justify-between">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            type="submit">
+                        Add Book
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

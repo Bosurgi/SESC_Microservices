@@ -1,5 +1,4 @@
 FROM python:3.7.8-slim-buster
-
 # Create python virtual environment
 ENV VIRTUAL_ENV=/opt/venv
 RUN python3 -m venv $VIRTUAL_ENV

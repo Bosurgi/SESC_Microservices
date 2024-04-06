@@ -1,0 +1,22 @@
+version: '3.9'
+
+networks:
+  default:
+    external: true
+    name: finance_default
+
+services:
+
+  discoveryserver:
+
+    build:
+      dockerfile: Dockerfile
+
+    ports:
+      - "8761:8761"
+
+    expose:
+      - "8761"
+
+    networks:
+      - default

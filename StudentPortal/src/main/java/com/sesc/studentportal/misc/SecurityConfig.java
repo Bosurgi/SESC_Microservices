@@ -11,10 +11,6 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-/**
- * An example code for demoing the Spring Security configuration, shouldn't affect
- * the doc application itself.
- */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends VaadinWebSecurity {
@@ -25,55 +21,11 @@ public class SecurityConfig extends VaadinWebSecurity {
         this.jpaUserDetailService = jpaUserDetailService;
     }
 
-
-//    @Autowired
-//    private DataSource dataSource;
-
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth)
-//            throws Exception {
-//        auth.jdbcAuthentication()
-//                .dataSource(dataSource)
-//                .withUser(User.withUsername("user")
-//                        .password("password")
-//                        .roles("USER"));
-//    }
-//    public DataSource dataSource() {
-//        return DataSourceBuilder
-//                .create()
-//                .url("jdbc:postgresql://localhost:5432/postgres")
-//                .username("postgres")
-//                .password("postgres")
-//                .build();
-//    }
-
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.jdbcAuthentication().dataSource(dataSource()).withUser("user").password("{noop}password").roles("USER");
-//    }
-
-//    @Bean
-//    public UserDetailsManager usersDetailsService(DataSource dataSource) {
-//
-//        UserDetails user = User
-//                .withUsername("user")
-//                .password("{noop}password")
-//                .roles("USER")
-//                .build();
-//        JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
-//        users.createUser(user);
-//        return users;
-//    }
-
     @Bean
     PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
 
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(jpaUserDetailService);
-//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
