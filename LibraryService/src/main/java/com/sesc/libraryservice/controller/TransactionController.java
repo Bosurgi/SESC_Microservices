@@ -113,9 +113,10 @@ public class TransactionController {
             // Checking if there is an invoice to send to the finance service
             if (invoice != null) {
                 // Send invoice to finance service
-                integrationService.sendInvoice(invoice);
+                Invoice response = integrationService.sendInvoice(invoice);
                 // Adding the invoice reference to the model to display on the page
-                model.addAttribute("invoice", invoice.getReference());
+                model.addAttribute("invoice", response.getReference());
+                return "return";
             }
 
             model.addAttribute("success", "Book returned successfully");
