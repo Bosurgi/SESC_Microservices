@@ -216,6 +216,7 @@ public class TransactionService {
         invoice.setAmount(fine.getAmount());
         invoice.setAccount(account);
         invoice.setType(Invoice.Type.TUITION_FEES);
+        invoice.setDueDate(LocalDate.now().plusMonths(6));
         return invoice;
     }
 }
