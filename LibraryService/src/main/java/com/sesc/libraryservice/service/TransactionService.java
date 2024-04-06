@@ -3,7 +3,6 @@ package com.sesc.libraryservice.service;
 import com.sesc.libraryservice.constants.LibraryConstants;
 import com.sesc.libraryservice.dto.Account;
 import com.sesc.libraryservice.dto.Invoice;
-import com.sesc.libraryservice.integration.IntegrationService;
 import com.sesc.libraryservice.model.Book;
 import com.sesc.libraryservice.model.Fine;
 import com.sesc.libraryservice.model.Student;
@@ -25,18 +24,14 @@ public class TransactionService {
 
     private final BookRepository bookRepository;
 
-    private final IntegrationService integrationService;
-
     public TransactionService(
             TransactionRepository transactionRepository,
             FineRepository fineRepository,
-            BookRepository bookRepository,
-            IntegrationService integrationService
+            BookRepository bookRepository
     ) {
         this.transactionRepository = transactionRepository;
         this.fineRepository = fineRepository;
         this.bookRepository = bookRepository;
-        this.integrationService = integrationService;
 
     }
 
@@ -77,16 +72,33 @@ public class TransactionService {
      */
     public Invoice returnTransaction(Transaction transaction) {
         transaction.setDateReturned(LocalDate.now());
-        if (isLateReturn(transaction)) {
-            transactionRepository.save(transaction);
-            return recordLateReturn(transaction);
-        }
-        transactionRepository.save(transaction);
-        return null;
+        return updateTransactionAndReturnInvoice(transaction);
     }
+
+    /**
+     * It finds a transaction by book and student.
+     *
+     * @param book    the book to find the transaction for
+     * @param student the student to find the transaction for
+     * @return the transaction found
+     */
 
     public Transaction findTransactionByBookAndStudent(Book book, Student student) {
         return transactionRepository.findTransactionByBookAndStudent(book, student);
+    }
+
+    /**
+     * It updates the transaction when a student returns a book and returns the Invoice if late.
+     *
+     * @param transaction the transaction to be updated
+     * @return the invoice if the book is returned late
+     */
+    public Invoice updateTransactionAndReturnInvoice(Transaction transaction) {
+        transactionRepository.save(transaction);
+        if (isLateReturn(transaction)) {
+            return recordLateReturn(transaction);
+        }
+        return null;
     }
 
     /**
