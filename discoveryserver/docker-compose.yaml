@@ -1,0 +1,20 @@
+version: '3.9'
+
+networks:
+  default:
+
+services:
+
+  discoveryserver:
+
+    build:
+      dockerfile: Dockerfile
+
+    ports:
+      - "8761:8761"
+
+    expose:
+      - "8761"
+
+    networks:
+      - default

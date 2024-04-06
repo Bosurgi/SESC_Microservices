@@ -49,7 +49,6 @@ Session(app)
 # db = SQL("mysql://redyelruc:financered180974finance@127.0.0.1:3309/finance")
 db = SQL(os.environ['DATABASE'])
 
-
 @app.route('/api/register', methods=['POST'])
 def register():
     """Register a new student"""

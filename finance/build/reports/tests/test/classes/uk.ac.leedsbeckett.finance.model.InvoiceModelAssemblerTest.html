@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.021s</div>
+<div class="counter">0.018s</div>
 <p>duration</p>
 </div>
 </td>
@@ -89,22 +89,22 @@
 </tr>
 <tr>
 <td class="success">testToModel_withNoAmount_ThrowsException()</td>
-<td class="success">0.002s</td>
+<td class="success">0.003s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testToModel_withNoDueDate_ThrowsException()</td>
-<td class="success">0.002s</td>
+<td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testToModel_withNullArgument_ThrowsException()</td>
-<td class="success">0.002s</td>
+<td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testToModel_withReferenceEmpty_ThrowsException()</td>
-<td class="success">0.002s</td>
+<td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -124,7 +124,7 @@
 </tr>
 <tr>
 <td class="success">testToModel_withValidPaidInvoice_ReturnsExpectedEntityModel()</td>
-<td class="success">0.003s</td>
+<td class="success">0.002s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -132,12 +132,12 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>2024-03-08 16:17:19.287  INFO 33604 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [uk.ac.leedsbeckett.finance.model.InvoiceModelAssemblerTest], using SpringBootContextLoader
-2024-03-08 16:17:19.287  INFO 33604 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [uk.ac.leedsbeckett.finance.model.InvoiceModelAssemblerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
-2024-03-08 16:17:19.288  INFO 33604 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [uk.ac.leedsbeckett.finance.model.InvoiceModelAssemblerTest]: InvoiceModelAssemblerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-03-08 16:17:19.288  INFO 33604 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration uk.ac.leedsbeckett.finance.FinanceApplication for test class uk.ac.leedsbeckett.finance.model.InvoiceModelAssemblerTest
-2024-03-08 16:17:19.290  INFO 33604 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
-2024-03-08 16:17:19.290  INFO 33604 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@1314700e, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@66f73d3d, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@2c427287, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@306cb0a0, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@c822a3, org.springframework.test.context.support.DirtiesContextTestExecutionListener@5f09e952, org.springframework.test.context.transaction.TransactionalTestExecutionListener@60e06e7e, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@355c2b72, org.springframework.test.context.event.EventPublishingTestExecutionListener@74c0da40, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@6413fef3, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@763ff91, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@533053b4, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@21d08148, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@5acf07e7, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@42c8f458]
+<pre>2024-04-06 18:11:07.479  INFO 2340 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [uk.ac.leedsbeckett.finance.model.InvoiceModelAssemblerTest], using SpringBootContextLoader
+2024-04-06 18:11:07.479  INFO 2340 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [uk.ac.leedsbeckett.finance.model.InvoiceModelAssemblerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2024-04-06 18:11:07.479  INFO 2340 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [uk.ac.leedsbeckett.finance.model.InvoiceModelAssemblerTest]: InvoiceModelAssemblerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-04-06 18:11:07.480  INFO 2340 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration uk.ac.leedsbeckett.finance.FinanceApplication for test class uk.ac.leedsbeckett.finance.model.InvoiceModelAssemblerTest
+2024-04-06 18:11:07.480  INFO 2340 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2024-04-06 18:11:07.481  INFO 2340 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@164ca703, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@f5dd2de, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@64f6964f, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@60291e59, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@13aed9e0, org.springframework.test.context.support.DirtiesContextTestExecutionListener@72842269, org.springframework.test.context.transaction.TransactionalTestExecutionListener@22908698, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@a638f45, org.springframework.test.context.event.EventPublishingTestExecutionListener@6fe73630, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@3c23d6cf, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@1a212395, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@c2e9e33, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@5aae7f30, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@78995f04, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@6bb7e609]
 </pre>
 </span>
 </div>
@@ -149,7 +149,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 7.3.1</a> at 8 Mar 2024, 16:17:20</p>
+<a href="http://www.gradle.org">Gradle 7.3.1</a> at 6 Apr 2024, 18:11:09</p>
 </div>
 </div>
 </body>
