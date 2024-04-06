@@ -1,5 +1,7 @@
 package com.sesc.libraryservice.controller;
 
+import com.sesc.libraryservice.dto.Invoice;
+import com.sesc.libraryservice.integration.IntegrationService;
 import com.sesc.libraryservice.model.Book;
 import com.sesc.libraryservice.model.Student;
 import com.sesc.libraryservice.model.Transaction;
@@ -24,16 +26,21 @@ public class TransactionController {
     private final BookService bookService;
     private final StudentService studentService;
 
+    private final IntegrationService integrationService;
+
     // CONSTRUCTOR //
     public TransactionController(
             TransactionService transactionService,
             BookService bookService,
-            StudentService studentService
+            StudentService studentService,
+            IntegrationService integrationService
+
     ) {
 
         this.transactionService = transactionService;
         this.bookService = bookService;
         this.studentService = studentService;
+        this.integrationService = integrationService;
     }
 
     /**
@@ -101,7 +108,15 @@ public class TransactionController {
             Transaction transactionToUpdate = transactionService.findTransactionByBookAndStudent(bookToReturn, currentStudent);
             // Updating the transaction and book copies
             bookService.updateBookCopies(bookToReturn.getId(), -1);
-            transactionService.returnTransaction(transactionToUpdate);
+            Invoice invoice = transactionService.returnTransaction(transactionToUpdate);
+
+            // Checking if there is an invoice to send to the finance service
+            if (invoice != null) {
+                // Send invoice to finance service
+                integrationService.sendInvoice(invoice);
+                // Adding the invoice reference to the model to display on the page
+                model.addAttribute("invoice", invoice.getReference());
+            }
 
             model.addAttribute("success", "Book returned successfully");
             return "return";

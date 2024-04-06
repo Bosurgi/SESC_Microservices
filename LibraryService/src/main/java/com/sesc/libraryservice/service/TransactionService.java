@@ -1,6 +1,9 @@
 package com.sesc.libraryservice.service;
 
 import com.sesc.libraryservice.constants.LibraryConstants;
+import com.sesc.libraryservice.dto.Account;
+import com.sesc.libraryservice.dto.Invoice;
+import com.sesc.libraryservice.integration.IntegrationService;
 import com.sesc.libraryservice.model.Book;
 import com.sesc.libraryservice.model.Fine;
 import com.sesc.libraryservice.model.Student;
@@ -22,15 +25,31 @@ public class TransactionService {
 
     private final BookRepository bookRepository;
 
+    private final IntegrationService integrationService;
+
     public TransactionService(
             TransactionRepository transactionRepository,
             FineRepository fineRepository,
-            BookRepository bookRepository
+            BookRepository bookRepository,
+            IntegrationService integrationService
     ) {
         this.transactionRepository = transactionRepository;
         this.fineRepository = fineRepository;
         this.bookRepository = bookRepository;
+        this.integrationService = integrationService;
 
+    }
+
+    public List<Transaction> findAllTransactionsByStudent(Student student) {
+        return transactionRepository.findAllByStudent(student);
+    }
+
+    public Transaction findTransactionById(Long id) {
+        return transactionRepository.findById(id).orElse(null);
+    }
+
+    public Transaction findTransactionByBook(Book book) {
+        return transactionRepository.findTransactionByBook(book);
     }
 
     /**
@@ -56,23 +75,14 @@ public class TransactionService {
      *
      * @param transaction the transaction to be updated
      */
-    public void returnTransaction(Transaction transaction) {
+    public Invoice returnTransaction(Transaction transaction) {
         transaction.setDateReturned(LocalDate.now());
-        // Checking for late returns
-        recordLateReturn(transaction);
+        if (isLateReturn(transaction)) {
+            transactionRepository.save(transaction);
+            return recordLateReturn(transaction);
+        }
         transactionRepository.save(transaction);
-    }
-
-    public List<Transaction> findAllTransactionsByStudent(Student student) {
-        return transactionRepository.findAllByStudent(student);
-    }
-
-    public Transaction findTransactionById(Long id) {
-        return transactionRepository.findById(id).orElse(null);
-    }
-
-    public Transaction findTransactionByBook(Book book) {
-        return transactionRepository.findTransactionByBook(book);
+        return null;
     }
 
     public Transaction findTransactionByBookAndStudent(Book book, Student student) {
@@ -84,21 +94,31 @@ public class TransactionService {
      *
      * @param transaction the transaction to be updated
      */
-    public void recordLateReturn(Transaction transaction) {
+    public Invoice recordLateReturn(Transaction transaction) {
         LocalDate dueDate = transaction.getDateBorrowed().plusDays(LibraryConstants.MAX_DAYS.getLongValue());
         LocalDate dateReturned = transaction.getDateReturned();
+        long daysLate = ChronoUnit.DAYS.between(dueDate, dateReturned);
+        double fineValue = daysLate * LibraryConstants.FINE_PER_DAY.getDoubleValue();
+        Fine fine = new Fine();
+        fine.setTransaction(transaction);
+        fine.setAmount(fineValue);
+        fine.setDue(LocalDate.now());
+        fine.setType(LibraryConstants.FINE_NAME.getStringValue());
+        fineRepository.save(fine);
+        // Create an invoice for the fine
+        return invoiceBuilder(fine, transaction.getStudent());
+    }
 
-        // Calculating the fine is book returned late
-        if (dateReturned.isAfter(dueDate)) {
-            long daysLate = ChronoUnit.DAYS.between(dueDate, dateReturned);
-            double fineValue = daysLate * LibraryConstants.FINE_PER_DAY.getDoubleValue();
-            Fine fine = new Fine();
-            fine.setTransaction(transaction);
-            fine.setAmount(fineValue);
-            fine.setDue(LocalDate.now());
-            fine.setType(LibraryConstants.FINE_NAME.getStringValue());
-            fineRepository.save(fine);
-        }
+    /**
+     * It checks if a book is returned late.
+     *
+     * @param transaction the transaction to be checked
+     * @return true if the book is returned late, false otherwise
+     */
+    public boolean isLateReturn(Transaction transaction) {
+        LocalDate dueDate = transaction.getDateBorrowed().plusDays(LibraryConstants.MAX_DAYS.getLongValue());
+        LocalDate dateReturned = transaction.getDateReturned();
+        return dateReturned.isAfter(dueDate);
     }
 
     /**
@@ -167,5 +187,23 @@ public class TransactionService {
     public Long getNumberOfOverdueBooks(Student student) {
         List<Transaction> transactions = getTransactionsAndOverdueDays(student);
         return transactions.stream().filter(transaction -> transaction.getOverdueDays() > 0).count();
+    }
+
+    /**
+     * It creates an invoice for the student if the book is returned late.
+     *
+     * @param fine    the fine to be invoiced
+     * @param student the student to invoice
+     * @return the invoice created
+     */
+    public Invoice invoiceBuilder(Fine fine, Student student) {
+        Account account = new Account();
+        Invoice invoice = new Invoice();
+        account.setStudentId(student.getStudentId());
+
+        invoice.setAmount(fine.getAmount());
+        invoice.setAccount(account);
+        invoice.setType(Invoice.Type.TUITION_FEES);
+        return invoice;
     }
 }
