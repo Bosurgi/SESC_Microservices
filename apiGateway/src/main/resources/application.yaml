@@ -1,0 +1,27 @@
+server:
+  port: 8666
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discoveryserver:8761/eureka
+
+spring:
+  cloud:
+    gateway:
+      mvc:
+        routes: # Routes configuration
+
+          # Discovery Server #
+          - id: discoveryServer
+            uri: http://discoveryserver:8761
+            predicates:
+              - Path=/eureka/web
+            filters:
+              - SetPath=/
+
+          - id: discoveryServer-static
+            uri: http://discoveryserver:8761
+            predicates:
+              - Path=/eureka/**

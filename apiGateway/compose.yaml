@@ -1,0 +1,21 @@
+version: '3.9'
+
+networks:
+  default:
+    external: true
+    name: discoveryserver_default
+
+services:
+  apigateway:
+
+    build:
+      dockerfile: Dockerfile
+
+    ports:
+      - "8666:8666"
+
+    expose:
+      - "8666"
+
+    networks:
+      - default
