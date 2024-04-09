@@ -40,7 +40,11 @@ public class BookController {
     @GetMapping("/{isbn}")
     public ResponseEntity<Book> getBookByIsbn(@PathVariable String isbn) {
         Book book = bookService.findBookByIsbn(isbn);
-        return ResponseEntity.ok(book);
+        if (book != null) {
+            return ResponseEntity.ok(book);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     /**
