@@ -10,9 +10,10 @@ import com.sesc.libraryservice.repository.FineRepository;
 import com.sesc.libraryservice.repository.TransactionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -22,18 +23,19 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
+@SpringBootTest
 class TransactionServiceTest {
 
-    @Mock
+    @MockBean
     private TransactionRepository transactionRepository;
 
-    @Mock
+    @MockBean
     private FineRepository fineRepository;
 
-    @Mock
+    @MockBean
     private BookRepository bookRepository;
 
-    @InjectMocks
+    @Autowired
     private TransactionService transactionService;
 
     private Student student;

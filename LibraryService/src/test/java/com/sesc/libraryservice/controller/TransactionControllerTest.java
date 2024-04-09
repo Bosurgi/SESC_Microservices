@@ -10,6 +10,9 @@ import com.sesc.libraryservice.service.StudentService;
 import com.sesc.libraryservice.service.TransactionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.ui.Model;
 
 import java.security.Principal;
@@ -17,13 +20,22 @@ import java.security.Principal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
 class TransactionControllerTest {
 
+    @MockBean
     private TransactionService transactionService;
+
+    @MockBean
     private BookService bookService;
+    
+    @MockBean
     private StudentService studentService;
+
+    @MockBean
     private IntegrationService integrationService;
 
+    @Autowired
     private TransactionController transactionController;
 
     @BeforeEach

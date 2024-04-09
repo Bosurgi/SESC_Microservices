@@ -4,9 +4,11 @@ import com.sesc.libraryservice.model.Student;
 import com.sesc.libraryservice.service.StudentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,18 +18,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
 class AuthControllerTest {
 
-    @Mock
+    @Autowired
     private StudentService studentService;
 
-    @Mock
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Mock
     private Model model;
 
-    @InjectMocks
+    @MockBean
     private AuthController authController;
 
     @BeforeEach

@@ -6,11 +6,12 @@ import com.sesc.libraryservice.util.BookClient;
 import com.sesc.libraryservice.util.BookParser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,16 +21,17 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
 class BookServiceTest {
 
-    @Mock
+    @Autowired
+    private BookService bookService;
+
+    @MockBean
     private BookRepository bookRepository;
 
     @Value("${library.key}")
     private String apiKey;
-
-    @InjectMocks
-    private BookService bookService;
 
     @BeforeEach
     void setUp() {
@@ -166,7 +168,6 @@ class BookServiceTest {
                     .thenThrow(new IOException("Failed to fetch book information: 400"));
 
             // Act
-            BookService bookService = new BookService(null, apiKey);
             Book actualBook = bookService.findBookFromAPI(nonExistingIsbn);
 
             // Assert

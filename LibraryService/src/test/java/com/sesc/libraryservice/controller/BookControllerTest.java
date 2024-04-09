@@ -4,9 +4,10 @@ import com.sesc.libraryservice.model.Book;
 import com.sesc.libraryservice.service.BookService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -17,15 +18,16 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
 class BookControllerTest {
 
-    @Mock
+    @MockBean
     private BookService bookService;
 
     @Mock
     private Model model;
 
-    @InjectMocks
+    @MockBean
     private BookController bookController;
 
     @BeforeEach

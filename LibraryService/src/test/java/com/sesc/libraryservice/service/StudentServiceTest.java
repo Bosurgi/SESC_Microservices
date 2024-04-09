@@ -5,9 +5,8 @@ import com.sesc.libraryservice.model.Student;
 import com.sesc.libraryservice.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
@@ -20,16 +19,15 @@ import static org.mockito.Mockito.when;
 
 class StudentServiceTest {
 
-    @Mock
+    @MockBean
     private StudentRepository studentRepository;
 
-    @Mock
+    @MockBean
     private TransactionService transactionService;
 
-    @Mock
+    @MockBean
     private PasswordEncoder passwordEncoder;
 
-    @InjectMocks
     private StudentService studentService;
 
     @BeforeEach
