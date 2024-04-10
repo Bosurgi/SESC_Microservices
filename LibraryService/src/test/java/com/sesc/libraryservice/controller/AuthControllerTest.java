@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 class AuthControllerTest {
 
-    @Autowired
+    @MockBean
     private StudentService studentService;
 
     @MockBean
@@ -30,7 +30,7 @@ class AuthControllerTest {
     @Mock
     private Model model;
 
-    @MockBean
+    @Autowired
     private AuthController authController;
 
     @BeforeEach
@@ -48,6 +48,7 @@ class AuthControllerTest {
 
         Authentication auth = new UsernamePasswordAuthenticationToken("testUser", "oldPassword");
 
+        // Configure the behavior of the studentService mock
         when(studentService.getStudentById("testUser")).thenReturn(student);
         when(passwordEncoder.matches("oldPassword", student.getPassword())).thenReturn(true);
         when(passwordEncoder.matches("newPassword", student.getPassword())).thenReturn(false);
