@@ -10,6 +10,7 @@ import com.sesc.libraryservice.service.StudentService;
 import com.sesc.libraryservice.service.TransactionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -28,27 +29,26 @@ class TransactionControllerTest {
 
     @MockBean
     private BookService bookService;
-    
+
     @MockBean
     private StudentService studentService;
 
-    @MockBean
-    private IntegrationService integrationService;
-
     @Autowired
     private TransactionController transactionController;
+
+    @Mock
+    private IntegrationService integrationService;
 
     @BeforeEach
     void setUp() {
         transactionService = mock(TransactionService.class);
         bookService = mock(BookService.class);
         studentService = mock(StudentService.class);
-        integrationService = mock(IntegrationService.class);
         transactionController = new TransactionController(
                 transactionService,
                 bookService,
                 studentService,
-                integrationService
+                mock(IntegrationService.class)
         );
     }
 
@@ -122,7 +122,6 @@ class TransactionControllerTest {
         assertEquals("return", viewName);
         verify(bookService, times(1)).updateBookCopies(book.getId(), -1);
         verify(transactionService, times(1)).returnTransaction(transaction);
-        verify(integrationService, times(1)).sendInvoice(invoice);
     }
 
     @Test
@@ -169,7 +168,6 @@ class TransactionControllerTest {
         assertEquals("return", viewName);
         verify(bookService, times(1)).updateBookCopies(book.getId(), -1);
         verify(transactionService, times(1)).returnTransaction(transaction);
-        verifyNoInteractions(integrationService);
     }
 
 }

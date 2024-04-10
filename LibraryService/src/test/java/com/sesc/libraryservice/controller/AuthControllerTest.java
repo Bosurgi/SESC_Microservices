@@ -24,7 +24,7 @@ class AuthControllerTest {
     @Autowired
     private StudentService studentService;
 
-    @Autowired
+    @MockBean
     private PasswordEncoder passwordEncoder;
 
     @Mock
