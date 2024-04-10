@@ -95,8 +95,12 @@ public class BookController {
      */
     @DeleteMapping("/{isbn}")
     public ResponseEntity<Book> deleteBookByIsbn(@PathVariable String isbn) {
-        Book book = bookService.findBookByIsbn(isbn);
-        bookService.deleteBook(book.getId());
-        return ResponseEntity.ok(book);
+        try {
+            Book book = bookService.findBookByIsbn(isbn);
+            bookService.deleteBook(book.getId());
+            return ResponseEntity.ok(book);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
