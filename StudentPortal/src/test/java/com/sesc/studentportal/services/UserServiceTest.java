@@ -80,4 +80,83 @@ class UserServiceTest {
         assertNotNull(result);
         assertEquals(newEmail, result.getEmail());
     }
+
+    @Test
+    void testUpdateUserWithNonExistingUserId() {
+        // Arrange
+        Long nonExistingId = 999L;
+        User updatedUser = new User();
+
+        // Act
+        User result = userService.updateUser(nonExistingId, updatedUser);
+
+        // Assert
+        assertNull(result);
+    }
+
+    @Test
+    void testUpdateUserWithNullUpdatedUser() {
+        // Arrange
+        Long existingId = 1L;
+
+        // Act
+        User result = userService.updateUser(existingId, null);
+
+        // Assert
+        assertNull(result);
+    }
+
+    @Test
+    void testUpdateUserWithNoChanges() {
+        // Arrange
+        Long existingId = 1L;
+        User existingUser = new User();
+        existingUser.setUserId(existingId);
+        when(userRepository.findById(existingId)).thenReturn(Optional.of(existingUser));
+
+        // Act
+        User result = userService.updateUser(existingId, existingUser);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(existingUser, result);
+    }
+
+    @Test
+    void testUpdateUserWithEmptyFields() {
+        // Arrange
+        Long existingId = 1L;
+        User existingUser = new User();
+        existingUser.setUserId(existingId);
+        when(userRepository.findById(existingId)).thenReturn(Optional.of(existingUser));
+
+        // Act
+        User updatedUser = new User();
+        updatedUser.setUserId(existingId);
+        User result = userService.updateUser(existingId, updatedUser);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(existingUser, result);
+    }
+
+    @Test
+    void testUpdateUserWithValidChanges() {
+        // Arrange
+        Long existingId = 1L;
+        User existingUser = new User();
+        existingUser.setUserId(existingId);
+        existingUser.setEmail("oldemail@test.com");
+        when(userRepository.findById(existingId)).thenReturn(Optional.of(existingUser));
+
+        // Act
+        User updatedUser = new User();
+        updatedUser.setUserId(existingId);
+        updatedUser.setEmail("newemail@test.com");
+        User result = userService.updateUser(existingId, updatedUser);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals("newemail@test.com", result.getEmail());
+    }
 }
