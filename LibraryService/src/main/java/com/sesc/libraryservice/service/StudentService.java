@@ -3,7 +3,6 @@ package com.sesc.libraryservice.service;
 import com.sesc.libraryservice.constants.LibraryConstants;
 import com.sesc.libraryservice.model.Student;
 import com.sesc.libraryservice.repository.StudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +15,9 @@ public class StudentService {
     private final StudentRepository studentRepository;
 
     private final TransactionService transactionService;
+
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
     public StudentService(StudentRepository studentRepository, PasswordEncoder passwordEncoder, TransactionService transactionService) {
         this.studentRepository = studentRepository;
         this.transactionService = transactionService;
@@ -34,6 +33,7 @@ public class StudentService {
     public Student createStudent(String studentId) throws RuntimeException {
         // Check if the student already exists
         if (studentRepository.findStudentByStudentId(studentId).isPresent()) {
+            System.out.println(studentRepository.findAll());
             throw new RuntimeException("Student with ID " + studentId + " already exists");
         }
 

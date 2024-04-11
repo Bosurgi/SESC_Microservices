@@ -25,7 +25,6 @@ public class TransactionController {
     private final TransactionService transactionService;
     private final BookService bookService;
     private final StudentService studentService;
-
     private final IntegrationService integrationService;
 
     // CONSTRUCTOR //

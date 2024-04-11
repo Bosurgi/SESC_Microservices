@@ -1,13 +1,17 @@
 server:
   port: 8666
 
-
 eureka:
   client:
     service-url:
       defaultZone: http://discoveryserver:8761/eureka
 
 spring:
+  ## Application Configurations ##
+  application:
+    name: apiGateway
+
+  ## Cloud Configurations ##
   cloud:
     gateway:
       mvc:
@@ -21,7 +25,26 @@ spring:
             filters:
               - SetPath=/
 
+            # Discovery Server static resources#
           - id: discoveryServer-static
             uri: http://discoveryserver:8761
             predicates:
               - Path=/eureka/**
+
+            # Library App #
+          - id: libraryapp
+            #            uri: lb://library-service
+            uri: http://libraryapp:8082
+            predicates:
+              - Path=/library/**
+            filters:
+              - SetPath=/
+
+
+## Debugging Configurations ##
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.route.RouteDefinitionLocator: INFO
+    org.springframework.cloud.gateway: TRACE
+

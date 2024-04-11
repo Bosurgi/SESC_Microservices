@@ -40,7 +40,11 @@ public class BookController {
     @GetMapping("/{isbn}")
     public ResponseEntity<Book> getBookByIsbn(@PathVariable String isbn) {
         Book book = bookService.findBookByIsbn(isbn);
-        return ResponseEntity.ok(book);
+        if (book != null) {
+            return ResponseEntity.ok(book);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     /**
@@ -91,8 +95,12 @@ public class BookController {
      */
     @DeleteMapping("/{isbn}")
     public ResponseEntity<Book> deleteBookByIsbn(@PathVariable String isbn) {
-        Book book = bookService.findBookByIsbn(isbn);
-        bookService.deleteBook(book.getId());
-        return ResponseEntity.ok(book);
+        try {
+            Book book = bookService.findBookByIsbn(isbn);
+            bookService.deleteBook(book.getId());
+            return ResponseEntity.ok(book);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
