@@ -25,7 +25,7 @@ class StudentControllerTest {
 
     @MockBean
     private StudentService studentService;
-    
+
     @Autowired
     private StudentController studentController;
 
