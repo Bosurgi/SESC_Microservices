@@ -31,6 +31,9 @@ public class BookService {
     }
 
     public Book findBookByIsbn(String isbn) {
+        if (bookRepository.findBookByIsbn(isbn) == null) {
+            throw new RuntimeException("Book not found");
+        }
         return bookRepository.findBookByIsbn(isbn);
     }
 

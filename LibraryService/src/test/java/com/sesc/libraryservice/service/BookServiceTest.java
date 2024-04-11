@@ -104,11 +104,8 @@ class BookServiceTest {
         String nonExistingIsbn = "0000000000";
         when(bookRepository.findBookByIsbn(nonExistingIsbn)).thenReturn(null);
 
-        // Act
-        Book actualBook = bookService.findBookByIsbn(nonExistingIsbn);
-
-        // Assert
-        assertNull(actualBook);
+        // Act and Assert
+        assertThrows(RuntimeException.class, () -> bookService.findBookByIsbn(nonExistingIsbn));
     }
 
     @Test
