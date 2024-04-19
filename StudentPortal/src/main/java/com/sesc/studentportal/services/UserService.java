@@ -7,6 +7,7 @@ import com.sesc.studentportal.repository.UserRepository;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import dev.hilla.BrowserCallable;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,17 @@ public class UserService {
     // Instantiating the UserRepository and StudentRepository with dependency injection.
     private final UserRepository userRepository;
     private final StudentRepository studentRepository;
+
+    /***
+     * Constructor for the UserService.
+     * Using AutoWired annotation to inject the UserRepository into the UserService.
+     * @param userRepository the Repository for the User
+     */
+    @Autowired
+    public UserService(UserRepository userRepository, StudentRepository studentRepository) {
+        this.userRepository = userRepository;
+        this.studentRepository = studentRepository;
+    }
 
     /***
      * Gets all the users in the database.
@@ -68,22 +80,23 @@ public class UserService {
      */
     public User updateUser(Long id, User user) {
         User userToUpdate = userRepository.findById(id).orElse(null);
-        Student student = user.getStudent();
         if (userToUpdate != null) {
-//            Username shouldn't be changed but if it needs to be changed, uncomment the line below
-//            userToUpdate.setUsername(user.getUsername());
-
-//            For future implementation of password change uncomment below
-//            userToUpdate.setPassword(user.getPassword());
-
+            // Get the student associated with the user
+            Student student = user.getStudent();
+            if (student != null) {
+                // Update student details
+                student.setFirstName(user.getFirstname());
+                student.setSurname(user.getSurname());
+                // Save the updated student
+                studentRepository.save(student);
+            }
+            // Update user details
             userToUpdate.setRoles(user.getRoles());
             userToUpdate.setEmail(user.getEmail());
             userToUpdate.setFirstname(user.getFirstname());
             userToUpdate.setSurname(user.getSurname());
-            student.setFirstName(user.getFirstname());
-            student.setSurname(user.getSurname());
+            // Save the updated user
             userRepository.save(userToUpdate);
-            studentRepository.save(student);
         }
         return userToUpdate;
     }
@@ -97,7 +110,6 @@ public class UserService {
         Student student = studentRepository.findStudentByUser(user);
         return student;
     }
-
 
     /***
      * Creates a new User checking if another student is not already registered with the same username.
@@ -128,23 +140,13 @@ public class UserService {
         return userRepository.saveAndFlush(userToUpdate);
     }
 
+    // CONSTRUCTOR //
+
     public List<String> getRoles(String username) {
         User user = userRepository.findUserByUsername(username).orElseThrow(
                 () -> new UsernameNotFoundException("User not exists by Username")
         );
         return List.of(user.getRoles().split(","));
-    }
-
-    // CONSTRUCTOR //
-
-    /***
-     * Constructor for the UserService.
-     * Using AutoWired annotation to inject the UserRepository into the UserService.
-     * @param userRepository the Repository for the User
-     */
-    public UserService(UserRepository userRepository, StudentRepository studentRepository) {
-        this.userRepository = userRepository;
-        this.studentRepository = studentRepository;
     }
 
 }
