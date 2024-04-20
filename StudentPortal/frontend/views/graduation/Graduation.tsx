@@ -12,7 +12,6 @@ export default function Graduation() {
     const [graduationStatus, setGraduationStatus] = useState<boolean>();
     const {state} = useAuth();
 
-    // TODO: Fix correct graduation status checker
     useEffect(() => {
         // Fetch the current student from user
         const getStudentStatus = async () => {
