@@ -41,7 +41,7 @@ spring:
               - SetPath=/
 
           # Finance App #
-          - id: libraryapp
+          - id: finance
             #            uri: lb://finance
             uri: http://finance:8081
             predicates:
