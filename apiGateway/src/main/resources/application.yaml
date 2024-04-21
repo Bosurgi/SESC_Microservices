@@ -40,6 +40,15 @@ spring:
             filters:
               - SetPath=/
 
+          # Finance App #
+          - id: libraryapp
+            #            uri: lb://finance
+            uri: http://finance:8081
+            predicates:
+              - Path=/finance/**
+            filters:
+              - SetPath=/
+
 
 ## Debugging Configurations ##
 logging:
