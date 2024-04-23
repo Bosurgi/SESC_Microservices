@@ -1,9 +1,6 @@
 package com.sesc.libraryservice.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +23,7 @@ public class Book {
 
     private String author;
 
+    @Column(name = "publication_year")
     private int year;
 
     private int copies;
