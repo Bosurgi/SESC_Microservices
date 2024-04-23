@@ -31,9 +31,10 @@ List the technologies/frameworks/languages used in the project.
 - Spring Boot
 - Spring Cloud
 - Docker
-- React
-- PostgreSQL
 - REST
+- PostgreSQL
+- Hilla
+- React
 - Thymeleaf
 - Tailwind
 - Mockito
